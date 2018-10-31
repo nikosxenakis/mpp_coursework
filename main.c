@@ -7,14 +7,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <mpi.h>
 
 #include "include/pgmio.h"
 
 #define M 192
 #define N 128
 
-#define MAXITER   50000
+#define MAXITER   5000
 #define PRINTFREQ  200
+
+#define MASTER 0
 
 double boundaryval(int i, int m);
 
@@ -26,6 +29,20 @@ int main (void) {
   char *filename;
   double val;
 
+  int world_rank, world_size;
+  double start_time, end_time;
+
+  MPI_Init(NULL, NULL);
+
+  MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
+  MPI_Comm_size(MPI_COMM_WORLD, &world_size);
+
+  MPI_Barrier(MPI_COMM_WORLD);
+
+  if(world_rank == MASTER)
+    start_time = MPI_Wtime();
+
+  printf("Process rank %d of %d processes\n", world_rank, world_size);
   printf("Processing %d x %d image\n", M, N);
   printf("Number of iterations = %d\n", MAXITER);
 
@@ -89,8 +106,16 @@ int main (void) {
   }
 
   filename="output/imagenew192x128.pgm";
-  printf("\nWriting <%s>\n", filename); 
   pgmwrite(filename, buf, M, N);
+
+  MPI_Barrier(MPI_COMM_WORLD);
+
+  if(world_rank == MASTER) {
+    end_time = MPI_Wtime();
+    printf("Running time = %f\n", end_time - start_time);
+  }
+
+  MPI_Finalize();
 
   return 0;
 } 
