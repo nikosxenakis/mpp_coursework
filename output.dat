@@ -2,3 +2,8 @@ Serial: v0
 Finished 5000 iterations
 Writing 192 x 128 picture into file: output/imagenew192x128.pgm
 Running time = 3.800765
+
+Parallel: v1 #no halo swaps
+Finished 5000 iterations
+Writing 192 x 128 picture into file: output/imagenew192x128.pgm
+Running time = 1.596465
