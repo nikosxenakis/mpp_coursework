@@ -15,10 +15,68 @@
 #define M 192
 #define N 128
 
-#define MAXITER   1000
+#define MAXITER   5000
 #define PRINTFREQ  200
 
 #define MASTER 0
+
+//0: is not
+//1: is only left border
+//2: is only right border
+//3: is only bottom border
+//4: is only top border
+
+//3: is upper-right border
+//1: is only right border
+//2: is right-bottom border
+//??????
+int is_border_process(int world_rank, int* dim, MPI_Comm comm) {
+  int coord[2];
+
+  MPI_Cart_coords(comm, world_rank, 2, coord);
+
+  if(coord[0] == 0)
+    return 1;
+  else if(coord[0] + 1 == dim[0])
+    return 2;
+  else if(coord[1] == 0)
+    return 3;
+  else if(coord[1] + 1 == dim[1])
+    return 4;
+  return 0;
+}
+
+int is_top_border_process(int world_rank, int* dim, MPI_Comm comm) {
+  int coord[2];
+  MPI_Cart_coords(comm, world_rank, 2, coord);
+  if(coord[1] + 1 == dim[1])
+    return 1;
+  return 0;
+}
+
+int is_bottom_border_process(int world_rank, int* dim, MPI_Comm comm) {
+  int coord[2];
+  MPI_Cart_coords(comm, world_rank, 2, coord);
+  if(coord[1] == 0)
+    return 1;
+  return 0;
+}
+
+int is_left_border_process(int world_rank, int* dim, MPI_Comm comm) {
+  int coord[2];
+  MPI_Cart_coords(comm, world_rank, 2, coord);
+  if(coord[0] == 0)
+    return 1;
+  return 0;
+}
+
+int is_right_border_process(int world_rank, int* dim, MPI_Comm comm) {
+  int coord[2];
+  MPI_Cart_coords(comm, world_rank, 2, coord);
+  if(coord[0] + 1 == dim[0])
+    return 1;
+  return 0;
+}
 
 double boundaryval(int i, int m) {
   double val;
@@ -47,9 +105,12 @@ void scatter_masterbuf(double **masterbuf, double **buf, int m, int n, int mp, i
   int curr_coord[2];
   int send_rank;
   MPI_Status status;
+  MPI_Request request;
 
   if(world_rank == MASTER)
     printf("MPI_Scatter\n");
+
+  MPI_Irecv(&buf[0][0], max_mp*max_np, MPI_DOUBLE, MASTER, 0, MPI_COMM_WORLD, &request);
 
   if(world_rank == MASTER) {
     double ***sendBuffs = (double ***) arralloc(sizeof(double), 3, world_size, max_mp, max_np);
@@ -69,18 +130,19 @@ void scatter_masterbuf(double **masterbuf, double **buf, int m, int n, int mp, i
 
   }
 
-  MPI_Recv(&buf[0][0], max_mp*max_np, MPI_DOUBLE, MASTER, 0, MPI_COMM_WORLD, &status);
+  MPI_Wait(&request, &status);
 }
 
 void gather_masterbuf(double **masterbuf, double **buf, int m, int n, int mp, int np, int max_mp, int max_np, int world_rank, int world_size, MPI_Comm comm) {
   int curr_coord[2];
   int send_rank;
   MPI_Status status;
+  MPI_Request request;
 
   if(world_rank == MASTER)
     printf("MPI_Gather\n");
 
-  MPI_Send(&buf[0][0], max_mp*max_np, MPI_DOUBLE, MASTER, 0, MPI_COMM_WORLD);
+  MPI_Isend(&buf[0][0], max_mp*max_np, MPI_DOUBLE, MASTER, 0, MPI_COMM_WORLD, &request);
 
   if(world_rank == MASTER) {
     double ***recvBuffs = (double ***) arralloc(sizeof(double), 3, world_size, max_mp, max_np);
@@ -100,30 +162,162 @@ void gather_masterbuf(double **masterbuf, double **buf, int m, int n, int mp, in
   }
 }
 
-void calculate(double **buf, double **old, double **new, double **edge, int m, int n) {
-  int i, j, iter;
+void initialize_tables(double **buf, double **old, double **edge, int m, int n, int world_rank, int* dim, MPI_Comm comm) {
+  int i, j;
   double val;
+  int pos;
+  int coord[2];
 
+  MPI_Cart_coords(comm, world_rank, 2, coord);
+  printf("initialize_tables: The processor at position (%d, %d) has rank %d\n", coord[0], coord[1], world_rank);
+  // 0,0 0,1
+
+  // init edge table
   for (i=1;i<m+1;i++) {
     for (j=1;j<n+1;j++) {
       edge[i][j]=buf[i-1][j-1];
     }
   }
 
+  //init old
   for (i=0; i<m+2;i++) {
     for (j=0;j<n+2;j++) {
       old[i][j]=255.0;
     }
   }
 
-  /* Set fixed boundary conditions on the left and right sides */
-  for (j=1; j < n+1; j++) {
-    /* compute sawtooth value */
-    val = boundaryval(j, n);
+  //init old borders
 
-    old[0][j]   = (int)(255.0*(1.0-val));
-    old[m+1][j] = (int)(255.0*val);
+  if(is_left_border_process(world_rank, dim, comm)) {
+    /* Set fixed boundary conditions on the left and right sides */
+    int height = dim[1]*n;
+    int init_pos_h = coord[1]*n;
+    printf("height = %d, init_pos_h = %d\n", height, init_pos_h);
+
+  // for (j=1; j < N+1; j++)
+  //   {
+  //     /* compute sawtooth value */
+     
+  //     val = boundaryval(j, N);
+
+  //     old[0][j]   = (int)(255.0*(1.0-val));
+  //     old[M+1][j] = (int)(255.0*val);
+  //   }
+
+    if(coord[1] == 0)
+      for (j=1; j < n+1; j++) {
+        /* compute sawtooth value */
+        val = boundaryval(j, height);
+        old[0][j]   = (int)(255.0*(1.0-val));
+        old[m+1][j] = (int)(255.0*val);
+      }
+
+    else if(coord[1] == 1)
+      for (j=1; j < n+1; j++) {
+        /* compute sawtooth value */
+        val = boundaryval(n+j, height);
+        old[0][j]   = (int)(255.0*(1.0-val));
+        old[m+1][j] = (int)(255.0*val);
+      }
+
+    // for (j=1; j < height+1; j++) {
+    //   /* compute sawtooth value */
+    //   val = boundaryval(j, height);
+    //   old[0][j]   = (int)(255.0*(1.0-val));
+    // }
+
+
+    // if(coord[1] == 0)
+    //   for (j=1; j < n+2; j++) {
+    //     /* compute sawtooth value */
+    //     val = boundaryval(init_pos_h + j, height);
+    //     old[0][j]   = (int)(255.0*(1.0-val));
+    //   }
+    // if(coord[1] == 1)
+    //   for (j=n+2; j < n+1; j++) {
+    //     /* compute sawtooth value */
+    //     val = boundaryval(init_pos_h + j, height);
+    //     old[0][j]   = (int)(255.0*(1.0-val));
+    //   }
   }
+
+  if(is_right_border_process(world_rank, dim, comm)) {
+    /* Set fixed boundary conditions on the left and right sides */
+    for (j=1; j < n+1; j++) {
+      /* compute sawtooth value */
+      val = boundaryval(coord[1]*n+j, dim[1]*n);
+      old[m+1][j] = (int)(255.0*val);
+    }
+  }
+
+  int other_coord[2];
+  int other_id;
+  MPI_Request request;
+  MPI_Status status;
+  double *send_buff = (double *) arralloc(sizeof(double), 1, m+2);
+  double *recv_buff = (double *) arralloc(sizeof(double), 1, m+2);
+
+  if(is_top_border_process(world_rank, dim, comm)) {
+    other_coord[0] = coord[0];
+    other_coord[1] = coord[1] - 1;
+
+    for (int i = 0; i < m+2; ++i) {
+      send_buff[i] = old[i][1];
+    }
+  }
+  if(is_bottom_border_process(world_rank, dim, comm)) {
+    other_coord[0] = coord[0];
+    other_coord[1] = coord[1] + 1;
+
+    for (int i = 0; i < m+2; ++i) {
+      send_buff[i] = old[i][n];
+    }
+  }
+
+  MPI_Cart_rank(comm, other_coord, &other_id); 
+
+  MPI_Irecv(recv_buff, m+2, MPI_DOUBLE, other_id, 0, MPI_COMM_WORLD, &request);
+
+  MPI_Send(send_buff, m+2, MPI_DOUBLE, other_id, 0, MPI_COMM_WORLD);
+
+  MPI_Wait(&request, &status);
+
+  if(is_top_border_process(world_rank, dim, comm)) {
+    for (int i = 0; i < m+2; ++i) {
+      old[i][0] = recv_buff[i];
+    }
+  }
+  if(is_bottom_border_process(world_rank, dim, comm)) {
+    for (int i = 0; i < m+2; ++i) {
+      old[i][n+1] = recv_buff[i];
+    }
+  }
+
+  // int coords2[2];
+  // int id;
+  // MPI_Request request;
+
+  // int right_coord[2];
+  // int left_coord[2];
+  // int right_id, left_id;
+
+
+  // if(!is_left_border_process(world_rank, dim, comm)) {
+  //   coords2[0] = coord[0] - 1;
+  //   coords2[1] = coord[1];
+  //   MPI_Cart_rank(comm, coords2, &id);
+  //   MPI_Recv(&old[0][0], n, MPI_DOUBLE, id, 0, comm, &request);
+  // }
+  // if(!is_right_border_process(world_rank, dim, comm)) {
+  //   coords2[0] = coord[0] + 1;
+  //   coords2[1] = coord[1];
+  //   MPI_Cart_rank(comm, coords2, &id);
+  //   MPI_Send(&old[m-1][0], n, MPI_DOUBLE, id, 0, comm);
+  // }
+}
+
+void calculate(double **buf, double **old, double **new, double **edge, int m, int n, int world_rank, int* dim, MPI_Comm comm) {
+  int i, j, iter;
 
   for (iter=1;iter<=MAXITER; iter++) {
     if(iter%PRINTFREQ==0) {
@@ -183,6 +377,8 @@ int main (void) {
   MPI_Comm_size(MPI_COMM_WORLD, &world_size);
 
 
+  // dim[0]=2;
+  // dim[1]=1;
   // cart.c
   dim[0]=sqrt(world_size);
   dim[1]=world_size/dim[0];
@@ -228,6 +424,7 @@ int main (void) {
   {
     printf("Fractions: %d x %d x %d = %d of image %d\n", world_size, mp, np, world_size*mp*np, m*n);
   }
+
   allocate_tables(&old, &new, &edge, mp, np);
 
   MPI_Barrier(MPI_COMM_WORLD);
@@ -249,7 +446,10 @@ int main (void) {
 
   if(world_rank == MASTER)
     printf("calculate\n");
-  calculate(buf, old, new, edge, mp, np);
+
+  initialize_tables(buf, old, edge, mp, np, world_rank, dim, comm);
+  calculate(buf, old, new, edge, mp, np, world_rank, dim, comm);
+
   if(world_rank == MASTER)
     printf("Finished %d iterations\n", MAXITER);
 
