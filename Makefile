@@ -1,7 +1,15 @@
 #COMPILER OPTIONS
-CFLAGS := -g -Wall -o3
+CFLAGS := -g -Wall -O3
 
 CC := mpicc $(CFLAGS)
+
+# If the first argument is "run"...
+ifeq (run,$(firstword $(MAKECMDGOALS)))
+  # use the rest as arguments for "run"
+  RUN_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
+  # ...and turn them into do-nothing targets
+  $(eval $(RUN_ARGS):;@:)
+endif
 
 #DIRECTORIES
 BASE_DIR := .
@@ -34,7 +42,7 @@ all: $(BIN)
 	@echo " $(BIN) ready."
 
 run: $(BIN)
-	mpirun -n 4 ./$(BIN)
+	mpirun -n 4 ./$(BIN) $(RUN_ARGS)
 
 clean: $(BIN)
 	@echo " Cleaning..."
