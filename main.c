@@ -208,7 +208,7 @@ void calculate_boundary_conditions(double **old, int m, int n, int world_rank, i
   right_coord[0] = coord[0] + 1;
   right_coord[1] = coord[1];
 
-  if(has_top(world_rank, dim, comm)) 
+  if(has_top(world_rank, dim, comm))
     MPI_Cart_rank(comm, up_coord, &up_id);
   if(has_bottom(world_rank, dim, comm))
     MPI_Cart_rank(comm, down_coord, &down_id);
@@ -236,7 +236,7 @@ void calculate_boundary_conditions(double **old, int m, int n, int world_rank, i
     MPI_Send(right_send_buff, n+2, MPI_DOUBLE, right_id, 0, MPI_COMM_WORLD);
 
   if(has_top(world_rank, dim, comm))
-    MPI_Wait(&request[0], &status[0]);   
+    MPI_Wait(&request[0], &status[0]);
   if(has_bottom(world_rank, dim, comm))
     MPI_Wait(&request[1], &status[1]);
   if(has_left(world_rank, dim, comm))
@@ -328,7 +328,7 @@ int main (int argc, char** argv) {
   MPI_Comm comm;
   int dim[2], period[2], reorder;
   int coord[2], id;
-  
+
   MPI_Init(NULL, NULL);
 
   MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
@@ -393,9 +393,9 @@ int main (int argc, char** argv) {
   MPI_Barrier(MPI_COMM_WORLD);
 
   initialize_tables(buf, old, edge, mp, np, world_rank, dim, comm);
-  
+
   MPI_Barrier(MPI_COMM_WORLD);
-  
+
   calculate(buf, old, new, edge, mp, np, world_rank, dim, comm);
 
   MPI_Barrier(MPI_COMM_WORLD);
@@ -429,4 +429,4 @@ int main (int argc, char** argv) {
   MPI_Finalize();
 
   return 0;
-} 
+}
