@@ -7,7 +7,7 @@
 #include "include/arralloc.h"
 #include "include/pgmio.h"
 
-#define MAXITER   5000
+#define MAXITER   1500
 #define PRINTFREQ  MAXITER/100
 #define FILENAME_SIZE 128
 
@@ -16,18 +16,20 @@
 // enum Position{Top, Bottom, Left, Right, Middle, Top_Left}; ...
 
 int has_top(int world_rank, int* dim, MPI_Comm comm) {
-  int coord[2];
-  MPI_Cart_coords(comm, world_rank, 2, coord);
-  if(coord[1] + 1 == dim[1])
-    return 0;
+  // int coord[2], id;
+  // MPI_Cart_coords(comm, world_rank, 2, coord);
+  //
+  // if(coord[1] + 1 == dim[1])
+  //   return 0;
   return 1;
 }
 
 int has_bottom(int world_rank, int* dim, MPI_Comm comm) {
-  int coord[2];
-  MPI_Cart_coords(comm, world_rank, 2, coord);
-  if(coord[1] == 0)
-    return 0;
+  // int coord[2], id;
+  // MPI_Cart_coords(comm, world_rank, 2, coord);
+  //
+  // if(coord[1] == 0)
+  //   return 0;
   return 1;
 }
 
@@ -163,17 +165,25 @@ void initialize_tables(double **buf, double **old, double **edge, int m, int n, 
   for (j=0; j < n+2; j++) {
     /* compute sawtooth value */
     val = boundaryval(coord[1]*n+j, dim[1]*n);
-    old[0][j]   = (int)(255.0*(1.0-val));
-    old[m+1][j] = (int)(255.0*val);
+
+    if( (coord[1] == 0 && j == 0) || (coord[1] + 1 == dim[1] && j == n+1) ) {
+        continue;
+      }
+
+      if(!has_left(world_rank, dim, comm))
+        old[0][j]   = (int)(255.0*(1.0-val));
+      if(!has_right(world_rank, dim, comm))
+        old[m+1][j] = (int)(255.0*val);
   }
+
 }
 
-void calculate_boundary_conditions(double **old, int m, int n, int world_rank, int* dim, MPI_Comm comm) {
+void calculate_halo_swaps(double **old, int m, int n, int world_rank, int* dim, MPI_Comm comm) {
   int coord[2], up_coord[2], down_coord[2], right_coord[2], left_coord[2];
   int up_id, down_id, left_id, right_id;
 
-  MPI_Request request[4];
-  MPI_Status status[4];
+  MPI_Request request[4], send_request[4];
+  MPI_Status status[4], send_status[4];
   double *top_send_buff, *bottom_send_buff, *left_send_buff, *right_send_buff;
   double *top_recv_buff, *bottom_recv_buff, *left_recv_buff, *right_recv_buff;
 
@@ -181,28 +191,26 @@ void calculate_boundary_conditions(double **old, int m, int n, int world_rank, i
 
   top_send_buff = (double *) arralloc(sizeof(double), 1, m);
   bottom_send_buff = (double *) arralloc(sizeof(double), 1, m);
-  left_send_buff = (double *) arralloc(sizeof(double), 1, n);
-  right_send_buff = (double *) arralloc(sizeof(double), 1, n);
+  // left_send_buff = (double *) arralloc(sizeof(double), 1, n+2);
+  // right_send_buff = (double *) arralloc(sizeof(double), 1, n+2);
 
   top_recv_buff = (double *) arralloc(sizeof(double), 1, m);
   bottom_recv_buff = (double *) arralloc(sizeof(double), 1, m);
-  left_recv_buff = (double *) arralloc(sizeof(double), 1, n);
-  right_recv_buff = (double *) arralloc(sizeof(double), 1, n);
+  // left_recv_buff = (double *) arralloc(sizeof(double), 1, n+2);
+  // right_recv_buff = (double *) arralloc(sizeof(double), 1, n+2);
 
+  //TODO: Send just m or n
   //use derived datatypes
-  for (int i = 0; i < m+2; ++i) {
-    top_send_buff[i] = old[i][n];
-    bottom_send_buff[i] = old[i][1];
-  }
-  for (int i = 0; i < n+2; ++i) {
-    left_send_buff[i] = old[1][i];
-    right_send_buff[i] = old[m][i];
+  for (int i = 1; i < m+1; ++i) {
+    top_send_buff[i-1] = old[i][n];
+    bottom_send_buff[i-1] = old[i][1];
   }
 
   up_coord[0] = coord[0];
   up_coord[1] = coord[1] + 1;
   down_coord[0] = coord[0];
   down_coord[1] = coord[1] - 1;
+
   left_coord[0] = coord[0] - 1;
   left_coord[1] = coord[1];
   right_coord[0] = coord[0] + 1;
@@ -212,59 +220,92 @@ void calculate_boundary_conditions(double **old, int m, int n, int world_rank, i
     MPI_Cart_rank(comm, up_coord, &up_id);
   if(has_bottom(world_rank, dim, comm))
     MPI_Cart_rank(comm, down_coord, &down_id);
-  if(has_left(world_rank, dim, comm))
-    MPI_Cart_rank(comm, left_coord, &left_id);
-  if(has_right(world_rank, dim, comm))
-    MPI_Cart_rank(comm, right_coord, &right_id);
+  // if(has_left(world_rank, dim, comm))
+  //   MPI_Cart_rank(comm, left_coord, &left_id);
+  // if(has_right(world_rank, dim, comm))
+  //   MPI_Cart_rank(comm, right_coord, &right_id);
 
   if(has_top(world_rank, dim, comm))
-    MPI_Irecv(top_recv_buff, m+2, MPI_DOUBLE, up_id, 0, MPI_COMM_WORLD, &request[0]);
+    MPI_Irecv(top_recv_buff, m, MPI_DOUBLE, up_id, 0, comm, &request[0]);
   if(has_bottom(world_rank, dim, comm))
-    MPI_Irecv(bottom_recv_buff, m+2, MPI_DOUBLE, down_id, 0, MPI_COMM_WORLD, &request[1]);
-  if(has_left(world_rank, dim, comm))
-    MPI_Irecv(left_recv_buff, n+2, MPI_DOUBLE, left_id, 0, MPI_COMM_WORLD, &request[2]);
-  if(has_right(world_rank, dim, comm))
-    MPI_Irecv(right_recv_buff, n+2, MPI_DOUBLE, right_id, 0, MPI_COMM_WORLD, &request[3]);
+    MPI_Irecv(bottom_recv_buff, m, MPI_DOUBLE, down_id, 1, comm, &request[1]);
+  // if(has_left(world_rank, dim, comm))
+  //   MPI_Irecv(left_recv_buff, n+2, MPI_DOUBLE, left_id, 0, MPI_COMM_WORLD, &request[2]);
+  // if(has_right(world_rank, dim, comm))
+  //   MPI_Irecv(right_recv_buff, n+2, MPI_DOUBLE, right_id, 0, MPI_COMM_WORLD, &request[3]);
 
   if(has_top(world_rank, dim, comm))
-    MPI_Send(top_send_buff, m+2, MPI_DOUBLE, up_id, 0, MPI_COMM_WORLD);
+    MPI_Isend(top_send_buff, m, MPI_DOUBLE, up_id, 1, comm, &send_request[0]);
   if(has_bottom(world_rank, dim, comm))
-    MPI_Send(bottom_send_buff, m+2, MPI_DOUBLE, down_id, 0, MPI_COMM_WORLD);
-  if(has_left(world_rank, dim, comm))
-    MPI_Send(left_send_buff, n+2, MPI_DOUBLE, left_id, 0, MPI_COMM_WORLD);
-  if(has_right(world_rank, dim, comm))
-    MPI_Send(right_send_buff, n+2, MPI_DOUBLE, right_id, 0, MPI_COMM_WORLD);
+    MPI_Isend(bottom_send_buff, m, MPI_DOUBLE, down_id, 0, comm, &send_request[1]);
+  // if(has_left(world_rank, dim, comm))
+  //   MPI_Send(left_send_buff, n+2, MPI_DOUBLE, left_id, 0, MPI_COMM_WORLD);
+  // if(has_right(world_rank, dim, comm))
+  //   MPI_Send(right_send_buff, n+2, MPI_DOUBLE, right_id, 0, MPI_COMM_WORLD);
 
-  if(has_top(world_rank, dim, comm))
+  if(has_top(world_rank, dim, comm)) {
     MPI_Wait(&request[0], &status[0]);
-  if(has_bottom(world_rank, dim, comm))
+    MPI_Wait(&send_request[0], &send_status[0]);
+  }
+  if(has_bottom(world_rank, dim, comm)) {
     MPI_Wait(&request[1], &status[1]);
-  if(has_left(world_rank, dim, comm))
-    MPI_Wait(&request[2], &status[2]);
-  if(has_right(world_rank, dim, comm))
-    MPI_Wait(&request[3], &status[3]);
+    MPI_Wait(&send_request[1], &send_status[1]);
+  }
+  // if(has_left(world_rank, dim, comm))
+  //   MPI_Wait(&request[2], &status[2]);
+  // if(has_right(world_rank, dim, comm))
+  //   MPI_Wait(&request[3], &status[3]);
 
-  for (int i = 0; i < m+2; ++i) {
+  // printf("rank = %d sends to up = %d, down = %d\n", world_rank, up_id, down_id);
+  for (int i = 0; i < m; ++i) {
+    // if(top_send_buff[i] != bottom_recv_buff[i])
+    //   printf("ERROR 1st if in i = %d, %d != %d\n", i, top_send_buff[i], bottom_recv_buff[i]);
+    // if(top_send_buff[i] != bottom_recv_buff[i])
+    //   printf("ERROR 2nd if in i = %d\n", i);
+  }
+
+  // printf("\n");
+  //
+  // for (int i = 1; i < 40; ++i) {
+  //     printf("%d ", top_recv_buff[i]);
+  // }
+  // printf("\n");
+  // for (int i = 1; i < 40; ++i) {
+  //     printf("%d ", bottom_send_buff[i]);
+  // }
+  // printf("\n");
+  // for (int i = 1; i < 40; ++i) {
+  //     printf("%d ", top_send_buff[i]);
+  // }
+  // printf("\n");
+  // for (int i = 1; i < 40; ++i) {
+  //     printf("%d ", bottom_recv_buff[i]);
+  // }
+  // printf("\n");
+  // printf("\n");
+
+  for (int i = 1; i < m+1; ++i) {
     if(has_top(world_rank, dim, comm))
-      old[i][n+1] = top_recv_buff[i];
+      old[i][n+1] = top_recv_buff[i-1];
     if(has_bottom(world_rank, dim, comm))
-      old[i][0] = bottom_recv_buff[i];
+      old[i][0] = bottom_recv_buff[i-1];
   }
-  for (int i = 0; i < n+2; ++i) {
-    if(has_left(world_rank, dim, comm))
-      old[0][i] = left_recv_buff[i];
-    if(has_right(world_rank, dim, comm))
-      old[m+1][i] = right_recv_buff[i];
-  }
+
+  // for (int i = 0; i < n+2; ++i) {
+  //   if(has_left(world_rank, dim, comm))
+  //     old[0][i] = left_recv_buff[i];
+  //   if(has_right(world_rank, dim, comm))
+  //     old[m+1][i] = right_recv_buff[i];
+  // }
 
   free(top_recv_buff);
   free(bottom_recv_buff);
-  free(left_recv_buff);
-  free(right_recv_buff);
+  // free(left_recv_buff);
+  // free(right_recv_buff);
   free(top_send_buff);
   free(bottom_send_buff);
-  free(left_send_buff);
-  free(right_send_buff);
+  // free(left_send_buff);
+  // free(right_send_buff);
 }
 
 void calculate(double **buf, double **old, double **new, double **edge, int m, int n, int world_rank, int* dim, MPI_Comm comm) {
@@ -278,16 +319,20 @@ void calculate(double **buf, double **old, double **new, double **edge, int m, i
     //   printf("Iteration %d\n", iter);
     // }
 
-    // MPI_Barrier(comm);
+    MPI_Barrier(comm);
 
     /* Implement periodic boundary conditions on bottom and top sides */
-    calculate_boundary_conditions(old, m, n, world_rank, dim, comm);
+    /* Implement halo swaps */
+    calculate_halo_swaps(old, m, n, world_rank, dim, comm);
 
     MPI_Barrier(comm);
 
     for (i=1;i<m+1;i++) {
       for (j=1;j<n+1;j++) {
-        new[i][j]=0.25*(old[i-1][j]+old[i+1][j]+old[i][j-1]+old[i][j+1] - edge[i][j]);
+        new[i][j]=0.25*(old[i-1][j  ]
+                       +old[i+1][j  ]
+                       +old[i  ][j-1]
+                       +old[i  ][j+1] - edge[i][j]);
       }
     }
 
@@ -336,11 +381,13 @@ int main (int argc, char** argv) {
 
   dim[0]=sqrt(world_size);
   dim[1]=world_size/dim[0];
-  // dim[0]=4;
-  // dim[1]=4;
+
+  dim[1]=world_size;
+  dim[0]=1;
+
   period[0]=0;
   period[1]=1;
-  reorder=0;
+  reorder=0;//  reorder=1;
 
   MPI_Cart_create(MPI_COMM_WORLD, 2, dim, period, reorder, &comm);
   if(world_rank == MASTER)
@@ -351,11 +398,6 @@ int main (int argc, char** argv) {
 
   MPI_Cart_coords(comm, world_rank, 2, coord);
   MPI_Cart_rank(comm, coord, &id);
-
-  MPI_Barrier(MPI_COMM_WORLD);
-
-  if(world_rank == MASTER)
-    start_time = MPI_Wtime();
 
   strcpy(filename, "resources/");
   if(argc == 2) {
@@ -372,12 +414,13 @@ int main (int argc, char** argv) {
   np = n/dim[1];
 
   printf("Rank: %d (%d, %d) Processing %d x %d = %d fraction of image %d x %d = %d\n", world_rank, coord[0], coord[1], mp, np, mp*np, m, n, m*n);
+
+  MPI_Barrier(MPI_COMM_WORLD);
+
   if(world_rank == MASTER)
   {
     printf("Fractions: %d x %d x %d = %d of image %d\n", world_size, mp, np, world_size*mp*np, m*n);
   }
-
-  allocate_tables(&buf, &old, &new, &edge, mp, np);
 
   if(world_rank == MASTER)
   {
@@ -385,6 +428,13 @@ int main (int argc, char** argv) {
     printf("\nReading <%s>\n", filename);
     pgmread(filename, &masterbuf[0][0], m, n);
   }
+
+  allocate_tables(&buf, &old, &new, &edge, mp, np);
+
+  MPI_Barrier(MPI_COMM_WORLD);
+
+  if(world_rank == MASTER)
+    start_time = MPI_Wtime();
 
   MPI_Barrier(MPI_COMM_WORLD);
 
@@ -404,6 +454,13 @@ int main (int argc, char** argv) {
 
   MPI_Barrier(MPI_COMM_WORLD);
 
+  if(world_rank == MASTER) {
+    end_time = MPI_Wtime();
+    printf("Running time = %f\n", end_time - start_time);
+  }
+
+  MPI_Barrier(MPI_COMM_WORLD);
+
   if(world_rank == MASTER)
   {
     strcpy(filename, "output/");
@@ -411,20 +468,13 @@ int main (int argc, char** argv) {
       strcat(filename, argv[1]);
     }
     else {
-      strcat(filename, "edgenew192x128.pgm");
+      strcat(filename, "imagenew192x128.pgm");
     }
     pgmwrite(filename, &masterbuf[0][0], m, n);
     free(masterbuf);
   }
 
   free_tables(buf, old, new, edge);
-
-  MPI_Barrier(MPI_COMM_WORLD);
-
-  if(world_rank == MASTER) {
-    end_time = MPI_Wtime();
-    printf("Running time = %f\n", end_time - start_time);
-  }
 
   MPI_Finalize();
 

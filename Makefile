@@ -1,6 +1,5 @@
 #COMPILER OPTIONS
 CFLAGS := -g -Wall -O3
-
 CC := mpicc $(CFLAGS)
 
 # If the first argument is "run"...
@@ -13,20 +12,15 @@ endif
 
 #DIRECTORIES
 BASE_DIR := .
-
 SRC_DIR := $(BASE_DIR)/src
-
 HEADER_DIR := $(BASE_DIR)/include
-
 BUILD_DIR := $(BASE_DIR)/build
-
 BIN_DIR := $(BASE_DIR)/bin
 
 #FILES
-BIN := $(BIN_DIR)/mpp_coursework
-
-SRC_FILES := $(wildcard $(SRC_DIR)/*.c) $(BASE_DIR)/main.c
-
+BIN := $(BIN_DIR)/imagenew
+TEMPLATE := $(BIN_DIR)/imagenew_template
+SRC_FILES := $(wildcard $(SRC_DIR)/*.c)
 OBJ_FILES := $(patsubst $(SRC_DIR)/%.c, $(BUILD_DIR)/%.o, $(SRC_FILES))
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c $(HEADER_DIR)/%.h
@@ -36,16 +30,24 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c $(HEADER_DIR)/%.h
 $(BIN): $(OBJ_FILES)
 	@echo " Linking..."
 	@mkdir -p $(BIN_DIR)
-	$(CC) $^ -o $@
+	$(CC) $^ $(BASE_DIR)/main.c -o $@
 
-all: $(BIN)
+$(TEMPLATE): $(OBJ_FILES)
+	@echo " Linking..."
+	@mkdir -p $(BIN_DIR)
+	$(CC) $^ $(BASE_DIR)/templates/imagenew.c -o $@
+
+all: $(BIN) $(TEMPLATE)
 	@echo " $(BIN) ready."
 
 run: $(BIN)
 	mpirun -n 4 ./$(BIN) $(RUN_ARGS)
 
-clean: $(BIN)
+test: test.py
+	python test.py
+
+clean:
 	@echo " Cleaning..."
 	rm -rf $(BIN_DIR) $(BUILD_DIR)
 
-.PHONY: clean
+.PHONY: clean all run
