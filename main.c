@@ -13,41 +13,68 @@
 
 #define MASTER 0
 
-// enum Position{Top, Bottom, Left, Right, Middle, Top_Left}; ...
-
-int has_top(int world_rank, int* dim, MPI_Comm comm) {
-  // int coord[2], id;
-  // MPI_Cart_coords(comm, world_rank, 2, coord);
-  //
-  // if(coord[1] + 1 == dim[1])
-  //   return 0;
-  return 1;
-}
-
-int has_bottom(int world_rank, int* dim, MPI_Comm comm) {
-  // int coord[2], id;
-  // MPI_Cart_coords(comm, world_rank, 2, coord);
-  //
-  // if(coord[1] == 0)
-  //   return 0;
-  return 1;
-}
-
-int has_left(int world_rank, int* dim, MPI_Comm comm) {
+typedef struct Cart_info {
+  int id;
+  MPI_Comm comm;
   int coord[2];
-  MPI_Cart_coords(comm, world_rank, 2, coord);
-  if(coord[0] == 0)
-    return 0;
+  int up;
+  int down;
+  int left;
+  int right;
+} Cart_info;
+
+int has_top(Cart_info cart_info) {
   return 1;
 }
 
-int has_right(int world_rank, int* dim, MPI_Comm comm) {
-  int coord[2];
-  MPI_Cart_coords(comm, world_rank, 2, coord);
-  if(coord[0] + 1 == dim[0])
-    return 0;
+int has_bottom(Cart_info cart_info) {
   return 1;
 }
+
+int has_left(Cart_info cart_info) {
+  return cart_info.left != -1;
+}
+
+int has_right(Cart_info cart_info) {
+  return cart_info.right != -1;
+}
+
+Cart_info discoverCart(int id, MPI_Comm comm, int dim[2]) {
+  Cart_info cart_info;
+
+  cart_info.id = id;
+  cart_info.comm = comm;
+
+  MPI_Cart_coords(comm, id, 2, cart_info.coord);
+
+  cart_info.coord[1] = cart_info.coord[1] + 1;
+  MPI_Cart_rank(comm, cart_info.coord, &cart_info.up);
+  cart_info.coord[1] = cart_info.coord[1] - 2;
+  MPI_Cart_rank(comm, cart_info.coord, &cart_info.down);
+  cart_info.coord[1] = cart_info.coord[1] + 1;
+
+  cart_info.left = -1;
+  cart_info.right = -1;
+
+  if(cart_info.coord[0] != 0) {
+    cart_info.coord[0] = cart_info.coord[0] - 1;
+    MPI_Cart_rank(comm, cart_info.coord, &cart_info.left);
+    cart_info.coord[0] = cart_info.coord[0] + 1;
+  }
+
+  if(cart_info.coord[0] + 1 != dim[0]) {
+    cart_info.coord[0] = cart_info.coord[0] + 1;
+    MPI_Cart_rank(comm, cart_info.coord, &cart_info.right);
+    cart_info.coord[0] = cart_info.coord[0] - 1;
+  }
+
+  return cart_info;
+}
+
+void print_cart_info(Cart_info cart_info) {
+  printf("id = %d has up = %d, down = %d, left = %d, right = %d\n", cart_info.id, cart_info.up, cart_info.down, cart_info.left, cart_info.right);
+}
+
 
 double boundaryval(int i, int m) {
   double val;
@@ -142,12 +169,10 @@ void gather_masterbuf(double **masterbuf, double **buf, int m, int n, int mp, in
     free(recvBuffs);
 }
 
-void initialize_tables(double **buf, double **old, double **edge, int m, int n, int world_rank, int* dim, MPI_Comm comm) {
+void initialize_tables(double **buf, double **old, double **edge, int m, int n, Cart_info cart_info, int dim[2]) {
   int i, j;
   double val;
-  int coord[2];
 
-  MPI_Cart_coords(comm, world_rank, 2, coord);
   // printf("initialize_tables: The processor at position (%d, %d) has rank %d\n", coord[0], coord[1], world_rank);
 
   for (i=1;i<m+1;i++) {
@@ -164,30 +189,26 @@ void initialize_tables(double **buf, double **old, double **edge, int m, int n, 
 
   for (j=0; j < n+2; j++) {
     /* compute sawtooth value */
-    val = boundaryval(coord[1]*n+j, dim[1]*n);
+    val = boundaryval(cart_info.coord[1]*n+j, dim[1]*n);
 
-    if( (coord[1] == 0 && j == 0) || (coord[1] + 1 == dim[1] && j == n+1) ) {
+    if( (cart_info.coord[1] == 0 && j == 0) || (cart_info.coord[1] + 1 == dim[1] && j == n+1) ) {
         continue;
       }
 
-      if(!has_left(world_rank, dim, comm))
+      if(!has_left(cart_info))
         old[0][j]   = (int)(255.0*(1.0-val));
-      if(!has_right(world_rank, dim, comm))
+      if(!has_right(cart_info))
         old[m+1][j] = (int)(255.0*val);
   }
 
 }
 
-void calculate_halo_swaps(double **old, int m, int n, int world_rank, int* dim, MPI_Comm comm) {
-  int coord[2], up_coord[2], down_coord[2], right_coord[2], left_coord[2];
-  int up_id, down_id, left_id, right_id;
+void calculate_halo_swaps(double **old, int m, int n, Cart_info cart_info) {
 
   MPI_Request request[4], send_request[4];
   MPI_Status status[4], send_status[4];
   double *top_send_buff, *bottom_send_buff, *left_send_buff, *right_send_buff;
   double *top_recv_buff, *bottom_recv_buff, *left_recv_buff, *right_recv_buff;
-
-  MPI_Cart_coords(comm, world_rank, 2, coord);
 
   top_send_buff = (double *) arralloc(sizeof(double), 1, m);
   bottom_send_buff = (double *) arralloc(sizeof(double), 1, m);
@@ -208,71 +229,52 @@ void calculate_halo_swaps(double **old, int m, int n, int world_rank, int* dim, 
     right_send_buff[i] = old[m][i];
   }
 
-  up_coord[0] = coord[0];
-  up_coord[1] = coord[1] + 1;
-  down_coord[0] = coord[0];
-  down_coord[1] = coord[1] - 1;
+  if(has_top(cart_info))
+    MPI_Irecv(top_recv_buff, m, MPI_DOUBLE, cart_info.up, 0, cart_info.comm, &request[0]);
+  if(has_bottom(cart_info))
+    MPI_Irecv(bottom_recv_buff, m, MPI_DOUBLE, cart_info.down, 1, cart_info.comm, &request[1]);
+  if(has_left(cart_info))
+    MPI_Irecv(left_recv_buff, n+2, MPI_DOUBLE, cart_info.left, 2, cart_info.comm, &request[2]);
+  if(has_right(cart_info))
+    MPI_Irecv(right_recv_buff, n+2, MPI_DOUBLE, cart_info.right, 3, cart_info.comm, &request[3]);
 
-  left_coord[0] = coord[0] - 1;
-  left_coord[1] = coord[1];
-  right_coord[0] = coord[0] + 1;
-  right_coord[1] = coord[1];
+  if(has_top(cart_info))
+    MPI_Isend(top_send_buff, m, MPI_DOUBLE, cart_info.up, 1, cart_info.comm, &send_request[0]);
+  if(has_bottom(cart_info))
+    MPI_Isend(bottom_send_buff, m, MPI_DOUBLE, cart_info.down, 0, cart_info.comm, &send_request[1]);
+  if(has_left(cart_info))
+    MPI_Isend(left_send_buff, n+2, MPI_DOUBLE, cart_info.left, 3, cart_info.comm, &send_request[2]);
+  if(has_right(cart_info))
+    MPI_Isend(right_send_buff, n+2, MPI_DOUBLE, cart_info.right, 2, cart_info.comm, &send_request[3]);
 
-  if(has_top(world_rank, dim, comm))
-    MPI_Cart_rank(comm, up_coord, &up_id);
-  if(has_bottom(world_rank, dim, comm))
-    MPI_Cart_rank(comm, down_coord, &down_id);
-  if(has_left(world_rank, dim, comm))
-    MPI_Cart_rank(comm, left_coord, &left_id);
-  if(has_right(world_rank, dim, comm))
-    MPI_Cart_rank(comm, right_coord, &right_id);
-
-  if(has_top(world_rank, dim, comm))
-    MPI_Irecv(top_recv_buff, m, MPI_DOUBLE, up_id, 0, comm, &request[0]);
-  if(has_bottom(world_rank, dim, comm))
-    MPI_Irecv(bottom_recv_buff, m, MPI_DOUBLE, down_id, 1, comm, &request[1]);
-  if(has_left(world_rank, dim, comm))
-    MPI_Irecv(left_recv_buff, n+2, MPI_DOUBLE, left_id, 2, comm, &request[2]);
-  if(has_right(world_rank, dim, comm))
-    MPI_Irecv(right_recv_buff, n+2, MPI_DOUBLE, right_id, 3, comm, &request[3]);
-
-  if(has_top(world_rank, dim, comm))
-    MPI_Isend(top_send_buff, m, MPI_DOUBLE, up_id, 1, comm, &send_request[0]);
-  if(has_bottom(world_rank, dim, comm))
-    MPI_Isend(bottom_send_buff, m, MPI_DOUBLE, down_id, 0, comm, &send_request[1]);
-  if(has_left(world_rank, dim, comm))
-    MPI_Isend(left_send_buff, n+2, MPI_DOUBLE, left_id, 3, comm, &send_request[2]);
-  if(has_right(world_rank, dim, comm))
-    MPI_Isend(right_send_buff, n+2, MPI_DOUBLE, right_id, 2, comm, &send_request[3]);
-
-  if(has_top(world_rank, dim, comm)) {
+  if(has_top(cart_info)) {
     MPI_Wait(&request[0], &status[0]);
     MPI_Wait(&send_request[0], &send_status[0]);
   }
-  if(has_bottom(world_rank, dim, comm)) {
+  if(has_bottom(cart_info)) {
     MPI_Wait(&request[1], &status[1]);
     MPI_Wait(&send_request[1], &send_status[1]);
   }
-  if(has_left(world_rank, dim, comm)) {
+  if(has_left(cart_info)) {
     MPI_Wait(&request[2], &status[2]);
     MPI_Wait(&send_request[2], &send_status[2]);
   }
-  if(has_right(world_rank, dim, comm)){
+  if(has_right(cart_info)){
     MPI_Wait(&request[3], &status[3]);
     MPI_Wait(&send_request[3], &send_status[3]);
   }
 
   for (int i = 1; i < m+1; ++i) {
-    if(has_top(world_rank, dim, comm))
+    if(has_top(cart_info))
       old[i][n+1] = top_recv_buff[i-1];
-    if(has_bottom(world_rank, dim, comm))
+    if(has_bottom(cart_info))
       old[i][0] = bottom_recv_buff[i-1];
   }
 
   for (int i = 0; i < n+2; ++i) {
-    if(has_left(world_rank, dim, comm))
+    if(has_left(cart_info))
       old[0][i] = left_recv_buff[i];
-    if(has_right(world_rank, dim, comm))
+    if(has_right(cart_info))
       old[m+1][i] = right_recv_buff[i];
   }
 
@@ -286,7 +288,7 @@ void calculate_halo_swaps(double **old, int m, int n, int world_rank, int* dim, 
   free(right_send_buff);
 }
 
-void calculate(double **buf, double **old, double **new, double **edge, int m, int n, int world_rank, int* dim, MPI_Comm comm) {
+void calculate(double **buf, double **old, double **new, double **edge, int m, int n, Cart_info cart_info) {
   int i, j, iter;
 
   // if(world_rank == MASTER)
@@ -297,13 +299,11 @@ void calculate(double **buf, double **old, double **new, double **edge, int m, i
     //   printf("Iteration %d\n", iter);
     // }
 
-    MPI_Barrier(comm);
-
     /* Implement periodic boundary conditions on bottom and top sides */
     /* Implement halo swaps */
-    calculate_halo_swaps(old, m, n, world_rank, dim, comm);
+    calculate_halo_swaps(old, m, n, cart_info);
 
-    MPI_Barrier(comm);
+    MPI_Barrier(cart_info.comm);
 
     for (i=1;i<m+1;i++) {
       for (j=1;j<n+1;j++) {
@@ -350,7 +350,6 @@ int main (int argc, char** argv) {
 
   MPI_Comm comm;
   int dim[2], period[2], reorder;
-  int coord[2], id;
 
   MPI_Init(NULL, NULL);
 
@@ -362,8 +361,8 @@ int main (int argc, char** argv) {
 
   // doesn't work for
   // n=3
-  dim[1]=world_size;
-  dim[0]=1;
+  // dim[1]=world_size;
+  // dim[0]=1;
 
   period[0]=0;
   period[1]=1;
@@ -376,8 +375,9 @@ int main (int argc, char** argv) {
   //   printf("Result topology: %d x %d\n", dim[0], dim[1]);
   // }
 
-  MPI_Cart_coords(comm, world_rank, 2, coord);
-  MPI_Cart_rank(comm, coord, &id);
+  Cart_info cart_info = discoverCart(world_rank, comm, dim);
+
+  print_cart_info(cart_info);
 
   strcpy(filename, "resources/");
   if(argc == 2) {
@@ -422,11 +422,11 @@ int main (int argc, char** argv) {
 
   MPI_Barrier(MPI_COMM_WORLD);
 
-  initialize_tables(buf, old, edge, mp, np, world_rank, dim, comm);
+  initialize_tables(buf, old, edge, mp, np, cart_info, dim);
 
   MPI_Barrier(MPI_COMM_WORLD);
 
-  calculate(buf, old, new, edge, mp, np, world_rank, dim, comm);
+  calculate(buf, old, new, edge, mp, np, cart_info);
 
   MPI_Barrier(MPI_COMM_WORLD);
 
