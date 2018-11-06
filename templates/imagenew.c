@@ -24,7 +24,7 @@ int main (void)
 
   double buf[M][N];
 
-  int i, j, iter, maxiter;
+  int i, j, iter;
   char *filename;
   double val;
 

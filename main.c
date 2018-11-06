@@ -80,8 +80,8 @@ void scatter_masterbuf(double **masterbuf, double **buf, int m, int n, int mp, i
   MPI_Request request;
   double ***sendBuffs = NULL;
 
-  if(world_rank == MASTER)
-    printf("MPI_Scatter\n");
+  // if(world_rank == MASTER)
+  //   printf("MPI_Scatter\n");
 
   MPI_Irecv(&buf[0][0], mp*np, MPI_DOUBLE, MASTER, 0, MPI_COMM_WORLD, &request);
 
@@ -116,8 +116,8 @@ void gather_masterbuf(double **masterbuf, double **buf, int m, int n, int mp, in
   MPI_Request request;
   double ***recvBuffs = NULL;
 
-  if(world_rank == MASTER)
-    printf("MPI_Gather\n");
+  // if(world_rank == MASTER)
+  //   printf("MPI_Gather\n");
 
   MPI_Isend(&buf[0][0], mp*np, MPI_DOUBLE, MASTER, 0, MPI_COMM_WORLD, &request);
 
@@ -148,7 +148,7 @@ void initialize_tables(double **buf, double **old, double **edge, int m, int n, 
   int coord[2];
 
   MPI_Cart_coords(comm, world_rank, 2, coord);
-  printf("initialize_tables: The processor at position (%d, %d) has rank %d\n", coord[0], coord[1], world_rank);
+  // printf("initialize_tables: The processor at position (%d, %d) has rank %d\n", coord[0], coord[1], world_rank);
 
   for (i=1;i<m+1;i++) {
     for (j=1;j<n+1;j++) {
@@ -289,8 +289,8 @@ void calculate_halo_swaps(double **old, int m, int n, int world_rank, int* dim, 
 void calculate(double **buf, double **old, double **new, double **edge, int m, int n, int world_rank, int* dim, MPI_Comm comm) {
   int i, j, iter;
 
-  if(world_rank == MASTER)
-    printf("calculate\n");
+  // if(world_rank == MASTER)
+  //   printf("calculate\n");
 
   for (iter=1;iter<=MAXITER; iter++) {
     // if(iter%PRINTFREQ==0) {
@@ -328,8 +328,8 @@ void calculate(double **buf, double **old, double **new, double **edge, int m, i
     }
   }
 
-  if(world_rank == MASTER)
-    printf("Finished %d iterations\n", MAXITER);
+  // if(world_rank == MASTER)
+  //   printf("Finished %d iterations\n", MAXITER);
 }
 
 void free_tables(double **buf, double **old, double **new, double **edge) {
@@ -360,6 +360,8 @@ int main (int argc, char** argv) {
   dim[0]=sqrt(world_size);
   dim[1]=world_size/dim[0];
 
+  // doesn't work for
+  // n=3
   dim[1]=world_size;
   dim[0]=1;
 
@@ -368,11 +370,11 @@ int main (int argc, char** argv) {
   reorder=1;
 
   MPI_Cart_create(MPI_COMM_WORLD, 2, dim, period, reorder, &comm);
-  if(world_rank == MASTER)
-  {
-    printf("Number of iterations = %d\n", MAXITER);
-    printf("Result topology: %d x %d\n", dim[0], dim[1]);
-  }
+  // if(world_rank == MASTER)
+  // {
+  //   printf("Number of iterations = %d\n", MAXITER);
+  //   printf("Result topology: %d x %d\n", dim[0], dim[1]);
+  // }
 
   MPI_Cart_coords(comm, world_rank, 2, coord);
   MPI_Cart_rank(comm, coord, &id);
@@ -391,19 +393,19 @@ int main (int argc, char** argv) {
   mp = m/dim[0];
   np = n/dim[1];
 
-  printf("Rank: %d (%d, %d) Processing %d x %d = %d fraction of image %d x %d = %d\n", world_rank, coord[0], coord[1], mp, np, mp*np, m, n, m*n);
+  // printf("Rank: %d (%d, %d) Processing %d x %d = %d fraction of image %d x %d = %d\n", world_rank, coord[0], coord[1], mp, np, mp*np, m, n, m*n);
 
   MPI_Barrier(MPI_COMM_WORLD);
 
-  if(world_rank == MASTER)
-  {
-    printf("Fractions: %d x %d x %d = %d of image %d\n", world_size, mp, np, world_size*mp*np, m*n);
-  }
+  // if(world_rank == MASTER)
+  // {
+  //   printf("Fractions: %d x %d x %d = %d of image %d\n", world_size, mp, np, world_size*mp*np, m*n);
+  // }
 
   if(world_rank == MASTER)
   {
     masterbuf = (double **) arralloc(sizeof(double), 2, m, n);
-    printf("\nReading <%s>\n", filename);
+    // printf("\nReading <%s>\n", filename);
     pgmread(filename, &masterbuf[0][0], m, n);
   }
 
@@ -434,7 +436,7 @@ int main (int argc, char** argv) {
 
   if(world_rank == MASTER) {
     end_time = MPI_Wtime();
-    printf("Running time = %f\n", end_time - start_time);
+    // printf("Running time = %f\n", end_time - start_time);
   }
 
   MPI_Barrier(MPI_COMM_WORLD);

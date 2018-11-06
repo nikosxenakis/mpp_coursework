@@ -17,6 +17,6 @@ import filecmp
 #     print "It is the same with the case study"
 
 if filecmp.cmp('./test_output/imagenew192x128.pgm', './output/imagenew192x128.pgm') == False:
-    print "Error is not the same with previous runs"
+    print "ERROR"
 else:
-    print "It is the same with previous runs"
+    print "PASS"
