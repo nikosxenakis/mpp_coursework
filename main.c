@@ -191,19 +191,21 @@ void calculate_halo_swaps(double **old, int m, int n, int world_rank, int* dim, 
 
   top_send_buff = (double *) arralloc(sizeof(double), 1, m);
   bottom_send_buff = (double *) arralloc(sizeof(double), 1, m);
-  // left_send_buff = (double *) arralloc(sizeof(double), 1, n+2);
-  // right_send_buff = (double *) arralloc(sizeof(double), 1, n+2);
+  left_send_buff = (double *) arralloc(sizeof(double), 1, n+2);
+  right_send_buff = (double *) arralloc(sizeof(double), 1, n+2);
 
   top_recv_buff = (double *) arralloc(sizeof(double), 1, m);
   bottom_recv_buff = (double *) arralloc(sizeof(double), 1, m);
-  // left_recv_buff = (double *) arralloc(sizeof(double), 1, n+2);
-  // right_recv_buff = (double *) arralloc(sizeof(double), 1, n+2);
+  left_recv_buff = (double *) arralloc(sizeof(double), 1, n+2);
+  right_recv_buff = (double *) arralloc(sizeof(double), 1, n+2);
 
-  //TODO: Send just m or n
-  //use derived datatypes
   for (int i = 1; i < m+1; ++i) {
     top_send_buff[i-1] = old[i][n];
     bottom_send_buff[i-1] = old[i][1];
+  }
+  for (int i = 0; i < n+2; ++i) {
+    left_send_buff[i] = old[1][i];
+    right_send_buff[i] = old[m][i];
   }
 
   up_coord[0] = coord[0];
@@ -220,28 +222,28 @@ void calculate_halo_swaps(double **old, int m, int n, int world_rank, int* dim, 
     MPI_Cart_rank(comm, up_coord, &up_id);
   if(has_bottom(world_rank, dim, comm))
     MPI_Cart_rank(comm, down_coord, &down_id);
-  // if(has_left(world_rank, dim, comm))
-  //   MPI_Cart_rank(comm, left_coord, &left_id);
-  // if(has_right(world_rank, dim, comm))
-  //   MPI_Cart_rank(comm, right_coord, &right_id);
+  if(has_left(world_rank, dim, comm))
+    MPI_Cart_rank(comm, left_coord, &left_id);
+  if(has_right(world_rank, dim, comm))
+    MPI_Cart_rank(comm, right_coord, &right_id);
 
   if(has_top(world_rank, dim, comm))
     MPI_Irecv(top_recv_buff, m, MPI_DOUBLE, up_id, 0, comm, &request[0]);
   if(has_bottom(world_rank, dim, comm))
     MPI_Irecv(bottom_recv_buff, m, MPI_DOUBLE, down_id, 1, comm, &request[1]);
-  // if(has_left(world_rank, dim, comm))
-  //   MPI_Irecv(left_recv_buff, n+2, MPI_DOUBLE, left_id, 0, MPI_COMM_WORLD, &request[2]);
-  // if(has_right(world_rank, dim, comm))
-  //   MPI_Irecv(right_recv_buff, n+2, MPI_DOUBLE, right_id, 0, MPI_COMM_WORLD, &request[3]);
+  if(has_left(world_rank, dim, comm))
+    MPI_Irecv(left_recv_buff, n+2, MPI_DOUBLE, left_id, 2, comm, &request[2]);
+  if(has_right(world_rank, dim, comm))
+    MPI_Irecv(right_recv_buff, n+2, MPI_DOUBLE, right_id, 3, comm, &request[3]);
 
   if(has_top(world_rank, dim, comm))
     MPI_Isend(top_send_buff, m, MPI_DOUBLE, up_id, 1, comm, &send_request[0]);
   if(has_bottom(world_rank, dim, comm))
     MPI_Isend(bottom_send_buff, m, MPI_DOUBLE, down_id, 0, comm, &send_request[1]);
-  // if(has_left(world_rank, dim, comm))
-  //   MPI_Send(left_send_buff, n+2, MPI_DOUBLE, left_id, 0, MPI_COMM_WORLD);
-  // if(has_right(world_rank, dim, comm))
-  //   MPI_Send(right_send_buff, n+2, MPI_DOUBLE, right_id, 0, MPI_COMM_WORLD);
+  if(has_left(world_rank, dim, comm))
+    MPI_Isend(left_send_buff, n+2, MPI_DOUBLE, left_id, 3, comm, &send_request[2]);
+  if(has_right(world_rank, dim, comm))
+    MPI_Isend(right_send_buff, n+2, MPI_DOUBLE, right_id, 2, comm, &send_request[3]);
 
   if(has_top(world_rank, dim, comm)) {
     MPI_Wait(&request[0], &status[0]);
@@ -251,38 +253,14 @@ void calculate_halo_swaps(double **old, int m, int n, int world_rank, int* dim, 
     MPI_Wait(&request[1], &status[1]);
     MPI_Wait(&send_request[1], &send_status[1]);
   }
-  // if(has_left(world_rank, dim, comm))
-  //   MPI_Wait(&request[2], &status[2]);
-  // if(has_right(world_rank, dim, comm))
-  //   MPI_Wait(&request[3], &status[3]);
-
-  // printf("rank = %d sends to up = %d, down = %d\n", world_rank, up_id, down_id);
-  for (int i = 0; i < m; ++i) {
-    // if(top_send_buff[i] != bottom_recv_buff[i])
-    //   printf("ERROR 1st if in i = %d, %d != %d\n", i, top_send_buff[i], bottom_recv_buff[i]);
-    // if(top_send_buff[i] != bottom_recv_buff[i])
-    //   printf("ERROR 2nd if in i = %d\n", i);
+  if(has_left(world_rank, dim, comm)) {
+    MPI_Wait(&request[2], &status[2]);
+    MPI_Wait(&send_request[2], &send_status[2]);
   }
-
-  // printf("\n");
-  //
-  // for (int i = 1; i < 40; ++i) {
-  //     printf("%d ", top_recv_buff[i]);
-  // }
-  // printf("\n");
-  // for (int i = 1; i < 40; ++i) {
-  //     printf("%d ", bottom_send_buff[i]);
-  // }
-  // printf("\n");
-  // for (int i = 1; i < 40; ++i) {
-  //     printf("%d ", top_send_buff[i]);
-  // }
-  // printf("\n");
-  // for (int i = 1; i < 40; ++i) {
-  //     printf("%d ", bottom_recv_buff[i]);
-  // }
-  // printf("\n");
-  // printf("\n");
+  if(has_right(world_rank, dim, comm)){
+    MPI_Wait(&request[3], &status[3]);
+    MPI_Wait(&send_request[3], &send_status[3]);
+  }
 
   for (int i = 1; i < m+1; ++i) {
     if(has_top(world_rank, dim, comm))
@@ -291,21 +269,21 @@ void calculate_halo_swaps(double **old, int m, int n, int world_rank, int* dim, 
       old[i][0] = bottom_recv_buff[i-1];
   }
 
-  // for (int i = 0; i < n+2; ++i) {
-  //   if(has_left(world_rank, dim, comm))
-  //     old[0][i] = left_recv_buff[i];
-  //   if(has_right(world_rank, dim, comm))
-  //     old[m+1][i] = right_recv_buff[i];
-  // }
+  for (int i = 0; i < n+2; ++i) {
+    if(has_left(world_rank, dim, comm))
+      old[0][i] = left_recv_buff[i];
+    if(has_right(world_rank, dim, comm))
+      old[m+1][i] = right_recv_buff[i];
+  }
 
   free(top_recv_buff);
   free(bottom_recv_buff);
-  // free(left_recv_buff);
-  // free(right_recv_buff);
+  free(left_recv_buff);
+  free(right_recv_buff);
   free(top_send_buff);
   free(bottom_send_buff);
-  // free(left_send_buff);
-  // free(right_send_buff);
+  free(left_send_buff);
+  free(right_send_buff);
 }
 
 void calculate(double **buf, double **old, double **new, double **edge, int m, int n, int world_rank, int* dim, MPI_Comm comm) {
@@ -387,7 +365,7 @@ int main (int argc, char** argv) {
 
   period[0]=0;
   period[1]=1;
-  reorder=0;//  reorder=1;
+  reorder=1;
 
   MPI_Cart_create(MPI_COMM_WORLD, 2, dim, period, reorder, &comm);
   if(world_rank == MASTER)
