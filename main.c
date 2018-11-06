@@ -6,75 +6,15 @@
 
 #include "include/arralloc.h"
 #include "include/pgmio.h"
+#include "include/cart_info.h"
 
 #define MAXITER   1500
-#define PRINTFREQ  MAXITER/100
+#define PRINTFREQ  100
 #define FILENAME_SIZE 128
 
+#define MIN_DIFF 0.075
+
 #define MASTER 0
-
-typedef struct Cart_info {
-  int id;
-  MPI_Comm comm;
-  int coord[2];
-  int up;
-  int down;
-  int left;
-  int right;
-} Cart_info;
-
-int has_top(Cart_info cart_info) {
-  return 1;
-}
-
-int has_bottom(Cart_info cart_info) {
-  return 1;
-}
-
-int has_left(Cart_info cart_info) {
-  return cart_info.left != -1;
-}
-
-int has_right(Cart_info cart_info) {
-  return cart_info.right != -1;
-}
-
-Cart_info discoverCart(int id, MPI_Comm comm, int dim[2]) {
-  Cart_info cart_info;
-
-  cart_info.id = id;
-  cart_info.comm = comm;
-
-  MPI_Cart_coords(comm, id, 2, cart_info.coord);
-
-  cart_info.coord[1] = cart_info.coord[1] + 1;
-  MPI_Cart_rank(comm, cart_info.coord, &cart_info.up);
-  cart_info.coord[1] = cart_info.coord[1] - 2;
-  MPI_Cart_rank(comm, cart_info.coord, &cart_info.down);
-  cart_info.coord[1] = cart_info.coord[1] + 1;
-
-  cart_info.left = -1;
-  cart_info.right = -1;
-
-  if(cart_info.coord[0] != 0) {
-    cart_info.coord[0] = cart_info.coord[0] - 1;
-    MPI_Cart_rank(comm, cart_info.coord, &cart_info.left);
-    cart_info.coord[0] = cart_info.coord[0] + 1;
-  }
-
-  if(cart_info.coord[0] + 1 != dim[0]) {
-    cart_info.coord[0] = cart_info.coord[0] + 1;
-    MPI_Cart_rank(comm, cart_info.coord, &cart_info.right);
-    cart_info.coord[0] = cart_info.coord[0] - 1;
-  }
-
-  return cart_info;
-}
-
-void print_cart_info(Cart_info cart_info) {
-  printf("id = %d has up = %d, down = %d, left = %d, right = %d\n", cart_info.id, cart_info.up, cart_info.down, cart_info.left, cart_info.right);
-}
-
 
 double boundaryval(int i, int m) {
   double val;
@@ -229,32 +169,28 @@ void calculate_halo_swaps(double **old, int m, int n, Cart_info cart_info) {
     right_send_buff[i] = old[m][i];
   }
 
-  if(has_top(cart_info))
-    MPI_Irecv(top_recv_buff, m, MPI_DOUBLE, cart_info.up, 0, cart_info.comm, &request[0]);
-  if(has_bottom(cart_info))
-    MPI_Irecv(bottom_recv_buff, m, MPI_DOUBLE, cart_info.down, 1, cart_info.comm, &request[1]);
+  MPI_Irecv(top_recv_buff, m, MPI_DOUBLE, cart_info.up, 0, cart_info.comm, &request[0]);
+  MPI_Irecv(bottom_recv_buff, m, MPI_DOUBLE, cart_info.down, 1, cart_info.comm, &request[1]);
+
   if(has_left(cart_info))
     MPI_Irecv(left_recv_buff, n+2, MPI_DOUBLE, cart_info.left, 2, cart_info.comm, &request[2]);
   if(has_right(cart_info))
     MPI_Irecv(right_recv_buff, n+2, MPI_DOUBLE, cart_info.right, 3, cart_info.comm, &request[3]);
 
-  if(has_top(cart_info))
-    MPI_Isend(top_send_buff, m, MPI_DOUBLE, cart_info.up, 1, cart_info.comm, &send_request[0]);
-  if(has_bottom(cart_info))
-    MPI_Isend(bottom_send_buff, m, MPI_DOUBLE, cart_info.down, 0, cart_info.comm, &send_request[1]);
+  MPI_Isend(top_send_buff, m, MPI_DOUBLE, cart_info.up, 1, cart_info.comm, &send_request[0]);
+  MPI_Isend(bottom_send_buff, m, MPI_DOUBLE, cart_info.down, 0, cart_info.comm, &send_request[1]);
+
   if(has_left(cart_info))
     MPI_Isend(left_send_buff, n+2, MPI_DOUBLE, cart_info.left, 3, cart_info.comm, &send_request[2]);
   if(has_right(cart_info))
     MPI_Isend(right_send_buff, n+2, MPI_DOUBLE, cart_info.right, 2, cart_info.comm, &send_request[3]);
 
-  if(has_top(cart_info)) {
-    MPI_Wait(&request[0], &status[0]);
-    MPI_Wait(&send_request[0], &send_status[0]);
-  }
-  if(has_bottom(cart_info)) {
-    MPI_Wait(&request[1], &status[1]);
-    MPI_Wait(&send_request[1], &send_status[1]);
-  }
+  MPI_Wait(&request[0], &status[0]);
+  MPI_Wait(&send_request[0], &send_status[0]);
+
+  MPI_Wait(&request[1], &status[1]);
+  MPI_Wait(&send_request[1], &send_status[1]);
+
   if(has_left(cart_info)) {
     MPI_Wait(&request[2], &status[2]);
     MPI_Wait(&send_request[2], &send_status[2]);
@@ -265,10 +201,8 @@ void calculate_halo_swaps(double **old, int m, int n, Cart_info cart_info) {
   }
 
   for (int i = 1; i < m+1; ++i) {
-    if(has_top(cart_info))
-      old[i][n+1] = top_recv_buff[i-1];
-    if(has_bottom(cart_info))
-      old[i][0] = bottom_recv_buff[i-1];
+    old[i][n+1] = top_recv_buff[i-1];
+    old[i][0] = bottom_recv_buff[i-1];
   }
 
   for (int i = 0; i < n+2; ++i) {
@@ -288,8 +222,44 @@ void calculate_halo_swaps(double **old, int m, int n, Cart_info cart_info) {
   free(right_send_buff);
 }
 
+double calculate_max_diff(double **old, double **new, int m, int n) {
+  double max_diff = -1, diff;
+
+  for (int i=1;i<m+1;i++) {
+    for (int j=1;j<n+1;j++) {
+      if(new[i][j] - old[i][j] > 0) {
+        diff = new[i][j] - old[i][j];
+      }
+      else {
+        diff = old[i][j] - new[i][j];
+      }
+
+      if(max_diff == -1) max_diff = diff;
+      if(diff > max_diff)  max_diff = diff;
+      if(max_diff >= MIN_DIFF) break;
+
+    }
+  }
+
+  return max_diff;
+}
+
+int can_terminate(double **old, double **new, int m, int n, MPI_Comm comm) {
+  double max_diff, global_max_diff;
+
+  max_diff = calculate_max_diff(old, new, m, n);
+
+  // all reduce max_diff
+  MPI_Allreduce(&max_diff, &global_max_diff, 1, MPI_DOUBLE, MPI_MAX, comm);
+
+  if(global_max_diff < MIN_DIFF && global_max_diff >= 0)
+    return 1;
+
+  return 0;
+}
+
 void calculate(double **buf, double **old, double **new, double **edge, int m, int n, Cart_info cart_info) {
-  int i, j, iter;
+  int i, j, iter, finished = 0;
 
   // if(world_rank == MASTER)
   //   printf("calculate\n");
@@ -299,7 +269,6 @@ void calculate(double **buf, double **old, double **new, double **edge, int m, i
     //   printf("Iteration %d\n", iter);
     // }
 
-    /* Implement periodic boundary conditions on bottom and top sides */
     /* Implement halo swaps */
     calculate_halo_swaps(old, m, n, cart_info);
 
@@ -314,12 +283,21 @@ void calculate(double **buf, double **old, double **new, double **edge, int m, i
       }
     }
 
+    // if can_terminate every PRINTFREQ
+    if(iter%PRINTFREQ==0) {
+      finished = can_terminate(old, new, m, n, cart_info.comm);
+    }
+
     for (i=1;i<m+1;i++) {
       for (j=1;j<n+1;j++) {
         old[i][j]=new[i][j];
       }
     }
 
+    if(finished) {
+      printf("ITER = %d\n", iter);
+      break;
+    }
   }
 
   for (i=1;i<m+1;i++) {
@@ -372,12 +350,11 @@ int main (int argc, char** argv) {
   // if(world_rank == MASTER)
   // {
   //   printf("Number of iterations = %d\n", MAXITER);
-  //   printf("Result topology: %d x %d\n", dim[0], dim[1]);
   // }
 
   Cart_info cart_info = discoverCart(world_rank, comm, dim);
 
-  print_cart_info(cart_info);
+  // print_cart_info(cart_info);
 
   strcpy(filename, "resources/");
   if(argc == 2) {
@@ -416,15 +393,11 @@ int main (int argc, char** argv) {
   if(world_rank == MASTER)
     start_time = MPI_Wtime();
 
-  MPI_Barrier(MPI_COMM_WORLD);
-
   scatter_masterbuf(masterbuf, buf, m, n, mp, np, world_rank, world_size, comm);
 
   MPI_Barrier(MPI_COMM_WORLD);
 
   initialize_tables(buf, old, edge, mp, np, cart_info, dim);
-
-  MPI_Barrier(MPI_COMM_WORLD);
 
   calculate(buf, old, new, edge, mp, np, cart_info);
 
@@ -438,8 +411,6 @@ int main (int argc, char** argv) {
     end_time = MPI_Wtime();
     // printf("Running time = %f\n", end_time - start_time);
   }
-
-  MPI_Barrier(MPI_COMM_WORLD);
 
   if(world_rank == MASTER)
   {
