@@ -48,34 +48,42 @@ void print_table(double **t, int m, int n) {
 void scatter_masterbuf(double **masterbuf, double **buf, int m, int n, int mp, int np, int world_rank, int world_size, MPI_Comm comm) {
   int curr_coord[2];
   int send_rank;
-  MPI_Status status;
-  MPI_Request request;
+  MPI_Status recv_status;
+  MPI_Request recv_request;
+  MPI_Status status[world_size];
+  MPI_Request request[world_size];
   double ***sendBuffs = NULL;
+  MPI_Datatype table;
+
+  MPI_Type_contiguous(mp*np, MPI_DOUBLE, &table);
+  MPI_Type_commit(&table);
 
   // if(world_rank == MASTER)
   //   printf("MPI_Scatter\n");
 
-  MPI_Irecv(&buf[0][0], mp*np, MPI_DOUBLE, MASTER, 0, MPI_COMM_WORLD, &request);
+  MPI_Irecv(&buf[0][0], 1, table, MASTER, 0, comm, &recv_request);
 
   if(world_rank == MASTER) {
     sendBuffs = (double ***) arralloc(sizeof(double), 3, world_size, mp, np);
 
     for (int i = 0; i < m; ++i) {
       for (int j = 0; j < n; ++j) {
+
         curr_coord[0] = i/mp;
         curr_coord[1] = j/np;
         MPI_Cart_rank(comm, curr_coord, &send_rank);
+
         sendBuffs[send_rank][i%mp][j%np] = masterbuf[i][j];
       }
     }
 
     for (int i = 0; i < world_size; ++i) {
-      MPI_Send(&(sendBuffs[i])[0][0], mp*np, MPI_DOUBLE, i, 0, MPI_COMM_WORLD);
+      MPI_Isend(&(sendBuffs[i])[0][0], 1, table, i, 0, comm, &request[i]);
     }
-
+    MPI_Waitall(world_size, request, status);
   }
 
-  MPI_Wait(&request, &status);
+  MPI_Wait(&recv_request, &recv_status);
 
   if(world_rank == MASTER)
     free(sendBuffs);
@@ -84,21 +92,28 @@ void scatter_masterbuf(double **masterbuf, double **buf, int m, int n, int mp, i
 void gather_masterbuf(double **masterbuf, double **buf, int m, int n, int mp, int np, int world_rank, int world_size, MPI_Comm comm) {
   int curr_coord[2];
   int send_rank;
-  MPI_Status status;
-  MPI_Request request;
+  MPI_Status send_status;
+  MPI_Request send_request;
+  MPI_Status status[world_size];
+  MPI_Request request[world_size];
   double ***recvBuffs = NULL;
+  MPI_Datatype table;
 
+  MPI_Type_contiguous(mp*np, MPI_DOUBLE, &table);
+  MPI_Type_commit(&table);
   // if(world_rank == MASTER)
   //   printf("MPI_Gather\n");
 
-  MPI_Isend(&buf[0][0], mp*np, MPI_DOUBLE, MASTER, 0, MPI_COMM_WORLD, &request);
+  MPI_Isend(&buf[0][0], 1, table, MASTER, 0, comm, &send_request);
 
   if(world_rank == MASTER) {
     recvBuffs = (double ***) arralloc(sizeof(double), 3, world_size, mp, np);
 
     for (int i = 0; i < world_size; ++i) {
-      MPI_Recv(&(recvBuffs[i])[0][0], mp*np, MPI_DOUBLE, i, 0, MPI_COMM_WORLD, &status);
+      MPI_Irecv(&(recvBuffs[i])[0][0], 1, table, i, 0, comm, &request[i]);
     }
+
+    MPI_Waitall(world_size, request, status);
 
     for (int i = 0; i < m; ++i) {
       for (int j = 0; j < n; ++j) {
@@ -109,6 +124,8 @@ void gather_masterbuf(double **masterbuf, double **buf, int m, int n, int mp, in
       }
     }
   }
+
+  MPI_Wait(&send_request, &send_status);
 
   if(world_rank == MASTER)
     free(recvBuffs);
@@ -299,12 +316,11 @@ int main (int argc, char** argv) {
 
   char filename[FILENAME_SIZE];
 
-  int world_rank, world_size;
+  int world_rank, world_size, m, n, mp, np, dim[2];
   double start_time, end_time;
-  int m, n, mp, np;
-
+  int period[2] = {0, 1};
+  int reorder = 1;
   MPI_Comm comm;
-  int dim[2], period[2], reorder;
 
   MPI_Init(NULL, NULL);
 
@@ -314,20 +330,7 @@ int main (int argc, char** argv) {
   dim[0]=sqrt(world_size);
   dim[1]=world_size/dim[0];
 
-  // doesn't work for
-  // n=3
-  // dim[1]=world_size;
-  // dim[0]=1;
-
-  period[0]=0;
-  period[1]=1;
-  reorder=1;
-
   MPI_Cart_create(MPI_COMM_WORLD, 2, dim, period, reorder, &comm);
-  // if(world_rank == MASTER)
-  // {
-  //   printf("Number of iterations = %d\n", MAXITER);
-  // }
 
   Cart_info cart_info = discoverCart(world_rank, comm, dim);
 
@@ -347,17 +350,7 @@ int main (int argc, char** argv) {
   mp = m/dim[0];
   np = n/dim[1];
 
-  // printf("Rank: %d (%d, %d) Processing %d x %d = %d fraction of image %d x %d = %d\n", world_rank, coord[0], coord[1], mp, np, mp*np, m, n, m*n);
-
-  MPI_Barrier(MPI_COMM_WORLD);
-
-  // if(world_rank == MASTER)
-  // {
-  //   printf("Fractions: %d x %d x %d = %d of image %d\n", world_size, mp, np, world_size*mp*np, m*n);
-  // }
-
-  if(world_rank == MASTER)
-  {
+  if(world_rank == MASTER) {
     masterbuf = (double **) arralloc(sizeof(double), 2, m, n);
     // printf("\nReading <%s>\n", filename);
     pgmread(filename, &masterbuf[0][0], m, n);
@@ -372,13 +365,9 @@ int main (int argc, char** argv) {
 
   scatter_masterbuf(masterbuf, buf, m, n, mp, np, world_rank, world_size, comm);
 
-  MPI_Barrier(MPI_COMM_WORLD);
-
   initialize_tables(buf, old, edge, mp, np, cart_info, dim);
 
   calculate(buf, old, new, edge, mp, np, cart_info);
-
-  MPI_Barrier(MPI_COMM_WORLD);
 
   gather_masterbuf(masterbuf, buf, m, n, mp, np, world_rank, world_size, comm);
 
@@ -389,8 +378,7 @@ int main (int argc, char** argv) {
     // printf("Running time = %f\n", end_time - start_time);
   }
 
-  if(world_rank == MASTER)
-  {
+  if(world_rank == MASTER) {
     if(argc == 2) {
       strcpy(filename, "./output/image");
       strcat(filename, &(argv[1][16]));
