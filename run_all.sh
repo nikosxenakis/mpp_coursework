@@ -1,9 +1,14 @@
-make clean;
-make ./bin/imagenew;
+bin = ./bin/imagenew;
 
-for N in 1 2 3 6 8 16
+make clean;
+make $bin;
+
+for N in 1 2 4 8 16
 do
-  echo "\nFor for n = ${N}"
-  mpirun -n ${N} ./bin/imagenew;
+  echo "\nFor n = ${N}"
+  for input_file in ./resources/*.pgm
+  do
+    mpirun -n $N ./bin/imagenew $input_file;
+  done
   python test.py;
 done

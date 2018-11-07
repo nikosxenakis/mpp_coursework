@@ -19,7 +19,7 @@ BIN_DIR := $(BASE_DIR)/bin
 
 #FILES
 BIN := $(BIN_DIR)/imagenew
-TEMPLATE := $(BIN_DIR)/imagenew_template
+TEMPLATE := $(BIN_DIR)/image
 SRC_FILES := $(wildcard $(SRC_DIR)/*.c)
 OBJ_FILES := $(patsubst $(SRC_DIR)/%.c, $(BUILD_DIR)/%.o, $(SRC_FILES))
 
@@ -35,7 +35,7 @@ $(BIN): $(OBJ_FILES)
 $(TEMPLATE): $(OBJ_FILES)
 	@echo " Linking..."
 	@mkdir -p $(BIN_DIR)
-	$(CC) $^ $(BASE_DIR)/templates/imagenew.c -o $@
+	$(CC) $^ $(BASE_DIR)/templates/image.c -o $@
 
 all: $(BIN) $(TEMPLATE)
 	@echo " $(BIN) ready."

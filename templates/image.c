@@ -10,8 +10,8 @@
 
 #include "../include/pgmio.h"
 
-#define M 192
-#define N 128
+#define M 768
+#define N 768
 
 #define MAXITER   1500
 #define PRINTFREQ  200
@@ -31,12 +31,11 @@ int main (void)
   printf("Processing %d x %d image\n", M, N);
   printf("Number of iterations = %d\n", MAXITER);
 
-  filename = "./resources/edgenew192x128.pgm";
+  filename = "./resources/edgenew768x768.pgm";
 
   printf("\nReading <%s>\n", filename);
   pgmread(filename, buf, M, N);
   printf("\n");
-
 
   for (i=1;i<M+1;i++)
     {

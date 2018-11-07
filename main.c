@@ -16,6 +16,11 @@
 
 #define MASTER 0
 
+#define TOP_TO_BOTTOM 0
+#define BOTTOM_TO_TOP 1
+#define LEFT_TO_RIGHT 3
+#define RIGHT_TO_LEFT 4
+
 double boundaryval(int i, int m) {
   double val;
 
@@ -143,83 +148,49 @@ void initialize_tables(double **buf, double **old, double **edge, int m, int n, 
 
 }
 
-void calculate_halo_swaps(double **old, int m, int n, Cart_info cart_info) {
+void halo_swaps(double **old, int m, int n, Cart_info cart_info, MPI_Datatype row, MPI_Datatype column, MPI_Request request[8], MPI_Status status[8]) {
 
-  MPI_Request request[4], send_request[4];
-  MPI_Status status[4], send_status[4];
-  double *top_send_buff, *bottom_send_buff, *left_send_buff, *right_send_buff;
-  double *top_recv_buff, *bottom_recv_buff, *left_recv_buff, *right_recv_buff;
+  MPI_Irecv(&(old[1][n+1]), 1, column, cart_info.up, TOP_TO_BOTTOM, cart_info.comm, &request[0]);
+  MPI_Isend(&(old[1][n]), 1, column, cart_info.up, BOTTOM_TO_TOP, cart_info.comm, &request[1]);
 
-  top_send_buff = (double *) arralloc(sizeof(double), 1, m);
-  bottom_send_buff = (double *) arralloc(sizeof(double), 1, m);
-  left_send_buff = (double *) arralloc(sizeof(double), 1, n+2);
-  right_send_buff = (double *) arralloc(sizeof(double), 1, n+2);
-
-  top_recv_buff = (double *) arralloc(sizeof(double), 1, m);
-  bottom_recv_buff = (double *) arralloc(sizeof(double), 1, m);
-  left_recv_buff = (double *) arralloc(sizeof(double), 1, n+2);
-  right_recv_buff = (double *) arralloc(sizeof(double), 1, n+2);
-
-  for (int i = 1; i < m+1; ++i) {
-    top_send_buff[i-1] = old[i][n];
-    bottom_send_buff[i-1] = old[i][1];
-  }
-  for (int i = 0; i < n+2; ++i) {
-    left_send_buff[i] = old[1][i];
-    right_send_buff[i] = old[m][i];
-  }
-
-  MPI_Irecv(top_recv_buff, m, MPI_DOUBLE, cart_info.up, 0, cart_info.comm, &request[0]);
-  MPI_Irecv(bottom_recv_buff, m, MPI_DOUBLE, cart_info.down, 1, cart_info.comm, &request[1]);
-
-  if(has_left(cart_info))
-    MPI_Irecv(left_recv_buff, n+2, MPI_DOUBLE, cart_info.left, 2, cart_info.comm, &request[2]);
-  if(has_right(cart_info))
-    MPI_Irecv(right_recv_buff, n+2, MPI_DOUBLE, cart_info.right, 3, cart_info.comm, &request[3]);
-
-  MPI_Isend(top_send_buff, m, MPI_DOUBLE, cart_info.up, 1, cart_info.comm, &send_request[0]);
-  MPI_Isend(bottom_send_buff, m, MPI_DOUBLE, cart_info.down, 0, cart_info.comm, &send_request[1]);
-
-  if(has_left(cart_info))
-    MPI_Isend(left_send_buff, n+2, MPI_DOUBLE, cart_info.left, 3, cart_info.comm, &send_request[2]);
-  if(has_right(cart_info))
-    MPI_Isend(right_send_buff, n+2, MPI_DOUBLE, cart_info.right, 2, cart_info.comm, &send_request[3]);
-
-  MPI_Wait(&request[0], &status[0]);
-  MPI_Wait(&send_request[0], &send_status[0]);
-
-  MPI_Wait(&request[1], &status[1]);
-  MPI_Wait(&send_request[1], &send_status[1]);
+  MPI_Irecv(&(old[1][0]), 1, column, cart_info.down, BOTTOM_TO_TOP, cart_info.comm, &request[2]);
+  MPI_Isend(&(old[1][1]), 1, column, cart_info.down, TOP_TO_BOTTOM, cart_info.comm, &request[3]);
 
   if(has_left(cart_info)) {
-    MPI_Wait(&request[2], &status[2]);
-    MPI_Wait(&send_request[2], &send_status[2]);
-  }
-  if(has_right(cart_info)){
-    MPI_Wait(&request[3], &status[3]);
-    MPI_Wait(&send_request[3], &send_status[3]);
+    MPI_Irecv(&(old[0][0]), 1, row, cart_info.left, LEFT_TO_RIGHT, cart_info.comm, &request[4]);
+    MPI_Isend(&(old[1][0]), 1, row, cart_info.left, RIGHT_TO_LEFT, cart_info.comm, &request[5]);
   }
 
-  for (int i = 1; i < m+1; ++i) {
-    old[i][n+1] = top_recv_buff[i-1];
-    old[i][0] = bottom_recv_buff[i-1];
+  if(has_right(cart_info)) {
+    MPI_Irecv(&(old[m+1][0]), 1, row, cart_info.right, RIGHT_TO_LEFT, cart_info.comm, &request[6]);
+    MPI_Isend(&(old[m][0]), 1, row, cart_info.right, LEFT_TO_RIGHT, cart_info.comm, &request[7]);
   }
 
-  for (int i = 0; i < n+2; ++i) {
-    if(has_left(cart_info))
-      old[0][i] = left_recv_buff[i];
-    if(has_right(cart_info))
-      old[m+1][i] = right_recv_buff[i];
+}
+
+void caclulate_halo(double **old, double **new, double **edge, int m, int n, Cart_info cart_info, MPI_Request request[8], MPI_Status status[8]) {
+  int i, j;
+
+  MPI_Waitall(4, request, status);
+
+  if(has_left(cart_info))
+    MPI_Waitall(2, &(request[4]), &(status[4]));
+
+  if(has_right(cart_info))
+    MPI_Waitall(2, &(request[6]), &(status[6]));
+
+  // calculate swaps
+  for (i=1;i<m+1;i+=m-1) {
+    for (j=1;j<n+1;j++) {
+      new[i][j]=0.25*(old[i-1][j] + old[i+1][j] + old[i][j-1] + old[i][j+1] - edge[i][j]);
+    }
   }
 
-  free(top_recv_buff);
-  free(bottom_recv_buff);
-  free(left_recv_buff);
-  free(right_recv_buff);
-  free(top_send_buff);
-  free(bottom_send_buff);
-  free(left_send_buff);
-  free(right_send_buff);
+  for (i=1;i<m+1;i++) {
+    for (j=1;j<n+1;j+=n-1) {
+      new[i][j]=0.25*(old[i-1][j] + old[i+1][j] + old[i][j-1] + old[i][j+1] - edge[i][j]);
+    }
+  }
 }
 
 double calculate_max_diff(double **old, double **new, int m, int n) {
@@ -259,33 +230,43 @@ int can_terminate(double **old, double **new, int m, int n, MPI_Comm comm) {
 }
 
 void calculate(double **buf, double **old, double **new, double **edge, int m, int n, Cart_info cart_info) {
-  int i, j, iter, finished = 0;
+  int i, j, iter;
+  MPI_Datatype column, row;
+  MPI_Request request[8];
+  MPI_Status status[8];
+
+  MPI_Type_contiguous(n+2, MPI_DOUBLE, &row);
+  MPI_Type_commit(&row);
+  MPI_Type_vector(m, 1, n+2, MPI_DOUBLE, &column);
+  MPI_Type_commit(&column);
 
   // if(world_rank == MASTER)
   //   printf("calculate\n");
 
-  for (iter=1;iter<=MAXITER; iter++) {
+  for (iter=1; iter<=MAXITER; iter++) {
     // if(iter%PRINTFREQ==0) {
     //   printf("Iteration %d\n", iter);
     // }
 
-    /* Implement halo swaps */
-    calculate_halo_swaps(old, m, n, cart_info);
+    // Send and Receive halo swaps
+    halo_swaps(old, m, n, cart_info, row, column, request, status);
 
-    MPI_Barrier(cart_info.comm);
-
-    for (i=1;i<m+1;i++) {
-      for (j=1;j<n+1;j++) {
-        new[i][j]=0.25*(old[i-1][j  ]
-                       +old[i+1][j  ]
-                       +old[i  ][j-1]
-                       +old[i  ][j+1] - edge[i][j]);
+    // calculate inner table
+    for (i=2;i<m;i++) {
+      for (j=2;j<n;j++) {
+        new[i][j]=0.25*(old[i-1][j] + old[i+1][j] + old[i][j-1] + old[i][j+1] - edge[i][j]);
       }
     }
 
+    // calculate borders with halo
+    caclulate_halo(old, new, edge, m, n, cart_info, request, status);
+
     // if can_terminate every PRINTFREQ
     if(iter%PRINTFREQ==0) {
-      finished = can_terminate(old, new, m, n, cart_info.comm);
+      if(can_terminate(old, new, m, n, cart_info.comm)) {
+        // printf("ITER = %d\n", iter);
+        // break;
+      }
     }
 
     for (i=1;i<m+1;i++) {
@@ -294,10 +275,6 @@ void calculate(double **buf, double **old, double **new, double **edge, int m, i
       }
     }
 
-    if(finished) {
-      printf("ITER = %d\n", iter);
-      break;
-    }
   }
 
   for (i=1;i<m+1;i++) {
@@ -356,11 +333,11 @@ int main (int argc, char** argv) {
 
   // print_cart_info(cart_info);
 
-  strcpy(filename, "resources/");
   if(argc == 2) {
-    strcat(filename, argv[1]);
+    strcpy(filename, argv[1]);
   }
   else {
+    strcpy(filename, "resources/");
     strcat(filename, "edgenew192x128.pgm");
   }
 
@@ -414,11 +391,12 @@ int main (int argc, char** argv) {
 
   if(world_rank == MASTER)
   {
-    strcpy(filename, "output/");
     if(argc == 2) {
-      strcat(filename, argv[1]);
+      strcpy(filename, "./output/image");
+      strcat(filename, &(argv[1][16]));
     }
     else {
+      strcpy(filename, "./output/");
       strcat(filename, "imagenew192x128.pgm");
     }
     pgmwrite(filename, &masterbuf[0][0], m, n);

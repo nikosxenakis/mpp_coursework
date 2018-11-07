@@ -1,0 +1,144 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{epcc}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{amsmath}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ 
+	backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+	basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+	breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+	breaklines=true,                 % sets automatic line breaking
+	captionpos=b,                    % sets the caption-position to bottom
+	commentstyle=\color{mygreen},    % comment style
+	deletekeywords={...},            % if you want to delete keywords from the given language
+	escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+	extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+	frame=single,	                   % adds a frame around the code
+	keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+	keywordstyle=\color{blue},       % keyword style
+	language=C,                 	 % the language of the code
+	morekeywords={*,...},            % if you want to add more keywords to the set
+	numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+	numbersep=5pt,                   % how far the line-numbers are from the code
+	numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+	rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+	showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+	showstringspaces=false,          % underline spaces within strings only
+	showtabs=false,                  % show tabs within strings adding particular underscores
+	stepnumber=5,                    % the step between two line-numbers. If it's 1, each line will be numbered
+	stringstyle=\color{mymauve},     % string literal style
+	tabsize=2,	                     % sets default tabsize to 2 spaces
+	title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true, %set true if you want colored links
+	linkcolor=black,  %choose some color if you want links to stand out
+}
+
+\newcommand{\sectionVspacing}{\vspace{15pt}} 
+
+
+\begin{document}
+
+\title{Threaded Programming Coursework Part 1}
+\author{Exam number B136013}
+\date{\today}
+
+\makeEPCCtitle
+
+\thispagestyle{empty}
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+
+
+\section{Introduction}
+This experiment measures the running time and speedup of a C program for multiple configurations using openMP on Cirrus supercomputer. The source code contains two (2) for loops, initialization procedures and time reporting commands. We used a variety of schedule methods on the loops which are implemented in openMP API multithread programming library. Next, we pick the fastest scheduling options for each loop and run them using different number of threads, in order to observe which configuration had the best speedup results.
+
+\sectionVspacing
+
+\section{Visual Representation}
+	
+\subsection{Execution Time}
+In the following section, there are graphs for the execution time and speed up of the given loops using different scheduling configurations like static, dynamic, guided against chunksizes such as 1, 2, 4, 8, 16, 32, 64.
+
+The active number of threads has been set to four (4) for all of the following executions in order to choose the best schedule taking into account only the running time.
+
+In Figure 1 and 2 are the execution time results in seconds of loop 1 and 2 for each one of the different scheduling configurations. As a result, in this series of executions the best scheduling options are shown in Table 1:
+
+\begin{table}[h]
+	\begin{center}
+		\begin{tabular}{||l|c|l||}
+			\hline
+			{\bf Loop No} & {\bf Schedule}\\
+			\hline
+			Loop 1         &  schedule(guided, 4)\\
+			Loop 2         &  schedule(dynamic, 16)\\
+			\hline
+		\end{tabular}
+	\end{center}
+	\caption{Best scheduler options on four (4) threads}
+	\label{simple_table}
+\end{table}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=0.6]{../screenshots/threads4_loop1.eps}
+	\caption{Running Time Loop 1 with 4 Threads}
+	\label{loop1-threads4}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=0.6]{../screenshots/threads4_loop2.eps}
+	\caption{Running Time Loop 2 with 4 Threads}
+	\label{loop2-threads4}
+\end{figure}
+
+\clearpage
+
+\subsection{Speedup}
+Speedup occurs dividing T1/Tp where Tp is the execution time of the process running over p threads, and T1 is the same for one (1) thread.
+
+As regards the speepup measurements, we picked up the best scheduling options for each loop as defined in the first two (2) lines of the source code shown in Listing 1: loops.c based on Table 1 results. Now, we are going to measure the speedup of the experiment running against different numbers of threads including 1, 2, 4, 6, 8, 12 and 16.
+
+\lstinputlisting[language=C, firstline=2, lastline=3, caption=loops.c]{../template/loops_parallel-B136013.c}
+
+Figure 3 and 4 depict the results of speedup in the application. As expected, when we increase the number of threads running the experiment, speedup increases or stays constant over a point.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{../screenshots/speedup_loop1.eps}
+	\caption{Speedup Loop 1 with schedule guided and chunksize 4}
+	\label{Speedup-Loop1}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=0.6]{../screenshots/speedup_loop2.eps}
+	\caption{Speedup Loop 2 with schedule dynamic and chunksize 16}
+	\label{Speedup-Loop2}
+\end{figure}
+
+\clearpage
+
+\input{explanation.tex}
+
+\sectionVspacing
+
+\input{conclusion.tex}
+
+\end{document}
