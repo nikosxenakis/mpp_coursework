@@ -1,0 +1,16 @@
+Input File	#Processes	Running Time (sec)
+./resources/edgenew192x128.pgm	1	0.117597
+./resources/edgenew256x192.pgm	1	0.203479
+./resources/edgenew512x384.pgm	1	2.048799
+./resources/edgenew192x128.pgm	2	0.075129
+./resources/edgenew256x192.pgm	2	0.184335
+./resources/edgenew512x384.pgm	2	1.400207
+./resources/edgenew192x128.pgm	4	0.182775
+./resources/edgenew256x192.pgm	4	0.413903
+./resources/edgenew512x384.pgm	4	1.381773
+./resources/edgenew192x128.pgm	8	0.340360
+./resources/edgenew256x192.pgm	8	0.431838
+./resources/edgenew512x384.pgm	8	1.175653
+./resources/edgenew192x128.pgm	16	0.197960
+./resources/edgenew256x192.pgm	16	0.346186
+./resources/edgenew512x384.pgm	16	1.591170

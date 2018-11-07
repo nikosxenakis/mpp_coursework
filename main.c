@@ -45,122 +45,92 @@ void print_table(double **t, int m, int n) {
   }
 }
 
-void scatter_masterbuf(double **masterbuf, double **buf, int m, int n, int mp, int np, int world_rank, int world_size, MPI_Comm comm) {
-  int curr_coord[2];
-  int send_rank;
-  MPI_Status recv_status;
-  MPI_Request recv_request;
-  MPI_Status status[world_size];
-  MPI_Request request[world_size];
-  double ***sendBuffs = NULL;
-  MPI_Datatype table;
+void scatter_masterbuf(double **masterbuf, double **buf, int m, int n, int mp, int np, int world_rank, int world_size, MPI_Comm comm, int dim[2]) {
+  int curr_coord[2], send_rank;
+  MPI_Status recv_status, status[world_size];
+  MPI_Request recv_request, request[world_size];
+  MPI_Datatype cont_table, table;
 
-  MPI_Type_contiguous(mp*np, MPI_DOUBLE, &table);
+  MPI_Type_contiguous(mp*np, MPI_DOUBLE, &cont_table);
+  MPI_Type_commit(&cont_table);
+
+  MPI_Type_vector(mp, np, n, MPI_DOUBLE, &table);
   MPI_Type_commit(&table);
 
-  // if(world_rank == MASTER)
-  //   printf("MPI_Scatter\n");
-
-  MPI_Irecv(&buf[0][0], 1, table, MASTER, 0, comm, &recv_request);
+  MPI_Irecv(&buf[0][0], 1, cont_table, MASTER, 0, comm, &recv_request);
 
   if(world_rank == MASTER) {
-    sendBuffs = (double ***) arralloc(sizeof(double), 3, world_size, mp, np);
 
-    for (int i = 0; i < m; ++i) {
-      for (int j = 0; j < n; ++j) {
-
-        curr_coord[0] = i/mp;
-        curr_coord[1] = j/np;
+    for (int i = 0; i < dim[0]; i++) {
+      for (int j = 0; j < dim[1]; j++) {
+        curr_coord[0] = i;
+        curr_coord[1] = j;
         MPI_Cart_rank(comm, curr_coord, &send_rank);
-
-        sendBuffs[send_rank][i%mp][j%np] = masterbuf[i][j];
+        MPI_Isend(&(masterbuf[i*mp][j*np]), 1, table, send_rank, 0, comm, &request[send_rank]);
       }
-    }
-
-    for (int i = 0; i < world_size; ++i) {
-      MPI_Isend(&(sendBuffs[i])[0][0], 1, table, i, 0, comm, &request[i]);
     }
     MPI_Waitall(world_size, request, status);
   }
 
   MPI_Wait(&recv_request, &recv_status);
 
-  if(world_rank == MASTER)
-    free(sendBuffs);
 }
 
-void gather_masterbuf(double **masterbuf, double **buf, int m, int n, int mp, int np, int world_rank, int world_size, MPI_Comm comm) {
-  int curr_coord[2];
-  int send_rank;
-  MPI_Status send_status;
-  MPI_Request send_request;
-  MPI_Status status[world_size];
-  MPI_Request request[world_size];
-  double ***recvBuffs = NULL;
-  MPI_Datatype table;
+void gather_masterbuf(double **masterbuf, double **buf, int m, int n, int mp, int np, int world_rank, int world_size, MPI_Comm comm, int dim[2]) {
+  int curr_coord[2], recv_rank;
+  MPI_Status send_status, status[world_size];
+  MPI_Request send_request, request[world_size];
+  MPI_Datatype cont_table, table;
 
-  MPI_Type_contiguous(mp*np, MPI_DOUBLE, &table);
+  MPI_Type_contiguous(mp*np, MPI_DOUBLE, &cont_table);
+  MPI_Type_commit(&cont_table);
+
+  MPI_Type_vector(mp, np, n, MPI_DOUBLE, &table);
   MPI_Type_commit(&table);
-  // if(world_rank == MASTER)
-  //   printf("MPI_Gather\n");
 
-  MPI_Isend(&buf[0][0], 1, table, MASTER, 0, comm, &send_request);
+  MPI_Isend(&buf[0][0], 1, cont_table, MASTER, 0, comm, &send_request);
 
   if(world_rank == MASTER) {
-    recvBuffs = (double ***) arralloc(sizeof(double), 3, world_size, mp, np);
 
-    for (int i = 0; i < world_size; ++i) {
-      MPI_Irecv(&(recvBuffs[i])[0][0], 1, table, i, 0, comm, &request[i]);
+    for (int i = 0; i < dim[0]; i++) {
+      for (int j = 0; j < dim[1]; j++) {
+        curr_coord[0] = i;
+        curr_coord[1] = j;
+        MPI_Cart_rank(comm, curr_coord, &recv_rank);
+        MPI_Irecv(&(masterbuf[i*mp][j*np]), 1, table, recv_rank, 0, comm, &request[recv_rank]);
+      }
     }
 
     MPI_Waitall(world_size, request, status);
-
-    for (int i = 0; i < m; ++i) {
-      for (int j = 0; j < n; ++j) {
-        curr_coord[0] = i/mp;
-        curr_coord[1] = j/np;
-        MPI_Cart_rank(comm, curr_coord, &send_rank);
-        masterbuf[i][j] = recvBuffs[send_rank][i%mp][j%np];
-      }
-    }
   }
 
   MPI_Wait(&send_request, &send_status);
 
-  if(world_rank == MASTER)
-    free(recvBuffs);
 }
 
 void initialize_tables(double **buf, double **old, double **edge, int m, int n, Cart_info cart_info, int dim[2]) {
   int i, j;
   double val;
 
-  // printf("initialize_tables: The processor at position (%d, %d) has rank %d\n", coord[0], coord[1], world_rank);
-
-  for (i=1;i<m+1;i++) {
-    for (j=1;j<n+1;j++) {
-      edge[i][j]=buf[i-1][j-1];
-    }
-  }
-
   for (i=0; i<m+2;i++) {
     for (j=0;j<n+2;j++) {
+      if(i>0 && i<m+1 && j>0 && j<n+1)  edge[i][j]=buf[i-1][j-1];
       old[i][j]=255.0;
     }
   }
 
+  /* compute sawtooth value */
   for (j=0; j < n+2; j++) {
-    /* compute sawtooth value */
-    val = boundaryval(cart_info.coord[1]*n+j, dim[1]*n);
-
     if( (cart_info.coord[1] == 0 && j == 0) || (cart_info.coord[1] + 1 == dim[1] && j == n+1) ) {
         continue;
-      }
+    }
 
-      if(!has_left(cart_info))
-        old[0][j]   = (int)(255.0*(1.0-val));
-      if(!has_right(cart_info))
-        old[m+1][j] = (int)(255.0*val);
+    val = boundaryval(cart_info.coord[1]*n+j, dim[1]*n);
+
+    if(!has_left(cart_info))
+      old[0][j]   = (int)(255.0*(1.0-val));
+    if(!has_right(cart_info))
+      old[m+1][j] = (int)(255.0*val);
   }
 
 }
@@ -196,15 +166,15 @@ void caclulate_halo(double **old, double **new, double **edge, int m, int n, Car
   if(has_right(cart_info))
     MPI_Waitall(2, &(request[6]), &(status[6]));
 
-  // calculate swaps
+  // calculate halo
   for (i=1;i<m+1;i+=m-1) {
     for (j=1;j<n+1;j++) {
       new[i][j]=0.25*(old[i-1][j] + old[i+1][j] + old[i][j-1] + old[i][j+1] - edge[i][j]);
     }
   }
 
-  for (i=1;i<m+1;i++) {
-    for (j=1;j<n+1;j+=n-1) {
+  for (j=1;j<n+1;j+=n-1) {
+    for (i=1;i<m+1;i++) {
       new[i][j]=0.25*(old[i-1][j] + old[i+1][j] + old[i][j-1] + old[i][j+1] - edge[i][j]);
     }
   }
@@ -356,26 +326,26 @@ int main (int argc, char** argv) {
     pgmread(filename, &masterbuf[0][0], m, n);
   }
 
-  allocate_tables(&buf, &old, &new, &edge, mp, np);
-
   MPI_Barrier(MPI_COMM_WORLD);
 
   if(world_rank == MASTER)
     start_time = MPI_Wtime();
 
-  scatter_masterbuf(masterbuf, buf, m, n, mp, np, world_rank, world_size, comm);
+  allocate_tables(&buf, &old, &new, &edge, mp, np);
+
+  scatter_masterbuf(masterbuf, buf, m, n, mp, np, world_rank, world_size, comm, dim);
 
   initialize_tables(buf, old, edge, mp, np, cart_info, dim);
 
   calculate(buf, old, new, edge, mp, np, cart_info);
 
-  gather_masterbuf(masterbuf, buf, m, n, mp, np, world_rank, world_size, comm);
+  gather_masterbuf(masterbuf, buf, m, n, mp, np, world_rank, world_size, comm, dim);
 
   MPI_Barrier(MPI_COMM_WORLD);
 
   if(world_rank == MASTER) {
     end_time = MPI_Wtime();
-    // printf("Running time = %f\n", end_time - start_time);
+    printf("%s\t%d\t%f\n", filename, world_size, end_time - start_time);
   }
 
   if(world_rank == MASTER) {

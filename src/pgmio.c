@@ -37,7 +37,7 @@
  */
 
 void pgmsize(char *filename, int *nx, int *ny)
-{ 
+{
   FILE *fp;
 
   char *cret;
@@ -56,7 +56,7 @@ void pgmsize(char *filename, int *nx, int *ny)
   cret = fgets(dummy, n, fp);
 
   iret = fscanf(fp,"%d %d", nx, ny);
-      
+
   fclose(fp);
 }
 
@@ -70,7 +70,7 @@ void pgmsize(char *filename, int *nx, int *ny)
  */
 
 void pgmread(char *filename, void *vx, int nx, int ny)
-{ 
+{
   FILE *fp;
 
   int nxt, nyt, i, j, t;
@@ -145,7 +145,7 @@ void pgmwrite(char *filename, void *vx, int nx, int ny)
     exit(-1);
   }
 
-  printf("Writing %d x %d picture into file: %s\n", nx, ny, filename);
+  // printf("Writing %d x %d picture into file: %s\n", nx, ny, filename);
 
   /*
    *  Find the max and min absolute values of the array

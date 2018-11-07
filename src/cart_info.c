@@ -12,8 +12,8 @@ int has_right(Cart_info cart_info) {
 
 Cart_info discoverCart(int id, MPI_Comm comm, int dim[2]) {
 
-  if(id == MASTER)
-    printf("Topology: %d x %d\n", dim[0], dim[1]);
+  // if(id == MASTER)
+  //   printf("Topology: %d x %d\n", dim[0], dim[1]);
 
   Cart_info cart_info;
 
