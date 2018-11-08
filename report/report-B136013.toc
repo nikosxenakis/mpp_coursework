@@ -1,0 +1,9 @@
+\contentsline {section}{\numberline {1}Introduction}{3}{section.1}
+\contentsline {section}{\numberline {2}Description}{3}{section.2}
+\contentsline {section}{\numberline {3}Implementation}{3}{section.3}
+\contentsline {subsection}{\numberline {3.1}MPI Scatter}{3}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}MPI Gather}{3}{subsection.3.2}
+\contentsline {section}{\numberline {4}Testing}{3}{section.4}
+\contentsline {subsection}{\numberline {4.1}Correctness}{3}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Performance}{3}{subsection.4.2}
+\contentsline {section}{\numberline {5}Conclusion}{4}{section.5}

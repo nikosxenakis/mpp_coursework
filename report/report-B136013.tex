@@ -49,7 +49,7 @@
 
 \begin{document}
 
-\title{Threaded Programming Coursework Part 1}
+\title{Message Passing Programming Coursework Assignment}
 \author{Exam number B136013}
 \date{\today}
 
@@ -58,87 +58,79 @@
 \thispagestyle{empty}
 
 \newpage
+\clearpage
 
 \tableofcontents
 
 \newpage
-
-
+\clearpage
 
 \section{Introduction}
-This experiment measures the running time and speedup of a C program for multiple configurations using openMP on Cirrus supercomputer. The source code contains two (2) for loops, initialization procedures and time reporting commands. We used a variety of schedule methods on the loops which are implemented in openMP API multithread programming library. Next, we pick the fastest scheduling options for each loop and run them using different number of threads, in order to observe which configuration had the best speedup results.
+What is the project? 2d domain decomposition
 
 \sectionVspacing
 
-\section{Visual Representation}
-	
-\subsection{Execution Time}
-In the following section, there are graphs for the execution time and speed up of the given loops using different scheduling configurations like static, dynamic, guided against chunksizes such as 1, 2, 4, 8, 16, 32, 64.
+\section{Description}
+Language used: C
+brief description of the design
+Tools from MPP (derived types, Async communication, virtual topologies)
+Boundary conditions: horizontal->sawtooth vertical->periodic
+Terminate condition: D parameter
 
-The active number of threads has been set to four (4) for all of the following executions in order to choose the best schedule taking into account only the running time.
+\sectionVspacing
 
-In Figure 1 and 2 are the execution time results in seconds of loop 1 and 2 for each one of the different scheduling configurations. As a result, in this series of executions the best scheduling options are shown in Table 1:
+\section{Implementation}
+implementation of your MPI program
+\subsection{MPI Scatter}
+\subsection{MPI Gather}
 
-\begin{table}[h]
-	\begin{center}
-		\begin{tabular}{||l|c|l||}
-			\hline
-			{\bf Loop No} & {\bf Schedule}\\
-			\hline
-			Loop 1         &  schedule(guided, 4)\\
-			Loop 2         &  schedule(dynamic, 16)\\
-			\hline
-		\end{tabular}
-	\end{center}
-	\caption{Best scheduler options on four (4) threads}
-	\label{simple_table}
-\end{table}
+\sectionVspacing
 
-\begin{figure}[ht]
-	\centering
-	\includegraphics[scale=0.6]{../screenshots/threads4_loop1.eps}
-	\caption{Running Time Loop 1 with 4 Threads}
-	\label{loop1-threads4}
-\end{figure}
+\section{Testing}
+Platform: backend of cirrus (.pbs), compiled using -O3
+Build, Run and Submit job: in Readme.md
 
-\begin{figure}[ht]
-	\centering
-	\includegraphics[scale=0.6]{../screenshots/threads4_loop2.eps}
-	\caption{Running Time Loop 2 with 4 Threads}
-	\label{loop2-threads4}
-\end{figure}
+\subsection{Correctness}
+Test: parallel code produces the same output as the serial
 
-\clearpage
+how long the code needs to run in order to give a reasonable assessment of its performance and/or correctness
+It is not necessary to run all and be correct
 
-\subsection{Speedup}
-Speedup occurs dividing T1/Tp where Tp is the execution time of the process running over p threads, and T1 is the same for one (1) thread.
+\subsection{Performance}
 
-As regards the speepup measurements, we picked up the best scheduling options for each loop as defined in the first two (2) lines of the source code shown in Listing 1: loops.c based on Table 1 results. Now, we are going to measure the speedup of the experiment running against different numbers of threads including 1, 2, 4, 6, 8, 12 and 16.
-
-\lstinputlisting[language=C, firstline=2, lastline=3, caption=loops.c]{../template/loops_parallel-B136013.c}
-
-Figure 3 and 4 depict the results of speedup in the application. As expected, when we increase the number of threads running the experiment, speedup increases or stays constant over a point.
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[scale=0.6]{../screenshots/speedup_loop1.eps}
-	\caption{Speedup Loop 1 with schedule guided and chunksize 4}
-	\label{Speedup-Loop1}
-\end{figure}
-
-\begin{figure}[ht]
-	\centering
-	\includegraphics[scale=0.6]{../screenshots/speedup_loop2.eps}
-	\caption{Speedup Loop 2 with schedule dynamic and chunksize 16}
-	\label{Speedup-Loop2}
-\end{figure}
-
-\clearpage
-
-\input{explanation.tex}
+Timing: exclude I/O from timing The timing starts before the scatter and ends after the gather
+Graphs: demonstrate that the performance of the code improves as you increase the number of processes.
+	 processes
+	 Input variety: performance change input(problem) size and see how it scales
+	 Speedup of strong scaling: performance metrics speed up vs ideal (linear) speedup 
+	 average time per iteration
 
 \sectionVspacing
 
 \input{conclusion.tex}
 
 \end{document}
+
+% \begin{table}[h]
+% 	\begin{center}
+% 		\begin{tabular}{||l|c|l||}
+% 			\hline
+% 			{\bf Loop No} & {\bf Schedule}\\
+% 			\hline
+% 			Loop 1         &  schedule(guided, 4)\\
+% 			Loop 2         &  schedule(dynamic, 16)\\
+% 			\hline
+% 		\end{tabular}
+% 	\end{center}
+% 	\caption{Best scheduler options on four (4) threads}
+% 	\label{simple_table}
+% \end{table}
+
+% \begin{figure}[ht]
+% 	\centering
+% 	\includegraphics[scale=0.6]{../screenshots/threads4_loop2.eps}
+% 	\caption{Running Time Loop 2 with 4 Threads}
+% 	\label{loop2-threads4}
+% \end{figure}
+%
+% \lstinputlisting[language=C, firstline=2, lastline=3, caption=loops.c]{../template/loops_parallel-B136013.c}
