@@ -3,6 +3,7 @@
 #include <math.h>
 #include <mpi.h>
 #include <string.h>
+#include <assert.h>
 
 #include "include/arralloc.h"
 #include "include/pgmio.h"
@@ -27,6 +28,46 @@ double boundaryval(int i, int m) {
   val = 2.0*((double)(i-1))/((double)(m-1));
   if (i >= m/2+1) val = 2.0-val;
   return val;
+}
+
+void decomposition(int world_size, int m, int n , int *mp, int *np, int *max_mp, int *max_np, int dim[2]) {
+
+  dim[1]=sqrt(world_size);
+  if(dim[1] > 1 && world_size%dim[1] == 0) {
+    dim[0]=world_size/dim[1];
+  }
+  else {
+    dim[0]=sqrt(world_size);
+    if(dim[0] > 1 && world_size%dim[0] == 0) {
+      dim[1]=world_size/dim[0];
+    }
+    else {
+      if(m % world_size == 0) {
+        dim[1] = 1;
+        dim[0] = world_size;
+      }
+      else if(n % world_size == 0) {
+        dim[1] = world_size;
+        dim[0] = 1;
+      }
+      else {
+        dim[1] = 1;
+        dim[0] = world_size;
+      }
+    }
+  }
+
+  assert(dim[0]*dim[1] == world_size);
+
+  //new sizes of tables
+  *mp = m/dim[0];
+  *np = n/dim[1];
+  *max_mp = m/dim[0] + m%dim[0];
+  *max_np = n/dim[1] + n%dim[1];
+
+  // (*mp)++;
+  // printf("processes = %d, image = %dx%d -> dim = (%d, %d), small_image = (%d, %d) , last_tile = (%d, %d) -> recons = (%d, %d)\n", world_size, m, n, dim[0], dim[1], *mp, *np, *max_mp, *max_np, dim[0]**mp, dim[1]**np);
+
 }
 
 void allocate_tables(double ***buf, double ***old, double ***new, double ***edge, int m, int n) {
@@ -286,7 +327,7 @@ int main (int argc, char** argv) {
 
   char filename[FILENAME_SIZE];
 
-  int world_rank, world_size, m, n, mp, np, dim[2];
+  int world_rank, world_size, m, n, mp, np, max_mp, max_np, dim[2];
   double start_time, end_time;
   int period[2] = {0, 1};
   int reorder = 1;
@@ -296,15 +337,6 @@ int main (int argc, char** argv) {
 
   MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
   MPI_Comm_size(MPI_COMM_WORLD, &world_size);
-
-  dim[0]=sqrt(world_size);
-  dim[1]=world_size/dim[0];
-
-  MPI_Cart_create(MPI_COMM_WORLD, 2, dim, period, reorder, &comm);
-
-  Cart_info cart_info = discoverCart(world_rank, comm, dim);
-
-  // print_cart_info(cart_info);
 
   if(argc == 2) {
     strcpy(filename, argv[1]);
@@ -316,9 +348,13 @@ int main (int argc, char** argv) {
 
   pgmsize (filename, &m, &n);
 
-  //new sizes of tables
-  mp = m/dim[0];
-  np = n/dim[1];
+  decomposition(world_size, m, n, &mp, &np, &max_mp, &max_np, dim);
+
+  MPI_Cart_create(MPI_COMM_WORLD, 2, dim, period, reorder, &comm);
+
+  Cart_info cart_info = discoverCart(world_rank, comm, dim);
+
+  // print_cart_info(cart_info);
 
   if(world_rank == MASTER) {
     masterbuf = (double **) arralloc(sizeof(double), 2, m, n);
