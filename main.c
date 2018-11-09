@@ -66,7 +66,7 @@ void decomposition(int world_size, int m, int n , int *mp, int *np, int *max_mp,
   *max_np = n/dim[1] + n%dim[1];
 
   // (*mp)++;
-  // printf("processes = %d, image = %dx%d -> dim = (%d, %d), small_image = (%d, %d) , last_tile = (%d, %d) -> recons = (%d, %d)\n", world_size, m, n, dim[0], dim[1], *mp, *np, *max_mp, *max_np, dim[0]**mp, dim[1]**np);
+  printf("processes = %d, image = %dx%d -> dim = (%d, %d), small_image = (%d, %d) , last_tile = (%d, %d) -> recons = (%d, %d)\n", world_size, m, n, dim[0], dim[1], *mp, *np, *max_mp, *max_np, dim[0]**mp, dim[1]**np);
 
 }
 
@@ -86,19 +86,28 @@ void print_table(double **t, int m, int n) {
   }
 }
 
-void scatter_masterbuf(double **masterbuf, double **buf, int m, int n, int mp, int np, int world_rank, int world_size, MPI_Comm comm, int dim[2]) {
+void scatter_masterbuf(double **masterbuf, double **buf, int m, int n, int mp, int np, int max_mp, int world_rank, int world_size, MPI_Comm comm, int dim[2], Cart_info cart_info) {
   int curr_coord[2], send_rank;
   MPI_Status recv_status, status[world_size];
   MPI_Request recv_request, request[world_size];
-  MPI_Datatype cont_table, table;
+  MPI_Datatype cont_table, table, max_cont_table, max_table;
 
   MPI_Type_contiguous(mp*np, MPI_DOUBLE, &cont_table);
   MPI_Type_commit(&cont_table);
 
+  MPI_Type_contiguous(max_mp*np, MPI_DOUBLE, &max_cont_table);
+  MPI_Type_commit(&max_cont_table);
+
   MPI_Type_vector(mp, np, n, MPI_DOUBLE, &table);
   MPI_Type_commit(&table);
 
-  MPI_Irecv(&buf[0][0], 1, cont_table, MASTER, 0, comm, &recv_request);
+  MPI_Type_vector(max_mp, np, n, MPI_DOUBLE, &max_table);
+  MPI_Type_commit(&max_table);
+
+  if(!has_right(cart_info))
+    MPI_Irecv(&buf[0][0], 1, max_cont_table, MASTER, 0, comm, &recv_request);
+  else
+    MPI_Irecv(&buf[0][0], 1, cont_table, MASTER, 0, comm, &recv_request);
 
   if(world_rank == MASTER) {
 
@@ -107,7 +116,10 @@ void scatter_masterbuf(double **masterbuf, double **buf, int m, int n, int mp, i
         curr_coord[0] = i;
         curr_coord[1] = j;
         MPI_Cart_rank(comm, curr_coord, &send_rank);
-        MPI_Isend(&(masterbuf[i*mp][j*np]), 1, table, send_rank, 0, comm, &request[send_rank]);
+        if(i + 1 == dim[0])
+          MPI_Isend(&(masterbuf[i*mp][j*np]), 1, max_table, send_rank, 0, comm, &request[send_rank]);
+        else
+          MPI_Isend(&(masterbuf[i*mp][j*np]), 1, table, send_rank, 0, comm, &request[send_rank]);
       }
     }
     MPI_Waitall(world_size, request, status);
@@ -117,19 +129,29 @@ void scatter_masterbuf(double **masterbuf, double **buf, int m, int n, int mp, i
 
 }
 
-void gather_masterbuf(double **masterbuf, double **buf, int m, int n, int mp, int np, int world_rank, int world_size, MPI_Comm comm, int dim[2]) {
+void gather_masterbuf(double **masterbuf, double **buf, int m, int n, int mp, int np, int max_mp, int world_rank, int world_size, MPI_Comm comm, int dim[2], Cart_info cart_info) {
   int curr_coord[2], recv_rank;
   MPI_Status send_status, status[world_size];
   MPI_Request send_request, request[world_size];
-  MPI_Datatype cont_table, table;
+  MPI_Datatype cont_table, table, max_cont_table, max_table;
 
   MPI_Type_contiguous(mp*np, MPI_DOUBLE, &cont_table);
   MPI_Type_commit(&cont_table);
 
+  MPI_Type_contiguous(max_mp*np, MPI_DOUBLE, &max_cont_table);
+  MPI_Type_commit(&max_cont_table);
+
   MPI_Type_vector(mp, np, n, MPI_DOUBLE, &table);
   MPI_Type_commit(&table);
 
-  MPI_Isend(&buf[0][0], 1, cont_table, MASTER, 0, comm, &send_request);
+  MPI_Type_vector(max_mp, np, n, MPI_DOUBLE, &max_table);
+  MPI_Type_commit(&max_table);
+
+  if(!has_right(cart_info))
+    MPI_Isend(&buf[0][0], 1, max_cont_table, MASTER, 0, comm, &send_request);
+  else
+    MPI_Isend(&buf[0][0], 1, cont_table, MASTER, 0, comm, &send_request);
+
 
   if(world_rank == MASTER) {
 
@@ -138,7 +160,10 @@ void gather_masterbuf(double **masterbuf, double **buf, int m, int n, int mp, in
         curr_coord[0] = i;
         curr_coord[1] = j;
         MPI_Cart_rank(comm, curr_coord, &recv_rank);
-        MPI_Irecv(&(masterbuf[i*mp][j*np]), 1, table, recv_rank, 0, comm, &request[recv_rank]);
+        if(i + 1 == dim[0])
+          MPI_Irecv(&(masterbuf[i*mp][j*np]), 1, max_table, recv_rank, 0, comm, &request[recv_rank]);
+        else
+          MPI_Irecv(&(masterbuf[i*mp][j*np]), 1, table, recv_rank, 0, comm, &request[recv_rank]);
       }
     }
 
@@ -356,6 +381,9 @@ int main (int argc, char** argv) {
 
   // print_cart_info(cart_info);
 
+  if(!has_right(cart_info))
+    mp = max_mp;
+
   if(world_rank == MASTER) {
     masterbuf = (double **) arralloc(sizeof(double), 2, m, n);
     // printf("\nReading <%s>\n", filename);
@@ -369,13 +397,13 @@ int main (int argc, char** argv) {
 
   allocate_tables(&buf, &old, &new, &edge, mp, np);
 
-  scatter_masterbuf(masterbuf, buf, m, n, mp, np, world_rank, world_size, comm, dim);
+  scatter_masterbuf(masterbuf, buf, m, n, mp, np, max_mp, world_rank, world_size, comm, dim, cart_info);
 
   initialize_tables(buf, old, edge, mp, np, cart_info, dim);
 
   calculate(buf, old, new, edge, mp, np, cart_info);
 
-  gather_masterbuf(masterbuf, buf, m, n, mp, np, world_rank, world_size, comm, dim);
+  gather_masterbuf(masterbuf, buf, m, n, mp, np, max_mp, world_rank, world_size, comm, dim, cart_info);
 
   MPI_Barrier(MPI_COMM_WORLD);
 

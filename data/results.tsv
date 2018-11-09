@@ -1,19 +1,181 @@
 Input File	#Processes	Running Time (sec)
-./resources/edgenew192x128.pgm	1	0.136131
-./resources/edgenew256x192.pgm	1	0.208903
-./resources/edgenew512x384.pgm	1	1.104126
-./resources/edgenew192x128.pgm	2	0.067805
-./resources/edgenew256x192.pgm	2	0.132384
-./resources/edgenew512x384.pgm	2	1.021868
-./resources/edgenew192x128.pgm	3	0.183876
-./resources/edgenew256x192.pgm	3	0.156497
-./resources/edgenew512x384.pgm	3	1.296424
-./resources/edgenew192x128.pgm	4	0.123281
-./resources/edgenew256x192.pgm	4	0.367697
-./resources/edgenew512x384.pgm	4	1.156906
-./resources/edgenew192x128.pgm	8	0.165252
-./resources/edgenew256x192.pgm	8	0.437874
-./resources/edgenew512x384.pgm	8	0.974309
-./resources/edgenew192x128.pgm	16	0.250765
-./resources/edgenew256x192.pgm	16	0.380338
-./resources/edgenew512x384.pgm	16	1.140328
+processes = 1, image = 192x128 -> dim = (1, 1), small_image = (192, 128) , last_tile = (192, 128) -> recons = (192, 128)
+./resources/edgenew192x128.pgm	1	0.119157
+processes = 1, image = 256x192 -> dim = (1, 1), small_image = (256, 192) , last_tile = (256, 192) -> recons = (256, 192)
+./resources/edgenew256x192.pgm	1	0.175079
+processes = 1, image = 512x384 -> dim = (1, 1), small_image = (512, 384) , last_tile = (512, 384) -> recons = (512, 384)
+./resources/edgenew512x384.pgm	1	0.992324
+processes = 2, image = 192x128 -> dim = (2, 1), small_image = (96, 128) , last_tile = (96, 128) -> recons = (192, 128)
+processes = 2, image = 192x128 -> dim = (2, 1), small_image = (96, 128) , last_tile = (96, 128) -> recons = (192, 128)
+./resources/edgenew192x128.pgm	2	0.066212
+processes = 2, image = 256x192 -> dim = (2, 1), small_image = (128, 192) , last_tile = (128, 192) -> recons = (256, 192)
+processes = 2, image = 256x192 -> dim = (2, 1), small_image = (128, 192) , last_tile = (128, 192) -> recons = (256, 192)
+./resources/edgenew256x192.pgm	2	0.125656
+processes = 2, image = 512x384 -> dim = (2, 1), small_image = (256, 384) , last_tile = (256, 384) -> recons = (512, 384)
+processes = 2, image = 512x384 -> dim = (2, 1), small_image = (256, 384) , last_tile = (256, 384) -> recons = (512, 384)
+./resources/edgenew512x384.pgm	2	0.804060
+processes = 3, image = 192x128 -> dim = (3, 1), small_image = (64, 128) , last_tile = (64, 128) -> recons = (192, 128)
+processes = 3, image = 192x128 -> dim = (3, 1), small_image = (64, 128) , last_tile = (64, 128) -> recons = (192, 128)
+processes = 3, image = 192x128 -> dim = (3, 1), small_image = (64, 128) , last_tile = (64, 128) -> recons = (192, 128)
+./resources/edgenew192x128.pgm	3	0.067565
+processes = 3, image = 256x192 -> dim = (1, 3), small_image = (256, 64) , last_tile = (256, 64) -> recons = (256, 192)
+processes = 3, image = 256x192 -> dim = (1, 3), small_image = (256, 64) , last_tile = (256, 64) -> recons = (256, 192)
+processes = 3, image = 256x192 -> dim = (1, 3), small_image = (256, 64) , last_tile = (256, 64) -> recons = (256, 192)
+./resources/edgenew256x192.pgm	3	0.137198
+processes = 3, image = 512x384 -> dim = (1, 3), small_image = (512, 128) , last_tile = (512, 128) -> recons = (512, 384)
+processes = 3, image = 512x384 -> dim = (1, 3), small_image = (512, 128) , last_tile = (512, 128) -> recons = (512, 384)
+processes = 3, image = 512x384 -> dim = (1, 3), small_image = (512, 128) , last_tile = (512, 128) -> recons = (512, 384)
+./resources/edgenew512x384.pgm	3	1.042834
+processes = 4, image = 192x128 -> dim = (2, 2), small_image = (96, 64) , last_tile = (96, 64) -> recons = (192, 128)
+processes = 4, image = 192x128 -> dim = (2, 2), small_image = (96, 64) , last_tile = (96, 64) -> recons = (192, 128)
+processes = 4, image = 192x128 -> dim = (2, 2), small_image = (96, 64) , last_tile = (96, 64) -> recons = (192, 128)
+processes = 4, image = 192x128 -> dim = (2, 2), small_image = (96, 64) , last_tile = (96, 64) -> recons = (192, 128)
+./resources/edgenew192x128.pgm	4	0.168086
+processes = 4, image = 256x192 -> dim = (2, 2), small_image = (128, 96) , last_tile = (128, 96) -> recons = (256, 192)
+processes = 4, image = 256x192 -> dim = (2, 2), small_image = (128, 96) , last_tile = (128, 96) -> recons = (256, 192)
+processes = 4, image = 256x192 -> dim = (2, 2), small_image = (128, 96) , last_tile = (128, 96) -> recons = (256, 192)
+processes = 4, image = 256x192 -> dim = (2, 2), small_image = (128, 96) , last_tile = (128, 96) -> recons = (256, 192)
+./resources/edgenew256x192.pgm	4	0.086204
+processes = 4, image = 512x384 -> dim = (2, 2), small_image = (256, 192) , last_tile = (256, 192) -> recons = (512, 384)
+processes = 4, image = 512x384 -> dim = (2, 2), small_image = (256, 192) , last_tile = (256, 192) -> recons = (512, 384)
+processes = 4, image = 512x384 -> dim = (2, 2), small_image = (256, 192) , last_tile = (256, 192) -> recons = (512, 384)
+processes = 4, image = 512x384 -> dim = (2, 2), small_image = (256, 192) , last_tile = (256, 192) -> recons = (512, 384)
+./resources/edgenew512x384.pgm	4	0.675278
+processes = 7, image = 192x128 -> dim = (7, 1), small_image = (27, 128) , last_tile = (30, 128) -> recons = (189, 128)
+processes = 7, image = 192x128 -> dim = (7, 1), small_image = (27, 128) , last_tile = (30, 128) -> recons = (189, 128)
+processes = 7, image = 192x128 -> dim = (7, 1), small_image = (27, 128) , last_tile = (30, 128) -> recons = (189, 128)
+processes = 7, image = 192x128 -> dim = (7, 1), small_image = (27, 128) , last_tile = (30, 128) -> recons = (189, 128)
+processes = 7, image = 192x128 -> dim = (7, 1), small_image = (27, 128) , last_tile = (30, 128) -> recons = (189, 128)
+processes = 7, image = 192x128 -> dim = (7, 1), small_image = (27, 128) , last_tile = (30, 128) -> recons = (189, 128)
+processes = 7, image = 192x128 -> dim = (7, 1), small_image = (27, 128) , last_tile = (30, 128) -> recons = (189, 128)
+./resources/edgenew192x128.pgm	7	0.182489
+processes = 7, image = 256x192 -> dim = (7, 1), small_image = (36, 192) , last_tile = (40, 192) -> recons = (252, 192)
+processes = 7, image = 256x192 -> dim = (7, 1), small_image = (36, 192) , last_tile = (40, 192) -> recons = (252, 192)
+processes = 7, image = 256x192 -> dim = (7, 1), small_image = (36, 192) , last_tile = (40, 192) -> recons = (252, 192)
+processes = 7, image = 256x192 -> dim = (7, 1), small_image = (36, 192) , last_tile = (40, 192) -> recons = (252, 192)
+processes = 7, image = 256x192 -> dim = (7, 1), small_image = (36, 192) , last_tile = (40, 192) -> recons = (252, 192)
+processes = 7, image = 256x192 -> dim = (7, 1), small_image = (36, 192) , last_tile = (40, 192) -> recons = (252, 192)
+processes = 7, image = 256x192 -> dim = (7, 1), small_image = (36, 192) , last_tile = (40, 192) -> recons = (252, 192)
+./resources/edgenew256x192.pgm	7	0.159927
+processes = 7, image = 512x384 -> dim = (7, 1), small_image = (73, 384) , last_tile = (74, 384) -> recons = (511, 384)
+processes = 7, image = 512x384 -> dim = (7, 1), small_image = (73, 384) , last_tile = (74, 384) -> recons = (511, 384)
+processes = 7, image = 512x384 -> dim = (7, 1), small_image = (73, 384) , last_tile = (74, 384) -> recons = (511, 384)
+processes = 7, image = 512x384 -> dim = (7, 1), small_image = (73, 384) , last_tile = (74, 384) -> recons = (511, 384)
+processes = 7, image = 512x384 -> dim = (7, 1), small_image = (73, 384) , last_tile = (74, 384) -> recons = (511, 384)
+processes = 7, image = 512x384 -> dim = (7, 1), small_image = (73, 384) , last_tile = (74, 384) -> recons = (511, 384)
+processes = 7, image = 512x384 -> dim = (7, 1), small_image = (73, 384) , last_tile = (74, 384) -> recons = (511, 384)
+./resources/edgenew512x384.pgm	7	0.800333
+processes = 8, image = 192x128 -> dim = (4, 2), small_image = (48, 64) , last_tile = (48, 64) -> recons = (192, 128)
+processes = 8, image = 192x128 -> dim = (4, 2), small_image = (48, 64) , last_tile = (48, 64) -> recons = (192, 128)
+processes = 8, image = 192x128 -> dim = (4, 2), small_image = (48, 64) , last_tile = (48, 64) -> recons = (192, 128)
+processes = 8, image = 192x128 -> dim = (4, 2), small_image = (48, 64) , last_tile = (48, 64) -> recons = (192, 128)
+processes = 8, image = 192x128 -> dim = (4, 2), small_image = (48, 64) , last_tile = (48, 64) -> recons = (192, 128)
+processes = 8, image = 192x128 -> dim = (4, 2), small_image = (48, 64) , last_tile = (48, 64) -> recons = (192, 128)
+processes = 8, image = 192x128 -> dim = (4, 2), small_image = (48, 64) , last_tile = (48, 64) -> recons = (192, 128)
+processes = 8, image = 192x128 -> dim = (4, 2), small_image = (48, 64) , last_tile = (48, 64) -> recons = (192, 128)
+./resources/edgenew192x128.pgm	8	0.103413
+processes = 8, image = 256x192 -> dim = (4, 2), small_image = (64, 96) , last_tile = (64, 96) -> recons = (256, 192)
+processes = 8, image = 256x192 -> dim = (4, 2), small_image = (64, 96) , last_tile = (64, 96) -> recons = (256, 192)
+processes = 8, image = 256x192 -> dim = (4, 2), small_image = (64, 96) , last_tile = (64, 96) -> recons = (256, 192)
+processes = 8, image = 256x192 -> dim = (4, 2), small_image = (64, 96) , last_tile = (64, 96) -> recons = (256, 192)
+processes = 8, image = 256x192 -> dim = (4, 2), small_image = (64, 96) , last_tile = (64, 96) -> recons = (256, 192)
+processes = 8, image = 256x192 -> dim = (4, 2), small_image = (64, 96) , last_tile = (64, 96) -> recons = (256, 192)
+processes = 8, image = 256x192 -> dim = (4, 2), small_image = (64, 96) , last_tile = (64, 96) -> recons = (256, 192)
+processes = 8, image = 256x192 -> dim = (4, 2), small_image = (64, 96) , last_tile = (64, 96) -> recons = (256, 192)
+./resources/edgenew256x192.pgm	8	0.143919
+processes = 8, image = 512x384 -> dim = (4, 2), small_image = (128, 192) , last_tile = (128, 192) -> recons = (512, 384)
+processes = 8, image = 512x384 -> dim = (4, 2), small_image = (128, 192) , last_tile = (128, 192) -> recons = (512, 384)
+processes = 8, image = 512x384 -> dim = (4, 2), small_image = (128, 192) , last_tile = (128, 192) -> recons = (512, 384)
+processes = 8, image = 512x384 -> dim = (4, 2), small_image = (128, 192) , last_tile = (128, 192) -> recons = (512, 384)
+processes = 8, image = 512x384 -> dim = (4, 2), small_image = (128, 192) , last_tile = (128, 192) -> recons = (512, 384)
+processes = 8, image = 512x384 -> dim = (4, 2), small_image = (128, 192) , last_tile = (128, 192) -> recons = (512, 384)
+processes = 8, image = 512x384 -> dim = (4, 2), small_image = (128, 192) , last_tile = (128, 192) -> recons = (512, 384)
+processes = 8, image = 512x384 -> dim = (4, 2), small_image = (128, 192) , last_tile = (128, 192) -> recons = (512, 384)
+./resources/edgenew512x384.pgm	8	0.792538
+processes = 11, image = 192x128 -> dim = (11, 1), small_image = (17, 128) , last_tile = (22, 128) -> recons = (187, 128)
+processes = 11, image = 192x128 -> dim = (11, 1), small_image = (17, 128) , last_tile = (22, 128) -> recons = (187, 128)
+processes = 11, image = 192x128 -> dim = (11, 1), small_image = (17, 128) , last_tile = (22, 128) -> recons = (187, 128)
+processes = 11, image = 192x128 -> dim = (11, 1), small_image = (17, 128) , last_tile = (22, 128) -> recons = (187, 128)
+processes = 11, image = 192x128 -> dim = (11, 1), small_image = (17, 128) , last_tile = (22, 128) -> recons = (187, 128)
+processes = 11, image = 192x128 -> dim = (11, 1), small_image = (17, 128) , last_tile = (22, 128) -> recons = (187, 128)
+processes = 11, image = 192x128 -> dim = (11, 1), small_image = (17, 128) , last_tile = (22, 128) -> recons = (187, 128)
+processes = 11, image = 192x128 -> dim = (11, 1), small_image = (17, 128) , last_tile = (22, 128) -> recons = (187, 128)
+processes = 11, image = 192x128 -> dim = (11, 1), small_image = (17, 128) , last_tile = (22, 128) -> recons = (187, 128)
+processes = 11, image = 192x128 -> dim = (11, 1), small_image = (17, 128) , last_tile = (22, 128) -> recons = (187, 128)
+processes = 11, image = 192x128 -> dim = (11, 1), small_image = (17, 128) , last_tile = (22, 128) -> recons = (187, 128)
+./resources/edgenew192x128.pgm	11	0.207912
+processes = 11, image = 256x192 -> dim = (11, 1), small_image = (23, 192) , last_tile = (26, 192) -> recons = (253, 192)
+processes = 11, image = 256x192 -> dim = (11, 1), small_image = (23, 192) , last_tile = (26, 192) -> recons = (253, 192)
+processes = 11, image = 256x192 -> dim = (11, 1), small_image = (23, 192) , last_tile = (26, 192) -> recons = (253, 192)
+processes = 11, image = 256x192 -> dim = (11, 1), small_image = (23, 192) , last_tile = (26, 192) -> recons = (253, 192)
+processes = 11, image = 256x192 -> dim = (11, 1), small_image = (23, 192) , last_tile = (26, 192) -> recons = (253, 192)
+processes = 11, image = 256x192 -> dim = (11, 1), small_image = (23, 192) , last_tile = (26, 192) -> recons = (253, 192)
+processes = 11, image = 256x192 -> dim = (11, 1), small_image = (23, 192) , last_tile = (26, 192) -> recons = (253, 192)
+processes = 11, image = 256x192 -> dim = (11, 1), small_image = (23, 192) , last_tile = (26, 192) -> recons = (253, 192)
+processes = 11, image = 256x192 -> dim = (11, 1), small_image = (23, 192) , last_tile = (26, 192) -> recons = (253, 192)
+processes = 11, image = 256x192 -> dim = (11, 1), small_image = (23, 192) , last_tile = (26, 192) -> recons = (253, 192)
+processes = 11, image = 256x192 -> dim = (11, 1), small_image = (23, 192) , last_tile = (26, 192) -> recons = (253, 192)
+./resources/edgenew256x192.pgm	11	0.227611
+processes = 11, image = 512x384 -> dim = (11, 1), small_image = (46, 384) , last_tile = (52, 384) -> recons = (506, 384)
+processes = 11, image = 512x384 -> dim = (11, 1), small_image = (46, 384) , last_tile = (52, 384) -> recons = (506, 384)
+processes = 11, image = 512x384 -> dim = (11, 1), small_image = (46, 384) , last_tile = (52, 384) -> recons = (506, 384)
+processes = 11, image = 512x384 -> dim = (11, 1), small_image = (46, 384) , last_tile = (52, 384) -> recons = (506, 384)
+processes = 11, image = 512x384 -> dim = (11, 1), small_image = (46, 384) , last_tile = (52, 384) -> recons = (506, 384)
+processes = 11, image = 512x384 -> dim = (11, 1), small_image = (46, 384) , last_tile = (52, 384) -> recons = (506, 384)
+processes = 11, image = 512x384 -> dim = (11, 1), small_image = (46, 384) , last_tile = (52, 384) -> recons = (506, 384)
+processes = 11, image = 512x384 -> dim = (11, 1), small_image = (46, 384) , last_tile = (52, 384) -> recons = (506, 384)
+processes = 11, image = 512x384 -> dim = (11, 1), small_image = (46, 384) , last_tile = (52, 384) -> recons = (506, 384)
+processes = 11, image = 512x384 -> dim = (11, 1), small_image = (46, 384) , last_tile = (52, 384) -> recons = (506, 384)
+processes = 11, image = 512x384 -> dim = (11, 1), small_image = (46, 384) , last_tile = (52, 384) -> recons = (506, 384)
+./resources/edgenew512x384.pgm	11	1.088969
+processes = 16, image = 192x128 -> dim = (4, 4), small_image = (48, 32) , last_tile = (48, 32) -> recons = (192, 128)
+processes = 16, image = 192x128 -> dim = (4, 4), small_image = (48, 32) , last_tile = (48, 32) -> recons = (192, 128)
+processes = 16, image = 192x128 -> dim = (4, 4), small_image = (48, 32) , last_tile = (48, 32) -> recons = (192, 128)
+processes = 16, image = 192x128 -> dim = (4, 4), small_image = (48, 32) , last_tile = (48, 32) -> recons = (192, 128)
+processes = 16, image = 192x128 -> dim = (4, 4), small_image = (48, 32) , last_tile = (48, 32) -> recons = (192, 128)
+processes = 16, image = 192x128 -> dim = (4, 4), small_image = (48, 32) , last_tile = (48, 32) -> recons = (192, 128)
+processes = 16, image = 192x128 -> dim = (4, 4), small_image = (48, 32) , last_tile = (48, 32) -> recons = (192, 128)
+processes = 16, image = 192x128 -> dim = (4, 4), small_image = (48, 32) , last_tile = (48, 32) -> recons = (192, 128)
+processes = 16, image = 192x128 -> dim = (4, 4), small_image = (48, 32) , last_tile = (48, 32) -> recons = (192, 128)
+processes = 16, image = 192x128 -> dim = (4, 4), small_image = (48, 32) , last_tile = (48, 32) -> recons = (192, 128)
+processes = 16, image = 192x128 -> dim = (4, 4), small_image = (48, 32) , last_tile = (48, 32) -> recons = (192, 128)
+processes = 16, image = 192x128 -> dim = (4, 4), small_image = (48, 32) , last_tile = (48, 32) -> recons = (192, 128)
+processes = 16, image = 192x128 -> dim = (4, 4), small_image = (48, 32) , last_tile = (48, 32) -> recons = (192, 128)
+processes = 16, image = 192x128 -> dim = (4, 4), small_image = (48, 32) , last_tile = (48, 32) -> recons = (192, 128)
+processes = 16, image = 192x128 -> dim = (4, 4), small_image = (48, 32) , last_tile = (48, 32) -> recons = (192, 128)
+processes = 16, image = 192x128 -> dim = (4, 4), small_image = (48, 32) , last_tile = (48, 32) -> recons = (192, 128)
+./resources/edgenew192x128.pgm	16	0.331325
+processes = 16, image = 256x192 -> dim = (4, 4), small_image = (64, 48) , last_tile = (64, 48) -> recons = (256, 192)
+processes = 16, image = 256x192 -> dim = (4, 4), small_image = (64, 48) , last_tile = (64, 48) -> recons = (256, 192)
+processes = 16, image = 256x192 -> dim = (4, 4), small_image = (64, 48) , last_tile = (64, 48) -> recons = (256, 192)
+processes = 16, image = 256x192 -> dim = (4, 4), small_image = (64, 48) , last_tile = (64, 48) -> recons = (256, 192)
+processes = 16, image = 256x192 -> dim = (4, 4), small_image = (64, 48) , last_tile = (64, 48) -> recons = (256, 192)
+processes = 16, image = 256x192 -> dim = (4, 4), small_image = (64, 48) , last_tile = (64, 48) -> recons = (256, 192)
+processes = 16, image = 256x192 -> dim = (4, 4), small_image = (64, 48) , last_tile = (64, 48) -> recons = (256, 192)
+processes = 16, image = 256x192 -> dim = (4, 4), small_image = (64, 48) , last_tile = (64, 48) -> recons = (256, 192)
+processes = 16, image = 256x192 -> dim = (4, 4), small_image = (64, 48) , last_tile = (64, 48) -> recons = (256, 192)
+processes = 16, image = 256x192 -> dim = (4, 4), small_image = (64, 48) , last_tile = (64, 48) -> recons = (256, 192)
+processes = 16, image = 256x192 -> dim = (4, 4), small_image = (64, 48) , last_tile = (64, 48) -> recons = (256, 192)
+processes = 16, image = 256x192 -> dim = (4, 4), small_image = (64, 48) , last_tile = (64, 48) -> recons = (256, 192)
+processes = 16, image = 256x192 -> dim = (4, 4), small_image = (64, 48) , last_tile = (64, 48) -> recons = (256, 192)
+processes = 16, image = 256x192 -> dim = (4, 4), small_image = (64, 48) , last_tile = (64, 48) -> recons = (256, 192)
+processes = 16, image = 256x192 -> dim = (4, 4), small_image = (64, 48) , last_tile = (64, 48) -> recons = (256, 192)
+processes = 16, image = 256x192 -> dim = (4, 4), small_image = (64, 48) , last_tile = (64, 48) -> recons = (256, 192)
+./resources/edgenew256x192.pgm	16	0.195682
+processes = 16, image = 512x384 -> dim = (4, 4), small_image = (128, 96) , last_tile = (128, 96) -> recons = (512, 384)
+processes = 16, image = 512x384 -> dim = (4, 4), small_image = (128, 96) , last_tile = (128, 96) -> recons = (512, 384)
+processes = 16, image = 512x384 -> dim = (4, 4), small_image = (128, 96) , last_tile = (128, 96) -> recons = (512, 384)
+processes = 16, image = 512x384 -> dim = (4, 4), small_image = (128, 96) , last_tile = (128, 96) -> recons = (512, 384)
+processes = 16, image = 512x384 -> dim = (4, 4), small_image = (128, 96) , last_tile = (128, 96) -> recons = (512, 384)
+processes = 16, image = 512x384 -> dim = (4, 4), small_image = (128, 96) , last_tile = (128, 96) -> recons = (512, 384)
+processes = 16, image = 512x384 -> dim = (4, 4), small_image = (128, 96) , last_tile = (128, 96) -> recons = (512, 384)
+processes = 16, image = 512x384 -> dim = (4, 4), small_image = (128, 96) , last_tile = (128, 96) -> recons = (512, 384)
+processes = 16, image = 512x384 -> dim = (4, 4), small_image = (128, 96) , last_tile = (128, 96) -> recons = (512, 384)
+processes = 16, image = 512x384 -> dim = (4, 4), small_image = (128, 96) , last_tile = (128, 96) -> recons = (512, 384)
+processes = 16, image = 512x384 -> dim = (4, 4), small_image = (128, 96) , last_tile = (128, 96) -> recons = (512, 384)
+processes = 16, image = 512x384 -> dim = (4, 4), small_image = (128, 96) , last_tile = (128, 96) -> recons = (512, 384)
+processes = 16, image = 512x384 -> dim = (4, 4), small_image = (128, 96) , last_tile = (128, 96) -> recons = (512, 384)
+processes = 16, image = 512x384 -> dim = (4, 4), small_image = (128, 96) , last_tile = (128, 96) -> recons = (512, 384)
+processes = 16, image = 512x384 -> dim = (4, 4), small_image = (128, 96) , last_tile = (128, 96) -> recons = (512, 384)
+processes = 16, image = 512x384 -> dim = (4, 4), small_image = (128, 96) , last_tile = (128, 96) -> recons = (512, 384)
+./resources/edgenew512x384.pgm	16	0.899276
