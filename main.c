@@ -70,11 +70,10 @@ void decomposition(int world_size, int m, int n , int *mp, int *np, int *max_mp,
 
 }
 
-void allocate_tables(double ***buf, double ***old, double ***new, double ***edge, int m, int n) {
-  *buf = (double **) arralloc(sizeof(double), 2, m, n);
+void allocate_tables(double ***edge, double ***old, double ***new, int m, int n) {
+  *edge = (double **) arralloc(sizeof(double), 2, m+2, n+2);
   *old = (double **) arralloc(sizeof(double), 2, m+2, n+2);
   *new = (double **) arralloc(sizeof(double), 2, m+2, n+2);
-  *edge = (double **) arralloc(sizeof(double), 2, m+2, n+2);
 }
 
 void print_table(double **t, int m, int n) {
@@ -86,15 +85,15 @@ void print_table(double **t, int m, int n) {
   }
 }
 
-void scatter_masterbuf(double **masterbuf, double **buf, int mp, int np, Cart_info cart_info, Mpi_Datatypes mpi_Datatypes) {
+void scatter_masterbuf(double **masterbuf, double **edge, int mp, int np, Cart_info cart_info, Mpi_Datatypes mpi_Datatypes) {
   int curr_coord[2], send_rank;
   MPI_Status recv_status, status[cart_info.world_size];
   MPI_Request recv_request, request[cart_info.world_size];
 
   if(!has_right(cart_info))
-    MPI_Irecv(&buf[0][0], 1, mpi_Datatypes.max_cont_table, MASTER, 0, cart_info.comm, &recv_request);
+    MPI_Irecv(&edge[1][1], 1, mpi_Datatypes.max_cont_table, MASTER, 0, cart_info.comm, &recv_request);
   else
-    MPI_Irecv(&buf[0][0], 1, mpi_Datatypes.cont_table, MASTER, 0, cart_info.comm, &recv_request);
+    MPI_Irecv(&edge[1][1], 1, mpi_Datatypes.cont_table, MASTER, 0, cart_info.comm, &recv_request);
 
   if(cart_info.id == MASTER) {
 
@@ -116,15 +115,15 @@ void scatter_masterbuf(double **masterbuf, double **buf, int mp, int np, Cart_in
 
 }
 
-void gather_masterbuf(double **masterbuf, double **buf, int mp, int np, Cart_info cart_info, Mpi_Datatypes mpi_Datatypes) {
+void gather_masterbuf(double **masterbuf, double **edge, int mp, int np, Cart_info cart_info, Mpi_Datatypes mpi_Datatypes) {
   int curr_coord[2], recv_rank;
   MPI_Status send_status, status[cart_info.world_size];
   MPI_Request send_request, request[cart_info.world_size];
 
   if(!has_right(cart_info))
-    MPI_Isend(&buf[0][0], 1, mpi_Datatypes.max_cont_table, MASTER, 0, cart_info.comm, &send_request);
+    MPI_Isend(&edge[1][1], 1, mpi_Datatypes.max_cont_table, MASTER, 0, cart_info.comm, &send_request);
   else
-    MPI_Isend(&buf[0][0], 1, mpi_Datatypes.cont_table, MASTER, 0, cart_info.comm, &send_request);
+    MPI_Isend(&edge[1][1], 1, mpi_Datatypes.cont_table, MASTER, 0, cart_info.comm, &send_request);
 
 
   if(cart_info.id == MASTER) {
@@ -148,13 +147,12 @@ void gather_masterbuf(double **masterbuf, double **buf, int mp, int np, Cart_inf
 
 }
 
-void initialize_tables(double **buf, double **old, double **edge, int m, int n, Cart_info cart_info) {
+void initialize_tables(double **edge, double **old, int m, int n, Cart_info cart_info) {
   int i, j;
   double val;
 
   for (i=0; i<m+2;i++) {
     for (j=0;j<n+2;j++) {
-      if(i>0 && i<m+1 && j>0 && j<n+1)  edge[i][j]=buf[i-1][j-1];
       old[i][j]=255.0;
     }
   }
@@ -256,7 +254,7 @@ int can_terminate(double **old, double **new, int m, int n, MPI_Comm comm) {
   return 0;
 }
 
-void calculate(double **buf, double **old, double **new, double **edge, int m, int n, Cart_info cart_info, Mpi_Datatypes *mpi_Datatypes) {
+void calculate(double **edge, double **old, double **new, int m, int n, Cart_info cart_info, Mpi_Datatypes *mpi_Datatypes) {
   int i, j, iter;
   MPI_Request request[8];
   MPI_Status status[8];
@@ -302,7 +300,7 @@ void calculate(double **buf, double **old, double **new, double **edge, int m, i
 
   for (i=1;i<m+1;i++) {
     for (j=1;j<n+1;j++) {
-      buf[i-1][j-1]=old[i][j];
+      edge[i][j]=old[i][j];
     }
   }
 
@@ -310,22 +308,20 @@ void calculate(double **buf, double **old, double **new, double **edge, int m, i
   //   printf("Finished %d iterations\n", MAXITER);
 }
 
-void free_tables(double **buf, double **old, double **new, double **edge) {
-  free(buf);
+void free_tables(double **edge, double **old, double **new) {
+  free(edge);
   free(old);
   free(new);
-  free(edge);
 }
 
 int main (int argc, char** argv) {
-  double **masterbuf = NULL, **buf, **old, **new, **edge;
+  double **masterbuf = NULL, **edge, **old, **new;
 
   char filename[FILENAME_SIZE];
 
-  int world_rank, world_size, m, n, mp, np, max_mp, max_np, dim[2] = {0, 0};
+  int world_rank, world_size, m, n, mp, np, max_mp, max_np;
   double start_time, end_time;
-  int period[2] = {0, 1};
-  int reorder = 1;
+  int dim[2], period[2] = {0, 1}, reorder = 1;
   MPI_Comm comm;
 
   MPI_Init(NULL, NULL);
@@ -369,15 +365,15 @@ int main (int argc, char** argv) {
   if(world_rank == MASTER)
     start_time = MPI_Wtime();
 
-  allocate_tables(&buf, &old, &new, &edge, mp, np);
+  allocate_tables(&edge, &old, &new, mp, np);
 
-  scatter_masterbuf(masterbuf, buf, mp, np, cart_info, mpi_Datatypes);
+  scatter_masterbuf(masterbuf, edge, mp, np, cart_info, mpi_Datatypes);
 
-  initialize_tables(buf, old, edge, mp, np, cart_info);
+  initialize_tables(edge, old, mp, np, cart_info);
 
-  calculate(buf, old, new, edge, mp, np, cart_info, &mpi_Datatypes);
+  calculate(edge, old, new, mp, np, cart_info, &mpi_Datatypes);
 
-  gather_masterbuf(masterbuf, buf, mp, np, cart_info, mpi_Datatypes);
+  gather_masterbuf(masterbuf, edge, mp, np, cart_info, mpi_Datatypes);
 
   MPI_Barrier(MPI_COMM_WORLD);
 
@@ -399,7 +395,7 @@ int main (int argc, char** argv) {
     free(masterbuf);
   }
 
-  free_tables(buf, old, new, edge);
+  free_tables(edge, old, new);
 
   MPI_Finalize();
 
