@@ -175,7 +175,7 @@ void initialize_tables(double **buf, double **old, double **edge, int m, int n, 
 
 }
 
-void halo_swaps(double **old, int m, int n, Cart_info cart_info, mpi_types row, Mpi_Datatypes *mpi_Datatypes, MPI_Request request[8], MPI_Status status[8]) {
+void halo_swaps(double **old, int m, int n, Cart_info cart_info, Mpi_Datatypes *mpi_Datatypes, MPI_Request request[8], MPI_Status status[8]) {
 
   MPI_Irecv(&(old[1][n+1]), 1, mpi_Datatypes->column, cart_info.up, TOP_TO_BOTTOM, cart_info.comm, &request[0]);
   MPI_Isend(&(old[1][n]), 1, mpi_Datatypes->column, cart_info.up, BOTTOM_TO_TOP, cart_info.comm, &request[1]);
@@ -256,7 +256,7 @@ int can_terminate(double **old, double **new, int m, int n, MPI_Comm comm) {
   return 0;
 }
 
-void calculate(double **buf, double **old, double **new, double **edge, int m, int n, Cart_info cart_info, Mpi_Datatypes mpi_Datatypes) {
+void calculate(double **buf, double **old, double **new, double **edge, int m, int n, Cart_info cart_info, Mpi_Datatypes *mpi_Datatypes) {
   int i, j, iter;
   MPI_Request request[8];
   MPI_Status status[8];
@@ -272,7 +272,7 @@ void calculate(double **buf, double **old, double **new, double **edge, int m, i
     // }
 
     // Send and Receive halo swaps
-    halo_swaps(old, m, n, cart_info, &mpi_Datatypes, request, status);
+    halo_swaps(old, m, n, cart_info, mpi_Datatypes, request, status);
 
     // calculate inner table
     for (i=2;i<m;i++) {
@@ -322,7 +322,7 @@ int main (int argc, char** argv) {
 
   char filename[FILENAME_SIZE];
 
-  int world_rank, world_size, m, n, mp, np, max_mp, max_np, dim[2];
+  int world_rank, world_size, m, n, mp, np, max_mp, max_np, dim[2] = {0, 0};
   double start_time, end_time;
   int period[2] = {0, 1};
   int reorder = 1;
@@ -375,7 +375,7 @@ int main (int argc, char** argv) {
 
   initialize_tables(buf, old, edge, mp, np, cart_info);
 
-  calculate(buf, old, new, edge, mp, np, cart_info, mpi_Datatypes);
+  calculate(buf, old, new, edge, mp, np, cart_info, &mpi_Datatypes);
 
   gather_masterbuf(masterbuf, buf, mp, np, cart_info, mpi_Datatypes);
 

@@ -18,12 +18,12 @@ Mpi_Datatypes init_mpi_datatypes(int n, int mp, int np, int max_mp, int max_np) 
   return mpi_Datatypes;
 }
 
-void init_mpi_datatypes_row_col(Mpi_Datatypes mpi_Datatypes, int mp, int np) {
+void init_mpi_datatypes_row_col(Mpi_Datatypes *mpi_Datatypes, int mp, int np) {
 
-  MPI_Type_contiguous(np+2, MPI_DOUBLE, &mpi_Datatypes.row);
-  MPI_Type_commit(&mpi_Datatypes.row);
+  MPI_Type_contiguous(np+2, MPI_DOUBLE, &(mpi_Datatypes->row));
+  MPI_Type_commit(&(mpi_Datatypes->row));
 
-  MPI_Type_vector(mp, 1, np+2, MPI_DOUBLE, &mpi_Datatypes.column);
-  MPI_Type_commit(&mpi_Datatypes.column);
+  MPI_Type_vector(mp, 1, np+2, MPI_DOUBLE, &(mpi_Datatypes->column));
+  MPI_Type_commit(&(mpi_Datatypes->column));
 
 }

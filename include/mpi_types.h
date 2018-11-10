@@ -14,6 +14,6 @@ typedef struct Mpi_Datatypes {
 
 Mpi_Datatypes init_mpi_datatypes(int n, int mp, int np, int max_mp, int max_np);
 
-void init_mpi_datatypes_row_col(Mpi_Datatypes mpi_Datatypes, int mp, int np);
+void init_mpi_datatypes_row_col(Mpi_Datatypes *mpi_Datatypes, int mp, int np);
 
 #endif
