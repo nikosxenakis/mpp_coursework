@@ -7,6 +7,11 @@
 
 #define MASTER 0
 
+#define TOP_TO_BOTTOM 0
+#define BOTTOM_TO_TOP 1
+#define LEFT_TO_RIGHT 3
+#define RIGHT_TO_LEFT 4
+
 typedef struct Cart_info {
   int id;
   MPI_Comm comm;

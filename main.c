@@ -10,18 +10,13 @@
 #include "include/mpi_types.h"
 #include "include/cart_info.h"
 
-#define MAXITER   1500
+#define MAXITER   1000000
 #define PRINTFREQ  100
 #define FILENAME_SIZE 128
 
 #define MIN_DIFF 0.075
 
 #define MASTER 0
-
-#define TOP_TO_BOTTOM 0
-#define BOTTOM_TO_TOP 1
-#define LEFT_TO_RIGHT 3
-#define RIGHT_TO_LEFT 4
 
 double boundaryval(int i, int m) {
   double val;
@@ -159,11 +154,11 @@ void print_average_pixel(double **table, int iter, Cart_info cart_info, int m, i
   average_pixel = get_average_pixel(table, cart_info.comm, m, n, mp, np);
   if(cart_info.id == MASTER) {
     if(iter == 1) {
-      fp = fopen ("./output/average_pixels.tsv", "w");
+      fp = fopen ("./data/average_pixels.tsv", "w");
       fprintf(fp, "iteration\taverage pixel\n");
       fclose(fp);
     }
-    fp = fopen ("./output/average_pixels.tsv", "a");
+    fp = fopen ("./data/average_pixels.tsv", "a");
     fprintf(fp, "%d\t%f\n", iter, average_pixel);
     fclose(fp);
   }
@@ -247,13 +242,7 @@ void calculate(double **edge, double **old, double **new, int m, int n, int mp, 
 
   init_mpi_datatypes_row_col(mpi_Datatypes, mp, np);
 
-  // if(world_rank == MASTER)
-  //   printf("calculate\n");
-
   for (iter=1; iter<=MAXITER; iter++) {
-    // if(iter%PRINTFREQ==0) {
-    //   printf("Iteration %d\n", iter);
-    // }
 
     // Send and Receive halo swaps
     halo_swaps(old, mp, np, cart_info, mpi_Datatypes, request, status);
@@ -272,10 +261,8 @@ void calculate(double **edge, double **old, double **new, int m, int n, int mp, 
     if(iter%PRINTFREQ==0 || iter == 1) {
       print_average_pixel(new, iter, cart_info, m, n, mp, np);
 
-      if(can_terminate(old, new, mp, np, cart_info.comm)) {
-        // printf("ITER = %d\n", iter);
-        // break;
-      }
+      if(can_terminate(old, new, mp, np, cart_info.comm))
+        break;
     }
 
     for (i=1;i<mp+1;i++) {
@@ -292,8 +279,6 @@ void calculate(double **edge, double **old, double **new, int m, int n, int mp, 
     }
   }
 
-  // if(world_rank == MASTER)
-  //   printf("Finished %d iterations\n", MAXITER);
 }
 
 void free_tables(double **edge, double **old, double **new) {
@@ -304,9 +289,8 @@ void free_tables(double **edge, double **old, double **new) {
 
 int main (int argc, char** argv) {
   double **masterbuf = NULL, **edge, **old, **new;
-
+  FILE * fp;
   char filename[FILENAME_SIZE];
-
   int world_rank, world_size, m, n, mp, np, max_mp, max_np;
   double start_time, end_time;
   int dim[2], period[2] = {0, 1}, reorder = 1;
@@ -365,7 +349,9 @@ int main (int argc, char** argv) {
 
   if(world_rank == MASTER) {
     end_time = MPI_Wtime();
-    printf("%s\t%d\t%f\n", filename, world_size, end_time - start_time);
+    fp = fopen ("./data/time_results.tsv", "a");
+    fprintf(fp, "%s\t%d\t%f\n", filename, world_size, end_time - start_time);
+    fclose(fp);
   }
 
   if(world_rank == MASTER) {
