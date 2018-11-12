@@ -139,6 +139,36 @@ void initialize_tables(double **edge, double **old, int m, int n, Cart_info cart
 
 }
 
+double get_average_pixel(double **table, MPI_Comm comm, int m, int n, int mp, int np) {
+  double sum = 0, global_sum = 0;
+
+  for (int i=1; i<mp+1; i++) {
+    for (int j=1; j<np+1; j++) {
+      sum += table[i][j];
+    }
+  }
+  MPI_Allreduce(&sum, &global_sum, 1, MPI_DOUBLE, MPI_SUM, comm);
+
+  return global_sum/(m*n);
+}
+
+void print_average_pixel(double **table, int iter, Cart_info cart_info, int m, int n, int mp, int np) {
+  double average_pixel;
+  FILE * fp;
+
+  average_pixel = get_average_pixel(table, cart_info.comm, m, n, mp, np);
+  if(cart_info.id == MASTER) {
+    if(iter == 1) {
+      fp = fopen ("./output/average_pixels.tsv", "w");
+      fprintf(fp, "iteration\taverage pixel\n");
+      fclose(fp);
+    }
+    fp = fopen ("./output/average_pixels.tsv", "a");
+    fprintf(fp, "%d\t%f\n", iter, average_pixel);
+    fclose(fp);
+  }
+}
+
 void halo_swaps(double **old, int m, int n, Cart_info cart_info, Mpi_Datatypes *mpi_Datatypes, MPI_Request request[8], MPI_Status status[8]) {
 
   MPI_Irecv(&(old[1][n+1]), 1, mpi_Datatypes->column, cart_info.up, TOP_TO_BOTTOM, cart_info.comm, &request[0]);
@@ -210,12 +240,12 @@ int can_terminate(double **old, double **new, int m, int n, MPI_Comm comm) {
   return 0;
 }
 
-void calculate(double **edge, double **old, double **new, int m, int n, Cart_info cart_info, Mpi_Datatypes *mpi_Datatypes) {
+void calculate(double **edge, double **old, double **new, int m, int n, int mp, int np, Cart_info cart_info, Mpi_Datatypes *mpi_Datatypes) {
   int i, j, iter;
   MPI_Request request[8];
   MPI_Status status[8];
 
-  init_mpi_datatypes_row_col(mpi_Datatypes, m, n);
+  init_mpi_datatypes_row_col(mpi_Datatypes, mp, np);
 
   // if(world_rank == MASTER)
   //   printf("calculate\n");
@@ -226,36 +256,38 @@ void calculate(double **edge, double **old, double **new, int m, int n, Cart_inf
     // }
 
     // Send and Receive halo swaps
-    halo_swaps(old, m, n, cart_info, mpi_Datatypes, request, status);
+    halo_swaps(old, mp, np, cart_info, mpi_Datatypes, request, status);
 
     // calculate inner table
-    for (i=2;i<m;i++) {
-      for (j=2;j<n;j++) {
+    for (i=2;i<mp;i++) {
+      for (j=2;j<np;j++) {
         new[i][j]=0.25*(old[i-1][j] + old[i+1][j] + old[i][j-1] + old[i][j+1] - edge[i][j]);
       }
     }
 
     // calculate borders with halo
-    caclulate_halo(old, new, edge, m, n, cart_info, request, status);
+    caclulate_halo(old, new, edge, mp, np, cart_info, request, status);
 
     // if can_terminate every PRINTFREQ
-    if(iter%PRINTFREQ==0) {
-      if(can_terminate(old, new, m, n, cart_info.comm)) {
+    if(iter%PRINTFREQ==0 || iter == 1) {
+      print_average_pixel(new, iter, cart_info, m, n, mp, np);
+
+      if(can_terminate(old, new, mp, np, cart_info.comm)) {
         // printf("ITER = %d\n", iter);
         // break;
       }
     }
 
-    for (i=1;i<m+1;i++) {
-      for (j=1;j<n+1;j++) {
+    for (i=1;i<mp+1;i++) {
+      for (j=1;j<np+1;j++) {
         old[i][j]=new[i][j];
       }
     }
 
   }
 
-  for (i=1;i<m+1;i++) {
-    for (j=1;j<n+1;j++) {
+  for (i=1;i<mp+1;i++) {
+    for (j=1;j<np+1;j++) {
       edge[i][j]=old[i][j];
     }
   }
@@ -325,7 +357,7 @@ int main (int argc, char** argv) {
 
   initialize_tables(edge, old, mp, np, cart_info);
 
-  calculate(edge, old, new, mp, np, cart_info, &mpi_Datatypes);
+  calculate(edge, old, new, m, n, mp, np, cart_info, &mpi_Datatypes);
 
   gather_masterbuf(masterbuf, edge, mp, np, cart_info, mpi_Datatypes);
 
