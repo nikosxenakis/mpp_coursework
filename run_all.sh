@@ -7,7 +7,7 @@ rm -rf data/results.tsv;
 
 echo "Input File\t#Processes\tRunning Time (sec)" >> data/results.tsv;
 
-for N in 1 2 3 4 8 16
+for N in 1 2 3 4 7 8 11 16
 do
   echo "\nFor n = ${N}"
   for input_file in ./resources/*.pgm
