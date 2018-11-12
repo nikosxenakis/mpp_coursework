@@ -27,6 +27,4 @@ int is_top(Cart_info cart_info);
 
 Cart_info discoverCart(int id, MPI_Comm comm, int world_size, int dim[2]);
 
-void print_cart_info(Cart_info cart_info);
-
 #endif

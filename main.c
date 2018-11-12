@@ -33,30 +33,7 @@ double boundaryval(int i, int m) {
 
 void decomposition(int world_size, int m, int n , int *mp, int *np, int *max_mp, int *max_np, int dim[2]) {
 
-  dim[1]=sqrt(world_size);
-  if(dim[1] > 1 && world_size%dim[1] == 0) {
-    dim[0]=world_size/dim[1];
-  }
-  else {
-    dim[0]=sqrt(world_size);
-    if(dim[0] > 1 && world_size%dim[0] == 0) {
-      dim[1]=world_size/dim[0];
-    }
-    else {
-      if(m % world_size == 0) {
-        dim[1] = 1;
-        dim[0] = world_size;
-      }
-      else if(n % world_size == 0) {
-        dim[1] = world_size;
-        dim[0] = 1;
-      }
-      else {
-        dim[1] = 1;
-        dim[0] = world_size;
-      }
-    }
-  }
+  MPI_Dims_create(world_size, 2, dim);
 
   assert(dim[0]*dim[1] == world_size);
 
@@ -66,23 +43,12 @@ void decomposition(int world_size, int m, int n , int *mp, int *np, int *max_mp,
   *max_mp = m/dim[0] + m%dim[0];
   *max_np = n/dim[1] + n%dim[1];
 
-  printf("processes = %d, image = %dx%d -> dim = (%d, %d), small_image = (%d, %d) , last_tile = (%d, %d) -> recons = (%d, %d)\n", world_size, m, n, dim[0], dim[1], *mp, *np, *max_mp, *max_np, dim[0]**mp, dim[1]**np);
-
 }
 
 void allocate_tables(double ***edge, double ***old, double ***new, int m, int n) {
   *edge = (double **) arralloc(sizeof(double), 2, m+2, n+2);
   *old = (double **) arralloc(sizeof(double), 2, m+2, n+2);
   *new = (double **) arralloc(sizeof(double), 2, m+2, n+2);
-}
-
-void print_table(double **t, int m, int n) {
-  for (int i = 0; i < m; ++i) {
-    for (int j = 0; j < n; ++j) {
-      printf("%.1f ", t[i][j]);
-    }
-    printf("\n");
-  }
 }
 
 void scatter_masterbuf(double **masterbuf, double **edge, int mp, int np, Cart_info cart_info, Mpi_Datatypes mpi_Datatypes) {
@@ -334,8 +300,6 @@ int main (int argc, char** argv) {
   MPI_Cart_create(MPI_COMM_WORLD, 2, dim, period, reorder, &comm);
 
   Cart_info cart_info = discoverCart(world_rank, comm, world_size, dim);
-
-  // print_cart_info(cart_info);
 
   Mpi_Datatypes mpi_Datatypes = init_mpi_datatypes(n, mp, np, max_mp, max_np);
 

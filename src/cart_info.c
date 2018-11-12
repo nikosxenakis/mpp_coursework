@@ -16,9 +16,6 @@ int is_top(Cart_info cart_info) {
 
 Cart_info discoverCart(int id, MPI_Comm comm, int world_size, int dim[2]) {
 
-  // if(id == MASTER)
-  //   printf("Topology: %d x %d\n", dim[0], dim[1]);
-
   Cart_info cart_info;
 
   cart_info.id = id;
@@ -50,8 +47,4 @@ Cart_info discoverCart(int id, MPI_Comm comm, int world_size, int dim[2]) {
   }
 
   return cart_info;
-}
-
-void print_cart_info(Cart_info cart_info) {
-  printf("id = %d has up = %d, down = %d, left = %d, right = %d\n", cart_info.id, cart_info.up, cart_info.down, cart_info.left, cart_info.right);
 }
