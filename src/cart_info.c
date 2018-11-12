@@ -3,11 +3,11 @@
 #define MASTER 0
 
 int has_left(Cart_info cart_info) {
-  return cart_info.left != -1;
+  return cart_info.left != MPI_PROC_NULL;
 }
 
 int has_right(Cart_info cart_info) {
-  return cart_info.right != -1;
+  return cart_info.right != MPI_PROC_NULL;
 }
 
 int is_top(Cart_info cart_info) {
@@ -34,8 +34,8 @@ Cart_info discoverCart(int id, MPI_Comm comm, int world_size, int dim[2]) {
   MPI_Cart_rank(comm, cart_info.coord, &cart_info.down);
   cart_info.coord[1] = cart_info.coord[1] + 1;
 
-  cart_info.left = -1;
-  cart_info.right = -1;
+  cart_info.left = MPI_PROC_NULL;
+  cart_info.right = MPI_PROC_NULL;
 
   if(cart_info.coord[0] != 0) {
     cart_info.coord[0] = cart_info.coord[0] - 1;

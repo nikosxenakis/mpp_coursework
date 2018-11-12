@@ -181,28 +181,18 @@ void halo_swaps(double **old, int m, int n, Cart_info cart_info, Mpi_Datatypes *
   MPI_Irecv(&(old[1][0]), 1, mpi_Datatypes->column, cart_info.down, BOTTOM_TO_TOP, cart_info.comm, &request[2]);
   MPI_Isend(&(old[1][1]), 1, mpi_Datatypes->column, cart_info.down, TOP_TO_BOTTOM, cart_info.comm, &request[3]);
 
-  if(has_left(cart_info)) {
-    MPI_Irecv(&(old[0][0]), 1, mpi_Datatypes->row, cart_info.left, LEFT_TO_RIGHT, cart_info.comm, &request[4]);
-    MPI_Isend(&(old[1][0]), 1, mpi_Datatypes->row, cart_info.left, RIGHT_TO_LEFT, cart_info.comm, &request[5]);
-  }
+  MPI_Irecv(&(old[0][0]), 1, mpi_Datatypes->row, cart_info.left, LEFT_TO_RIGHT, cart_info.comm, &request[4]);
+  MPI_Isend(&(old[1][0]), 1, mpi_Datatypes->row, cart_info.left, RIGHT_TO_LEFT, cart_info.comm, &request[5]);
 
-  if(has_right(cart_info)) {
-    MPI_Irecv(&(old[m+1][0]), 1, mpi_Datatypes->row, cart_info.right, RIGHT_TO_LEFT, cart_info.comm, &request[6]);
-    MPI_Isend(&(old[m][0]), 1, mpi_Datatypes->row, cart_info.right, LEFT_TO_RIGHT, cart_info.comm, &request[7]);
-  }
+  MPI_Irecv(&(old[m+1][0]), 1, mpi_Datatypes->row, cart_info.right, RIGHT_TO_LEFT, cart_info.comm, &request[6]);
+  MPI_Isend(&(old[m][0]), 1, mpi_Datatypes->row, cart_info.right, LEFT_TO_RIGHT, cart_info.comm, &request[7]);
 
 }
 
 void caclulate_halo(double **old, double **new, double **edge, int m, int n, Cart_info cart_info, MPI_Request request[8], MPI_Status status[8]) {
   int i, j;
 
-  MPI_Waitall(4, request, status);
-
-  if(has_left(cart_info))
-    MPI_Waitall(2, &(request[4]), &(status[4]));
-
-  if(has_right(cart_info))
-    MPI_Waitall(2, &(request[6]), &(status[6]));
+  MPI_Waitall(8, request, status);
 
   // calculate halo
   for (i=1;i<m+1;i+=m-1) {
