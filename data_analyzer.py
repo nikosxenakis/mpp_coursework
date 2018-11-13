@@ -10,7 +10,7 @@ def create_plots(title, x_axis_title, y_axis_title, labels, x_values, y_values, 
     ax.set_xlabel(x_axis_title)
     ax.set_ylabel(y_axis_title)
 
-    colors = ['#d3390a', '#35d20a']
+    colors = ['#35d20a', '#d3390a']
 
     lines = []
 
@@ -33,15 +33,18 @@ def analyze_data(data_file, image):
     time1 = 0
 
     for line in data_file:
+        data = line.split('\t')
+
         if i == 0:
-            titles = line.split('\t')
-        else:
-            data = line.split('\t')
-            if data[0] == str("./resources/" + image):
-                if int(data[1]) == 1:
-                    time1 = int(data[1])
+            titles = data
+
+        if i > 0 and int(data[1]) == 1 and data[0] == str("./resources/" + image):
+            time1 = float(data[2])
+
+        if i > 0 and data[0] == str("./resources/" + image):
                 processes = processes + (float(data[1]),)
-                speedup = speedup + ( float("%.3f" % float(time1/float(data[2]))) ,)
+                curr_speedup = time1 / float(data[2])
+                speedup = speedup + ( float("%.2f" % curr_speedup ) ,)
         i = i + 1
 
     create_plots(
@@ -51,6 +54,35 @@ def analyze_data(data_file, image):
         [titles[1], titles[2]],
         processes,
         [speedup],
+        0.4,
+        "upper right"
+    )
+
+
+def analyze_average_pixel(data_file, path):
+
+    i = 0;
+
+    titles = ()
+    iterations = ()
+    average = ()
+
+    for line in data_file:
+        if i == 0:
+            titles = line.split('\t')
+        else:
+            data = line.split('\t')
+            iterations = iterations + (int(data[0]),)
+            average = average + ( float("%.3f" % float(data[1])) ,)
+        i = i + 1
+
+    create_plots(
+        str(path),
+        titles[0],
+        str(path),
+        [titles[1]],
+        iterations,
+        [average],
         0.4,
         "upper right"
     )
@@ -67,3 +99,29 @@ if os.path.exists(path):
     analyze_data(f, "edgenew512x384.pgm")
     f = open(path, 'r')
     analyze_data(f, "edgenew768x768.pgm")
+
+path = './data/'
+ext = '.tsv'
+filename = 'edgenew192x128_average_pixel'
+
+if os.path.exists(path):
+    f = open(path + filename + ext, 'r')
+    analyze_average_pixel(f, filename)
+
+filename = 'edgenew256x192_average_pixel'
+
+if os.path.exists(str(path+filename+ext)):
+    f = open(str(path+filename+ext), 'r')
+    analyze_average_pixel(f, filename)
+
+filename = 'edgenew512x384_average_pixel'
+
+if os.path.exists(str(path+filename+ext)):
+    f = open(str(path+filename+ext), 'r')
+    analyze_average_pixel(f, filename)
+
+filename = 'edgenew768x768_average_pixel'
+
+if os.path.exists(str(path+filename+ext)):
+    f = open(str(path+filename+ext), 'r')
+    analyze_average_pixel(f, filename)

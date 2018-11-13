@@ -147,18 +147,22 @@ double get_average_pixel(double **table, MPI_Comm comm, int m, int n, int mp, in
   return global_sum/(m*n);
 }
 
-void print_average_pixel(double **table, int iter, Cart_info cart_info, int m, int n, int mp, int np) {
+void print_average_pixel(double **table, int iter, Cart_info cart_info, int m, int n, int mp, int np, char *filename) {
   double average_pixel;
   FILE * fp;
+  char average_pixel_filename[FILENAME_SIZE];
 
   average_pixel = get_average_pixel(table, cart_info.comm, m, n, mp, np);
   if(cart_info.id == MASTER) {
+    strcpy(average_pixel_filename, "./data/");
+    strncat(average_pixel_filename, filename, 14);
+    strcat(average_pixel_filename, "_average_pixel.tsv");
     if(iter == 1) {
-      fp = fopen ("./data/average_pixels.tsv", "w");
+      fp = fopen (average_pixel_filename, "w");
       fprintf(fp, "iteration\taverage pixel\n");
       fclose(fp);
     }
-    fp = fopen ("./data/average_pixels.tsv", "a");
+    fp = fopen (average_pixel_filename, "a");
     fprintf(fp, "%d\t%f\n", iter, average_pixel);
     fclose(fp);
   }
@@ -235,7 +239,7 @@ int can_terminate(double **old, double **new, int m, int n, MPI_Comm comm) {
   return 0;
 }
 
-void calculate(double **edge, double **old, double **new, int m, int n, int mp, int np, Cart_info cart_info, Mpi_Datatypes *mpi_Datatypes) {
+void calculate(double **edge, double **old, double **new, int m, int n, int mp, int np, Cart_info cart_info, Mpi_Datatypes *mpi_Datatypes, char *filename) {
   int i, j, iter;
   MPI_Request request[8];
   MPI_Status status[8];
@@ -259,7 +263,7 @@ void calculate(double **edge, double **old, double **new, int m, int n, int mp, 
 
     // if can_terminate every PRINTFREQ
     if(iter%PRINTFREQ==0 || iter == 1) {
-      print_average_pixel(new, iter, cart_info, m, n, mp, np);
+      print_average_pixel(new, iter, cart_info, m, n, mp, np, filename);
 
       if(can_terminate(old, new, mp, np, cart_info.comm))
         break;
@@ -305,8 +309,7 @@ int main (int argc, char** argv) {
     strcpy(filename, argv[1]);
   }
   else {
-    strcpy(filename, "resources/");
-    strcat(filename, "edgenew192x128.pgm");
+    strcpy(filename, "./resources/edgenew192x128.pgm");
   }
 
   pgmsize (filename, &m, &n);
@@ -341,7 +344,7 @@ int main (int argc, char** argv) {
 
   initialize_tables(edge, old, mp, np, cart_info);
 
-  calculate(edge, old, new, m, n, mp, np, cart_info, &mpi_Datatypes);
+  calculate(edge, old, new, m, n, mp, np, cart_info, &mpi_Datatypes, &filename[12]);
 
   gather_masterbuf(masterbuf, edge, mp, np, cart_info, mpi_Datatypes);
 
@@ -349,19 +352,16 @@ int main (int argc, char** argv) {
 
   if(world_rank == MASTER) {
     end_time = MPI_Wtime();
-    fp = fopen ("./data/time_results.tsv", "a");
+    fp = fopen ("./data/results.tsv", "a");
     fprintf(fp, "%s\t%d\t%f\n", filename, world_size, end_time - start_time);
     fclose(fp);
-  }
 
-  if(world_rank == MASTER) {
     if(argc == 2) {
       strcpy(filename, "./output/image");
       strcat(filename, &(argv[1][16]));
     }
     else {
-      strcpy(filename, "./output/");
-      strcat(filename, "imagenew192x128.pgm");
+      strcpy(filename, "./output/imagenew192x128.pgm");
     }
     pgmwrite(filename, &masterbuf[0][0], m, n);
     free(masterbuf);

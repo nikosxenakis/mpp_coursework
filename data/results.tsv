@@ -1,4 +1,4 @@
-Input File	#Processes	Running Time (sec)
+Input File	Processes Number	Running Time (sec)
 ./resources/edgenew192x128.pgm	1	0.143785
 ./resources/edgenew256x192.pgm	1	0.172973
 ./resources/edgenew512x384.pgm	1	2.643027
