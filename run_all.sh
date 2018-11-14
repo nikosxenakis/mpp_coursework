@@ -16,3 +16,6 @@ do
   done
   python test.py;
 done
+
+# example run
+# make clean; make all; mpirun -n 4 ./bin/imagenew ./resources/edgenew192x128.pgm; python test.py

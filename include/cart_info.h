@@ -30,6 +30,8 @@ int has_right(Cart_info cart_info);
 
 int is_top(Cart_info cart_info);
 
+int is_bottom(Cart_info cart_info);
+
 Cart_info discoverCart(int id, MPI_Comm comm, int world_size, int dim[2]);
 
 #endif

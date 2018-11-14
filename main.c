@@ -26,11 +26,9 @@ double boundaryval(int i, int m) {
   return val;
 }
 
-void decomposition(int world_size, int m, int n , int *mp, int *np, int *max_mp, int *max_np, int dim[2]) {
+void decomposition(int world_size, int m, int n, int dim[2], int *mp, int *np, int *max_mp, int *max_np) {
 
   MPI_Dims_create(world_size, 2, dim);
-
-  assert(dim[0]*dim[1] == world_size);
 
   //new sizes of tables
   *mp = m/dim[0];
@@ -119,17 +117,18 @@ void initialize_tables(double **edge, double **old, int m, int n, Cart_info cart
   }
 
   /* compute sawtooth value */
-  for (j=0; j < n+2; j++) {
-    if( (cart_info.coord[1] == 0 && j == 0) || (cart_info.coord[1] + 1 == cart_info.dim[1] && j == n+1) ) {
-        continue;
-    }
+  if(!has_left(cart_info))
+    i = 0;
+  if(!has_right(cart_info))
+    i = m+1;
 
+  for (j=0; j<n+2; j++) {
     val = boundaryval(cart_info.coord[1]*n+j, cart_info.dim[1]*n);
 
-    if(!has_left(cart_info))
-      old[0][j]   = (int)(255.0*(1.0-val));
-    if(!has_right(cart_info))
-      old[m+1][j] = (int)(255.0*val);
+    if(i == 0)
+      old[i][j] = (int)(255.0*(1.0-val));
+    if(i == m+1)
+      old[i][j] = (int)(255.0*val);
   }
 
 }
@@ -208,17 +207,9 @@ double calculate_max_diff(double **old, double **new, int m, int n) {
 
   for (int i=1;i<m+1;i++) {
     for (int j=1;j<n+1;j++) {
-      if(new[i][j] - old[i][j] > 0) {
-        diff = new[i][j] - old[i][j];
-      }
-      else {
-        diff = old[i][j] - new[i][j];
-      }
-
-      if(max_diff == -1) max_diff = diff;
+      diff = fabs(old[i][j] - new[i][j]);
       if(diff > max_diff)  max_diff = diff;
       if(max_diff >= MIN_DIFF) break;
-
     }
   }
 
@@ -299,6 +290,8 @@ int main (int argc, char** argv) {
   double start_time, end_time;
   int dim[2], period[2] = {0, 1}, reorder = 1;
   MPI_Comm comm;
+  Cart_info cart_info;
+  Mpi_Datatypes mpi_Datatypes;
 
   MPI_Init(NULL, NULL);
 
@@ -314,13 +307,13 @@ int main (int argc, char** argv) {
 
   pgmsize (filename, &m, &n);
 
-  decomposition(world_size, m, n, &mp, &np, &max_mp, &max_np, dim);
+  decomposition(world_size, m, n, dim, &mp, &np, &max_mp, &max_np);
 
   MPI_Cart_create(MPI_COMM_WORLD, 2, dim, period, reorder, &comm);
 
-  Cart_info cart_info = discoverCart(world_rank, comm, world_size, dim);
+  cart_info = discoverCart(world_rank, comm, world_size, dim);
 
-  Mpi_Datatypes mpi_Datatypes = init_mpi_datatypes(n, mp, np, max_mp, max_np);
+  mpi_Datatypes = init_mpi_datatypes(n, mp, np, max_mp, max_np);
 
   if(!has_right(cart_info))
     mp = max_mp;
@@ -329,7 +322,6 @@ int main (int argc, char** argv) {
 
   if(world_rank == MASTER) {
     masterbuf = (double **) arralloc(sizeof(double), 2, m, n);
-    // printf("\nReading <%s>\n", filename);
     pgmread(filename, &masterbuf[0][0], m, n);
   }
 

@@ -14,6 +14,10 @@ int is_top(Cart_info cart_info) {
   return cart_info.coord[1] + 1 == cart_info.dim[1];
 }
 
+int is_bottom(Cart_info cart_info) {
+  return cart_info.coord[1] == 0;
+}
+
 Cart_info discoverCart(int id, MPI_Comm comm, int world_size, int dim[2]) {
 
   Cart_info cart_info;
