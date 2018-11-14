@@ -66,7 +66,7 @@
 \clearpage
 
 \section{Introduction}
-What is the project? 2d domain decomposition
+The project solves an image processing problem. It uses a two-dimensional domain decomposition in order to split the workload to the active processes. To achieve this we use MPI API for process communication. This approach arise a variety of challenges that need to be addressed, such as the communication, decomposition, boundary conditions and halo swaps.
 
 \sectionVspacing
 
@@ -80,9 +80,11 @@ Terminate condition: D parameter
 \section{Analysis}
 
 \subsection{Tools}
-Language used: C
+For the development of this project the used programming language is C due to its performance and for low level calculations. In addition, gnu make was used for the build phase and python to compare the output for testing reasons.
+
 \subsection{MPP API}
-Tools from MPP (derived types, Async communication, virtual topologies)
+Tools from MPP (derived types, non blocking communication, virtual topologies)
+
 \subsection{Design}
 brief description of the design and implementation of your MPI program
 bypassed buff to edge

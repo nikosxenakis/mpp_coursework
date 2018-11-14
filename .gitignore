@@ -13,5 +13,13 @@ bin/*
 # Output
 output/*
 
+# latex
+*.aux
+*.log
+*.out
+*.toc
+*.gz
+*.fdb_latexmk
+
 # Kernel Module Compile Results
 .DS_Store
