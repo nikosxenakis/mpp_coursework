@@ -38,10 +38,10 @@ def analyze_data(data_file, image):
         if i == 0:
             titles = data
 
-        if i > 0 and int(data[1]) == 1 and data[0] == str("./resources/" + image):
+        if i > 0 and int(data[1]) == 1 and data[0] == str("./resources/" + image + ".pgm"):
             time1 = float(data[2])
 
-        if i > 0 and data[0] == str("./resources/" + image):
+        if i > 0 and data[0] == str("./resources/" + image + ".pgm"):
                 processes = processes + (float(data[1]),)
                 curr_speedup = time1 / float(data[2])
                 speedup = speedup + ( float("%.2f" % curr_speedup ) ,)
@@ -92,13 +92,13 @@ path = './data/results.tsv'
 
 if os.path.exists(path):
     f = open(path, 'r')
-    analyze_data(f, "edgenew192x128.pgm")
+    analyze_data(f, "edgenew192x128")
     f = open(path, 'r')
-    analyze_data(f, "edgenew256x192.pgm")
+    analyze_data(f, "edgenew256x192")
     f = open(path, 'r')
-    analyze_data(f, "edgenew512x384.pgm")
+    analyze_data(f, "edgenew512x384")
     f = open(path, 'r')
-    analyze_data(f, "edgenew768x768.pgm")
+    analyze_data(f, "edgenew768x768")
 
 path = './data/'
 ext = '.tsv'

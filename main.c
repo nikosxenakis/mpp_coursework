@@ -74,15 +74,15 @@ void scatter_masterbuf(double **masterbuf, double **edge, int mp, int np, Cart_i
 
 }
 
-void gather_masterbuf(double **masterbuf, double **edge, int mp, int np, Cart_info cart_info, Mpi_Datatypes mpi_Datatypes) {
+void gather_masterbuf(double **masterbuf, double **old, int mp, int np, Cart_info cart_info, Mpi_Datatypes mpi_Datatypes) {
   int curr_coord[2], recv_rank;
   MPI_Status send_status, status[cart_info.world_size];
   MPI_Request send_request, request[cart_info.world_size];
 
   if(!has_right(cart_info))
-    MPI_Isend(&edge[1][1], 1, mpi_Datatypes.max_cont_table, MASTER, 0, cart_info.comm, &send_request);
+    MPI_Isend(&old[1][1], 1, mpi_Datatypes.max_cont_table, MASTER, 0, cart_info.comm, &send_request);
   else
-    MPI_Isend(&edge[1][1], 1, mpi_Datatypes.cont_table, MASTER, 0, cart_info.comm, &send_request);
+    MPI_Isend(&old[1][1], 1, mpi_Datatypes.cont_table, MASTER, 0, cart_info.comm, &send_request);
 
 
   if(cart_info.id == MASTER) {
@@ -267,13 +267,6 @@ void calculate(double **edge, double **old, double **new, int m, int n, int mp, 
     }
 
   }
-
-  for (i=1;i<mp+1;i++) {
-    for (j=1;j<np+1;j++) {
-      edge[i][j]=old[i][j];
-    }
-  }
-
 }
 
 void free_tables(double **edge, double **old, double **new) {
@@ -338,7 +331,7 @@ int main (int argc, char** argv) {
 
   calculate(edge, old, new, m, n, mp, np, cart_info, &mpi_Datatypes, &filename[12]);
 
-  gather_masterbuf(masterbuf, edge, mp, np, cart_info, mpi_Datatypes);
+  gather_masterbuf(masterbuf, old, mp, np, cart_info, mpi_Datatypes);
 
   MPI_Barrier(MPI_COMM_WORLD);
 

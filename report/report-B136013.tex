@@ -72,45 +72,87 @@ The project solves an image processing problem. It uses a two-dimensional domain
 
 \section{Project Specification}
 \subsection{Description}
-Boundary conditions: horizontal->sawtooth vertical->periodic
-Terminate condition: D parameter
+There are a variety of project requirements in order to produce a correct output. On the one hand, there are fixed “sawtooth” boundary conditions in the horizontal direction. On the other hand, there are periodic boundary conditions in the vertical direction. This means that when the a top process performs halo swap to fill the upper edge of the local table it receives it from the according bottom process.
+
+Another specification is the terminate condition. The main loop of image reconstruction should finish when the maximum difference of a pixel in the image between the old and value it's insignificant. This means that after some iterations when the produced image has not drastic variations from the previous the loop should be terminated.
 
 \sectionVspacing
 
 \section{Analysis}
 
-\subsection{Tools}
-For the development of this project the used programming language is C due to its performance and for low level calculations. In addition, gnu make was used for the build phase and python to compare the output for testing reasons.
+	\subsection{Tools}
+	For the development of this project the used programming language is C due to its performance and for low level calculations. In addition, gnu make was used for the build phase and python to compare the output for testing reasons.
 
-\subsection{MPP API}
-Tools from MPP (derived types, non blocking communication, virtual topologies)
+	\subsection{MPP API}
+	The implementation of the project uses mainly basic functions of the MPI API. Some of theses features create a virtual topology, perform non blocking communication and use derived types.
+	% reorder = 0, 
 
-\subsection{Design}
-brief description of the design and implementation of your MPI program
-bypassed buff to edge
-\subsection{MPI Scatter}
-\subsection{MPI Gather}
+		\subsubsection{Communication}
+		The main functions used for the non blocking communication between the processes are MPI Isend and MPI Irecv. There are called in scatter and gather part that communication needs to be established between the master process and all of the slaves. Also, in each iteration of the calculation loop we use them in order to send and receive the halo swaps.
+		% all reduce
+
+		\subsubsection{Topology}
+		In terms of the produced virtual topology the main function was MPI Cart create that creates the new 2 dimention topology, in addition methods like MPI Cart coords and MPI Cart rank are used identify the neighbour's ranks or coords.
+
+		\subsubsection{Derived Types}
+		In order to reduce the code volume and avoid unessesary memory allocations derived types are used extensively. Derived types such as row, column and table are declared once in main function. They can be found in communication phase like the non blocking functions. Their main goal are to avoid memory copies for the send and receive buffer. What we managed to is to read and write directly from the old buffer.
+
+	\subsection{Design}
+	The design and control flow of the project is basically the same as the case study with different implementation. In the beginning, the program create the virtual topology, does the decomposition of the problem and fill the nessesary data structures for the rest of the execution. Then the master process reads the image and stores it to it's master buffer. At the same time all of the process allocate the necessary buffers for the calculations.
+
+	At this point the data exchange takes place. The master scatters the image which is stored in the master buffer directly to the edge buffers of the workers. When this part is done each process the old buffer filling it with white and fixes the horizontial borders if the worker has a part of the image which belongs to the left or right side.
+
+	After the initialization is completed the main loop is ready to start. The calculation phase is decomposed as followed:
+	\begin{enumerate}
+	  \item Halo swaps are sent to the neighbours if they exist, otherwise to mpi proc null
+	  \item The middle calculation are made (excluding these that require the halo swaps)
+	  \item The program waits to receive the halo swaps and then performs their part of calculations
+	  \item At specific intervals the avarage pixel is logged and the program checks if the loop can be terminated
+	  \item If not the new buffer is overwritten to the old one
+	  \item Step 1 is executed
+	\end{enumerate}
+
+	In the end, the master gathers all of the old buffers and reconstructs the master buffer which will be written to the new output image.
+
+	\subsection{Input/Output}
+	On the one hand the input of the program is an edge image. On the other hand output is the new reconstructed image and a log that contains the average pixel between fixed interval of the main calculation loop.
 
 \sectionVspacing
 
 \section{Evaluation}
-Platform: backend of cirrus (.pbs), compiled using -O3
-Build, Run and Submit job: in Readme.md
+	Evaluation has been done in order to find out if the program performs as it should. All of the experiment has been run on the backend of cirrus and the code is compiled using -O3 flag for serial optimization in the machine code.
 
-\subsection{Correctness}
-Test: parallel code produces the same output as the serial
+	% Build, Run and Submit job: in Readme.md
 
-how long the code needs to run in order to give a reasonable assessment of its performance and/or correctness
-It is not necessary to run all and be correct
+	\subsection{Correctness}
+		First and foremost, before performance analysis, we have to ensure that the produced outputs are valid regraless of the number of processes that are used undernith. The approach is very simple. We run the serial program from all of the given input images and stored the outputs. Then we run the experiment using different number of processes.
 
-\subsection{Performance}
+		\subsubsection{Testing}
+			Each time our program produces a new image we compare it with the stored output of the serial code. The comparison is made automatically through a pyton script that uses filecmp function. If the files are the same then our experiment is correct. It worth mentioning that the terminate condition has to remain the same in all of the executions because different conditions create different results.
 
-Timing: exclude I/O from timing The timing starts before the scatter and ends after the gather
-Graphs: demonstrate that the performance of the code improves as you increase the number of processes.
-	 processes
-	 Input variety: performance change input(problem) size and see how it scales
-	 Speedup of strong scaling: performance metrics speed up vs ideal (linear) speedup
-	 average time per iteration
+			% how long the code needs to run in order to give a reasonable assessment of its performance and/or correctness
+			% It is not necessary to run all and be correct
+
+	\subsection{Performance}
+		Graphs: demonstrate that the performance of the code improves as you increase the number of processes.
+			processes
+			Input variety: performance change input(problem) size and see how it scales
+			Speedup of strong scaling: performance metrics speed up vs ideal (linear) speedup
+			average time per iteration
+			how performance is affected by the problem size (small problem becomes worse with many processes)
+
+		\subsubsection{Timing}
+			Timing of the experiment excludes I/O. The timing starts before the scatter and ends after the gather of the buffers. This decision has been made in order to take into consideration only the communication and calculation procedures.
+			
+			\begin{figure}[ht]
+				\centering
+				\includegraphics[scale=0.6]{../graphs/edgenew192x128_speedup.eps}
+				\caption{Running Time Loop 2 with 4 Threads}
+				\label{loop2-threads4}
+			\end{figure}
+
+		\subsubsection{Average Pixel}
+			Performance analysis for the average pixel results.
 
 \sectionVspacing
 
@@ -133,11 +175,4 @@ Graphs: demonstrate that the performance of the code improves as you increase th
 % 	\label{simple_table}
 % \end{table}
 
-% \begin{figure}[ht]
-% 	\centering
-% 	\includegraphics[scale=0.6]{../screenshots/threads4_loop2.eps}
-% 	\caption{Running Time Loop 2 with 4 Threads}
-% 	\label{loop2-threads4}
-% \end{figure}
-%
 % \lstinputlisting[language=C, firstline=2, lastline=3, caption=loops.c]{../template/loops_parallel-B136013.c}
