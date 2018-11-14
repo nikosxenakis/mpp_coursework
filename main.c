@@ -57,8 +57,8 @@ void scatter_masterbuf(double **masterbuf, double **edge, int mp, int np, Cart_i
   if(cart_info.id == MASTER) {
 
     for (int i = 0; i < cart_info.dim[0]; i++) {
+      curr_coord[0] = i;
       for (int j = 0; j < cart_info.dim[1]; j++) {
-        curr_coord[0] = i;
         curr_coord[1] = j;
         MPI_Cart_rank(cart_info.comm, curr_coord, &send_rank);
         if(i + 1 == cart_info.dim[0])
@@ -88,8 +88,8 @@ void gather_masterbuf(double **masterbuf, double **edge, int mp, int np, Cart_in
   if(cart_info.id == MASTER) {
 
     for (int i = 0; i < cart_info.dim[0]; i++) {
+      curr_coord[0] = i;
       for (int j = 0; j < cart_info.dim[1]; j++) {
-        curr_coord[0] = i;
         curr_coord[1] = j;
         MPI_Cart_rank(cart_info.comm, curr_coord, &recv_rank);
         if(i + 1 == cart_info.dim[0])
