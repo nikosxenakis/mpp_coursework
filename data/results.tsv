@@ -31,3 +31,11 @@ Input File	Processes Number	Running Time (sec)
 ./resources/edgenew256x192.pgm	16	0.482224
 ./resources/edgenew512x384.pgm	16	1.835549
 ./resources/edgenew768x768.pgm	16	4.711259
+./resources/edgenew192x128.pgm	4	0.071381
+./resources/edgenew192x128.pgm	4	0.271051
+./resources/edgenew192x128.pgm	4	0.638712
+./resources/edgenew192x128.pgm	4	0.166251
+./resources/edgenew192x128.pgm	4	0.168257
+./resources/edgenew192x128.pgm	4	0.170788
+./resources/edgenew192x128.pgm	4	0.210551
+./resources/edgenew192x128.pgm	4	0.169649

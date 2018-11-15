@@ -32,12 +32,7 @@ $(BIN): $(OBJ_FILES)
 	@mkdir -p $(BIN_DIR)
 	$(CC) $^ $(BASE_DIR)/main.c -o $@
 
-$(TEMPLATE): $(OBJ_FILES)
-	@echo " Linking..."
-	@mkdir -p $(BIN_DIR)
-	$(CC) $^ $(BASE_DIR)/templates/image.c -o $@
-
-all: $(BIN) $(TEMPLATE)
+all: $(BIN)
 	@echo " $(BIN) ready."
 
 run: $(BIN)

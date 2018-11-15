@@ -1,0 +1,29 @@
+#!/bin/bash --login
+#
+#PBS -N loops2
+#PBS -l select=1:ncpus=36
+#PBS -l walltime=0:30:0
+#PBS -A d167-s1770309
+
+cd $PBS_O_WORKDIR
+ 
+module load intel-compilers-17
+module load gcc
+
+BIN = ./bin/imagenew;
+
+make clean;
+make $BIN;
+
+rm -rf data/results.tsv;
+
+echo "Input File\tProcesses Number\tRunning Time (sec)" >> data/results.tsv;
+
+for N in 1 2 3 4 5 7 8 11 12 16
+do
+  echo "\nFor n = ${N}"
+  for INPUT_FILE in ./resources/*.pgm
+  do
+    mpirun -n $N $BIN $INPUT_FILE;
+  done
+done
