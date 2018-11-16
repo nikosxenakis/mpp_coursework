@@ -1,21 +1,21 @@
-bin = ./bin/imagenew;
+BIN=./imagenew;
 
 make clean;
-make $bin;
+make $BIN;
 
 rm -rf data/results.tsv;
 
-echo "Input File\tProcesses Number\tRunning Time (sec)" >> data/results.tsv;
+echo -e "Input File\tProcesses Number\tRunning Time (sec)" >> data/results.tsv;
 
 for N in 1 2 3 4 5 7 8 11 12 16
 do
-  echo "\nFor n = ${N}"
-  for input_file in ./resources/*.pgm
+  echo "For n = ${N}"
+  for INPUT_FILE in ./resources/*
   do
-    mpirun -n $N ./bin/imagenew $input_file;
+    mpirun -n $N $BIN $INPUT_FILE;
   done
   python test.py;
 done
 
 # example run
-# make clean; make all; mpirun -n 4 ./bin/imagenew ./resources/edgenew192x128.pgm; python test.py
+# make clean; make all; mpirun -n 4 ./imagenew ./resources/edgenew192x128.pgm; python test.py

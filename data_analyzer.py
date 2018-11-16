@@ -16,6 +16,7 @@ def create_plots(title, x_axis_title, y_axis_title, labels, x_values, y_values, 
 
     i = 0
     for y_list in y_values:
+        lines.append(plt.plot(x_values, y_list, linewidth=2, color=colors[i]))
         lines.append(plt.plot(x_values, y_list, label=labels[i], linewidth=2, color=colors[i]))
         i = i + 1
 
@@ -26,11 +27,16 @@ def create_plots(title, x_axis_title, y_axis_title, labels, x_values, y_values, 
 def analyze_data(data_file, image):
 
     i = 0;
-
+    times = 10
+    curr_times = 0
     titles = ()
     processes = ()
     speedup = ()
-    time1 = 0
+    sum_run_time = 0
+    mean_run_time = 0
+    sum_time1 = 0
+    mean_time1 = 0
+    x = 1
 
     for line in data_file:
         data = line.split('\t')
@@ -38,24 +44,33 @@ def analyze_data(data_file, image):
         if i == 0:
             titles = data
 
-        if i > 0 and int(data[1]) == 1 and data[0] == str("./resources/" + image + ".pgm"):
-            time1 = float(data[2])
-
         if i > 0 and data[0] == str("./resources/" + image + ".pgm"):
-                processes = processes + (float(data[1]),)
-                curr_speedup = time1 / float(data[2])
+            sum_run_time = sum_run_time + float(data[2])
+            if int(data[1]) == 1:
+                sum_time1 = sum_time1 + float(data[2])
+
+            if x == 1:
+                processes = processes + (int(data[1]),)
+            if x == 10:
+                mean_time1 = sum_time1 / 10
+                mean_run_time = sum_run_time / 10
+                curr_speedup = mean_time1 / mean_run_time
                 speedup = speedup + ( float("%.2f" % curr_speedup ) ,)
+                x = 0
+                sum_run_time = 0
+
+            x = x + 1
         i = i + 1
 
     create_plots(
         str(image + "_speedup"),
-        titles[0],
-        str(image + "_speedup"),
-        [titles[1], titles[2]],
+        titles[1],
+        str("speedup"),
+        [image, "ideal"],
         processes,
-        [speedup],
+        [speedup, processes],
         0.4,
-        "upper right"
+        "upper left"
     )
 
 

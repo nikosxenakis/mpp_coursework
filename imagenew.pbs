@@ -1,29 +1,77 @@
 #!/bin/bash --login
 #
-#PBS -N loops2
-#PBS -l select=1:ncpus=36
-#PBS -l walltime=0:30:0
+#PBS -N imagenew
 #PBS -A d167-s1770309
-
-cd $PBS_O_WORKDIR
- 
-module load intel-compilers-17
-module load gcc
-
-BIN = ./bin/imagenew;
+#PBS -l walltime=00:30:00
+#PBS -l select=1:ncpus=36
 
 make clean;
 make $BIN;
 
+cd $PBS_O_WORKDIR
+
+BIN=./imagenew;
+
 rm -rf data/results.tsv;
 
-echo "Input File\tProcesses Number\tRunning Time (sec)" >> data/results.tsv;
+module load mpt
+module load intel-compilers-17
 
-for N in 1 2 3 4 5 7 8 11 12 16
+export OMP_NUM_THREADS=1
+
+echo -e "Input File\tProcesses Number\tRunning Time (sec)" >> data/results.tsv;
+
+for N in 1 2 3 4 5 7 8 11 12 16 20 24 26 32
 do
-  echo "\nFor n = ${N}"
-  for INPUT_FILE in ./resources/*.pgm
+		
+  NPROC=$N
+
+  for INPUT_FILE in ./resources/*
   do
-    mpirun -n $N $BIN $INPUT_FILE;
+
+  	for i in {1..10}
+  	do
+
+	  	MPIPROG=`basename $PBS_JOBNAME .pbs`
+		MPISIZE=$NPROC
+
+		# Spread the processes as evenly as possible across the nodes
+
+		CPN=36                                     # Cores Per Node (physical)
+		NNODE=$( wc -l < $PBS_NODEFILE )           # nodes reserved
+		PPN=$(( (MPISIZE + NNODE - 1) / NNODE ))   # Processes Per Node
+
+		# Ensure we place a maximum of 36 processes per node to avoid hyperthreads
+
+		if [ $PPN -gt $CPN ]
+		then
+		    NMIN=$(( (MPISIZE + CPN - 1) / CPN ))
+		    echo "Error: for $MPISIZE processes you must select at least $NMIN nodes"
+
+		    exit 1
+		fi
+
+		# Ensure that number of MPI processes is a multiple of number of nodes
+
+		if [ $MPISIZE -ne $(( NNODE * PPN )) ]
+		then
+
+		    echo "Error: NPROC=$NPROC must be a multiple of number of nodes=$NNODE"
+		    exit 1
+		fi
+
+		echo '--------------------------------------------------------------------------------'
+
+		echo 'Running' $MPIPROG 'on' $MPISIZE 'processes over' $NNODE 'node(s)'
+		echo 'Issuing command: mpiexec_mpt -n' $MPISIZE '-ppn' $PPN ./$MPIPROG
+		echo 'Started at' `date`
+		echo '--------------------------------------------------------------------------------'
+
+		(time mpiexec_mpt -n $MPISIZE -ppn $PPN ./$MPIPROG $INPUT_FILE) 2>&1
+
+		echo '--------------------------------------------------------------------------------'
+		echo 'Finished at' `date`
+
+	done
   done
 done

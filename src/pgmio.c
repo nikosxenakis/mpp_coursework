@@ -41,7 +41,7 @@ void pgmsize(char *filename, int *nx, int *ny)
   FILE *fp;
 
   char *cret;
-  int iret;
+  char iret;
 
   char dummy[MAXLINE];
   int n = MAXLINE;

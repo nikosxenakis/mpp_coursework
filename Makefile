@@ -1,5 +1,5 @@
 #COMPILER OPTIONS
-CFLAGS := -g -Wall -O3
+CFLAGS := -cc=icc -g -Wall -O3
 CC := mpicc $(CFLAGS)
 
 # If the first argument is "run"...
@@ -15,11 +15,10 @@ BASE_DIR := .
 SRC_DIR := $(BASE_DIR)/src
 HEADER_DIR := $(BASE_DIR)/include
 BUILD_DIR := $(BASE_DIR)/build
-BIN_DIR := $(BASE_DIR)/bin
 
 #FILES
-BIN := $(BIN_DIR)/imagenew
-TEMPLATE := $(BIN_DIR)/image
+BIN := imagenew
+SERIAL := serial
 SRC_FILES := $(wildcard $(SRC_DIR)/*.c)
 OBJ_FILES := $(patsubst $(SRC_DIR)/%.c, $(BUILD_DIR)/%.o, $(SRC_FILES))
 
@@ -29,11 +28,14 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c $(HEADER_DIR)/%.h
 
 $(BIN): $(OBJ_FILES)
 	@echo " Linking..."
-	@mkdir -p $(BIN_DIR)
 	$(CC) $^ $(BASE_DIR)/main.c -o $@
 
-all: $(BIN)
-	@echo " $(BIN) ready."
+$(SERIAL): $(BUILD_DIR)/pgmio.o
+	@echo " Linking..."
+	$(CC) $^ $(BASE_DIR)/serial.c -o $@
+
+all: $(BIN) $(SERIAL)
+	@echo " executables ready."
 
 run: $(BIN)
 	mpirun -n 4 ./$(BIN) $(RUN_ARGS)
@@ -43,6 +45,6 @@ test: test.py
 
 clean:
 	@echo " Cleaning..."
-	rm -rf $(BIN_DIR) $(BUILD_DIR)
+	rm -rf $(BIN) $(SERIAL) $(BUILD_DIR)
 
 .PHONY: clean all run

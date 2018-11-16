@@ -2,9 +2,10 @@
 
 double get_average_pixel(double **table, MPI_Comm comm, int m, int n, int mp, int np) {
   double sum = 0, global_sum = 0;
+  int i, j;
 
-  for (int i=1; i<mp+1; i++) {
-    for (int j=1; j<np+1; j++) {
+  for (i=1; i<mp+1; i++) {
+    for (j=1; j<np+1; j++) {
       sum += table[i][j];
     }
   }
@@ -70,9 +71,10 @@ void caclulate_halo(double **old, double **new, double **edge, int m, int n, Car
 
 double calculate_max_diff(double **old, double **new, int m, int n) {
   double max_diff = -1, diff;
+  int i, j;
 
-  for (int i=1;i<m+1;i++) {
-    for (int j=1;j<n+1;j++) {
+  for (i=1;i<m+1;i++) {
+    for (j=1;j<n+1;j++) {
       diff = fabs(old[i][j] - new[i][j]);
       if(diff > max_diff)  max_diff = diff;
       if(max_diff >= MIN_DIFF) break;
@@ -120,7 +122,7 @@ void calculate(double **edge, double **old, double **new, int m, int n, int mp, 
 
     // if can_terminate every PRINTFREQ
     if(iter%PRINTFREQ==0 || iter == 1) {
-      print_average_pixel(new, iter, cart_info, m, n, mp, np, filename);
+      print_average_pixel(old, iter, cart_info, m, n, mp, np, filename);
 
       if(can_terminate(old, new, mp, np, cart_info.comm))
         break;
@@ -131,6 +133,5 @@ void calculate(double **edge, double **old, double **new, int m, int n, int mp, 
         old[i][j]=new[i][j];
       }
     }
-
   }
 }

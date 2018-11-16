@@ -28,6 +28,12 @@ void decomposition(int world_size, int m, int n, int dim[2], int *mp, int *np, i
   *np = n/dim[1];
   *max_mp = m/dim[0] + m%dim[0];
   *max_np = n/dim[1] + n%dim[1];
+
+  if(n%dim[1] != 0) {
+    dim[0] = 0;
+    dim[1] = 1;
+    decomposition(world_size, m, n, dim, mp, np, max_mp, max_np);
+  }
 }
 
 void allocate_tables(double ***edge, double ***old, double ***new, int m, int n) {
@@ -37,7 +43,7 @@ void allocate_tables(double ***edge, double ***old, double ***new, int m, int n)
 }
 
 void scatter_masterbuf(double **masterbuf, double **edge, int mp, int np, Cart_info cart_info, Mpi_Datatypes mpi_Datatypes) {
-  int curr_coord[2], send_rank;
+  int curr_coord[2], send_rank, i, j;
   MPI_Status recv_status, status[cart_info.world_size];
   MPI_Request recv_request, request[cart_info.world_size];
 
@@ -48,9 +54,9 @@ void scatter_masterbuf(double **masterbuf, double **edge, int mp, int np, Cart_i
 
   if(cart_info.id == MASTER) {
 
-    for (int i = 0; i < cart_info.dim[0]; i++) {
+    for (i = 0; i < cart_info.dim[0]; i++) {
       curr_coord[0] = i;
-      for (int j = 0; j < cart_info.dim[1]; j++) {
+      for (j = 0; j < cart_info.dim[1]; j++) {
         curr_coord[1] = j;
         MPI_Cart_rank(cart_info.comm, curr_coord, &send_rank);
         if(i + 1 == cart_info.dim[0])
@@ -66,7 +72,7 @@ void scatter_masterbuf(double **masterbuf, double **edge, int mp, int np, Cart_i
 }
 
 void gather_masterbuf(double **masterbuf, double **old, int mp, int np, Cart_info cart_info, Mpi_Datatypes mpi_Datatypes) {
-  int curr_coord[2], recv_rank;
+  int curr_coord[2], recv_rank, i, j;
   MPI_Status send_status, status[cart_info.world_size];
   MPI_Request send_request, request[cart_info.world_size];
 
@@ -75,12 +81,11 @@ void gather_masterbuf(double **masterbuf, double **old, int mp, int np, Cart_inf
   else
     MPI_Isend(&old[1][1], 1, mpi_Datatypes.cont_table, MASTER, 0, cart_info.comm, &send_request);
 
-
   if(cart_info.id == MASTER) {
 
-    for (int i = 0; i < cart_info.dim[0]; i++) {
+    for (i = 0; i < cart_info.dim[0]; i++) {
       curr_coord[0] = i;
-      for (int j = 0; j < cart_info.dim[1]; j++) {
+      for (j = 0; j < cart_info.dim[1]; j++) {
         curr_coord[1] = j;
         MPI_Cart_rank(cart_info.comm, curr_coord, &recv_rank);
         if(i + 1 == cart_info.dim[0])
@@ -96,7 +101,7 @@ void gather_masterbuf(double **masterbuf, double **old, int mp, int np, Cart_inf
   MPI_Wait(&send_request, &send_status);
 }
 
-void initialize_tables(double **edge, double **old, int m, int n, Cart_info cart_info) {
+void initialize_tables(double **old, int m, int n, Cart_info cart_info) {
   int i, j;
   double val;
 
@@ -107,19 +112,15 @@ void initialize_tables(double **edge, double **old, int m, int n, Cart_info cart
   }
 
   /* compute sawtooth value */
-  if(!has_left(cart_info))
-    i = 0;
-  if(!has_right(cart_info))
-    i = m+1;
-
   for (j=0; j<n+2; j++) {
     val = boundaryval(cart_info.coord[1]*n+j, cart_info.dim[1]*n);
 
-    if(i == 0)
-      old[i][j] = (int)(255.0*(1.0-val));
-    if(i == m+1)
-      old[i][j] = (int)(255.0*val);
+    if(!has_left(cart_info))
+      old[0][j] = (int)(255.0*(1.0-val));
+    if(!has_right(cart_info))
+      old[m+1][j] = (int)(255.0*val);
   }
+
 }
 
 void free_tables(double **edge, double **old, double **new) {
@@ -133,8 +134,8 @@ int main (int argc, char** argv) {
   FILE * fp;
   char filename[FILENAME_SIZE];
   int world_rank, world_size, m, n, mp, np, max_mp, max_np;
-  double start_time, end_time;
-  int dim[2], period[2] = {0, 1}, reorder = 1;
+  double start_time = 0, end_time = 0;
+  int dim[2] = {0, 0}, period[2] = {0, 1}, reorder = 1;
   MPI_Comm comm;
   Cart_info cart_info;
   Mpi_Datatypes mpi_Datatypes;
@@ -178,9 +179,9 @@ int main (int argc, char** argv) {
 
   allocate_tables(&edge, &old, &new, mp, np);
 
-  scatter_masterbuf(masterbuf, edge, mp, np, cart_info, mpi_Datatypes);
+  initialize_tables(old, mp, np, cart_info);
 
-  initialize_tables(edge, old, mp, np, cart_info);
+  scatter_masterbuf(masterbuf, edge, mp, np, cart_info, mpi_Datatypes);
 
   calculate(edge, old, new, m, n, mp, np, cart_info, &mpi_Datatypes, &filename[12]);
 
