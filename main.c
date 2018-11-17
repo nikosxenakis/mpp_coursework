@@ -134,7 +134,7 @@ int main (int argc, char** argv) {
   FILE * fp;
   char filename[FILENAME_SIZE];
   int world_rank, world_size, m, n, mp, np, max_mp, max_np;
-  double start_time = 0, end_time = 0;
+  double start_time = 0, end_time = 0, average_iter_time = 0;
   int dim[2] = {0, 0}, period[2] = {0, 1}, reorder = 1;
   MPI_Comm comm;
   Cart_info cart_info;
@@ -183,7 +183,7 @@ int main (int argc, char** argv) {
 
   scatter_masterbuf(masterbuf, edge, mp, np, cart_info, mpi_Datatypes);
 
-  calculate(edge, old, new, m, n, mp, np, cart_info, &mpi_Datatypes, &filename[12]);
+  average_iter_time = calculate(edge, old, new, m, n, mp, np, cart_info, &mpi_Datatypes, &filename[12]);
 
   gather_masterbuf(masterbuf, old, mp, np, cart_info, mpi_Datatypes);
 
@@ -192,7 +192,7 @@ int main (int argc, char** argv) {
   if(world_rank == MASTER) {
     end_time = MPI_Wtime();
     fp = fopen ("./data/results.tsv", "a");
-    fprintf(fp, "%s\t%d\t%f\n", filename, world_size, end_time - start_time);
+    fprintf(fp, "%s\t%d\t%f\t%f\n", filename, world_size, end_time - start_time, average_iter_time);
     fclose(fp);
 
     if(argc == 2) {

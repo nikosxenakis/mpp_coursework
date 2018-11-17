@@ -98,14 +98,18 @@ int can_terminate(double **old, double **new, int m, int n, MPI_Comm comm) {
   return 0;
 }
 
-void calculate(double **edge, double **old, double **new, int m, int n, int mp, int np, Cart_info cart_info, Mpi_Datatypes *mpi_Datatypes, char *filename) {
+double calculate(double **edge, double **old, double **new, int m, int n, int mp, int np, Cart_info cart_info, Mpi_Datatypes *mpi_Datatypes, char *filename) {
   int i, j, iter;
   MPI_Request request[8];
   MPI_Status status[8];
+  double iter_time[MAXITER], average_iter_time = 0;
 
   init_mpi_datatypes_row_col(mpi_Datatypes, mp, np);
 
   for (iter=1; iter<=MAXITER; iter++) {
+
+    if(world_rank == MASTER)
+      iter_time[iter-1] = MPI_Wtime();
 
     // Send and Receive halo swaps
     halo_swaps(old, mp, np, cart_info, mpi_Datatypes, request, status);
@@ -133,5 +137,15 @@ void calculate(double **edge, double **old, double **new, int m, int n, int mp, 
         old[i][j]=new[i][j];
       }
     }
+
+    if(world_rank == MASTER)
+      iter_time[iter-1] = MPI_Wtime() - iter_time[iter-1];
   }
+
+  for (i = 0; i < MAXITER; ++i)
+  {
+    average_iter_time += iter_time[i];
+  }
+  average_iter_time /= MAXITER;
+  return average_iter_time;
 }

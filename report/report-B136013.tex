@@ -82,13 +82,13 @@ The project solves an image processing problem. It uses a two-dimensional domain
     \subsection{MPP API}
     The implementation of the project uses mainly the basic functions of the MPI API. Some of these features perform non-blocking communication, create a virtual topology and use derived types.
 
-        \subsubsection{Communication}
+        \paragraph{Communication}
             The corestone of the communication process are the MPI\_Isend and MPI\_Irecv functions. These methods are used for the halo swaps which are necessary for the calculations and the custom Scatter and Gather mechanisms. In the end of each of these procedures the program calls the MPI\_Wait function to ensure that there are not ongoing communications so the algorithm can resume its execution. In extension MPI\_Allreduce function has been used twice in the calculation procedure. First, to calculate the average pixel value which is part of the Output. Second, to calculate the max difference in the pixels between each iteration, and determine if the execution has to be stopped.
 
-        \subsubsection{Topology}
+        \paragraph{Topology}
             In terms of the produced virtual topology, the main function was MPI\_Cart\_create that creates the new 2 dimension topology. Reorder of the given processes to the new topology is permited. In addition, methods like MPI\_Cart\_coords and MPI Cart rank are used identify the neighbor's ranks or coordinates.
 
-        \subsubsection{Derived Types}
+        \paragraph{Derived Types}
             In order to reduce the code volume and avoid unnecessary memory allocations derived types are used extensively. Derived types such as row, column, and table are declared once in the main function. They can be found in the communication phase like the non-blocking functions. Their main goal is to avoid memory copies for the send and receive buffer. What we managed to is to read and write directly from the old buffer.
 
     \subsection{Design}
@@ -120,10 +120,10 @@ The project solves an image processing problem. It uses a two-dimensional domain
 \section{Evaluation}
     Evaluation has been done in order to find out if the program behaves as it should in terms of correctness and performance.
 
-    \subsection{Tools and Testing}
-        For the development of this project the used programming language is C due to its performance in low-level calculations. In addition, GNU Make was selected for the build phase and Python to compare the output for testing reasons. The backend of Cirrus supercomputer is the platform that all of the experiments has been run. Also, the project is compiled using -O3 flag for serial optimization.
+    \subsection{Tools and Building}
+        For the development of this project the used programming language is C due to its performance in low-level calculations. The project is compiled using -O3 flag for serial optimization. In addition, GNU Make was selected for the build phase and Python to compare the output for testing reasons. To build the project just run: <make imagenew>
 
-        A Portable Batch System (PBS) file has been created to:
+        Cirrus supercomputer is the platform that all of the experiments have been executed. In order to submit the job to the backend of Cirrus a Portable Batch System (PBS) has been developed. This file is a script to:
         \begin{enumerate}
           \item Build the project using GNU Make
           \item Load the Intel compilers
@@ -136,10 +136,14 @@ The project solves an image processing problem. It uses a two-dimensional domain
           \item All of the edge images in resources/ folder
         \end{enumerate}
 
-        At this point we have to point out that each experiment has been executed multiple times. In our occasion, the image edgenew192x128.pgm running on 8 processes, has been executed 10 times then we calculate the mean running time and this value has been used to calculate the speedup for the specific configuration.
+        To run it execute <qsub imagenew.pbs>.
 
-    \subsection{Correctness}        
+        \paragraph{Noise}
+            At this point we have to point out that each experiment has been executed multiple times. In our occasion, the image edgenew192x128.pgm running on 8 processes, has been executed 10 times then we calculate the mean running time and this value has been used to calculate the speedup for the specific configuration.
+
+    \subsection{Correctness}
         First and foremost, before performance analysis, we have to ensure that the produced outputs are valid regardless of the number of processes that are used underneath. The approach is very simple. Once the job has been successfully executed, we run the serial program for all of the given input images and then store the outputs. The serial program has been modified to stop when there are no significant changes in the image's pixels between each step. To be more specific, the max different has been definied to be 0.1. It worths to mention that the termination condition has to remain the same in all of the executions because different conditions create different results. This comparison is made automatically through a Python script that uses the filecmp function. If the files are the same then our experiment is correct.
+
 
     \subsection{Performance}
         Performance analysis is essential for this experiment in order to compare our results and extract useful information of them. Speedup from the running time of our experiments. This a very useful measurement because we can decide how good our input scales for a variety of process. This would help us decide which is the optimal number of process to run if our budget or resources are limited.
@@ -148,25 +152,37 @@ The project solves an image processing problem. It uses a two-dimensional domain
             The timing of the experiment excludes Input and Output. The timing starts before the scatter and ends after the gather of the buffers. This decision has been made in order to take into consideration only the communication and calculation procedures.
 
             \paragraph{Small Input}
-                Ideally as we increase the processors running the speedup should be increased accordingly but this is not the case for small problems. Let's take for example the case where the input image is 192x128 pixels. In Figure 1, it plain to see that the problem doen't scale as it should.
+                Ideally as we increase the processors running the speedup should be increased accordingly but this is not the case for small problems. Let's take for example the case where the input image is 192x128 pixels. In Figure 1, it plain to see that the problem doen't scale as it should. When we use even more processors the speedup is slightly inclined. As a result, for the specific problem 4 or 5 process would be the best option. We don't have to waste 10 or 20 more of them if the speedup is not going to exceed 4.
 
                 \begin{figure}[ht]
                     \centering
                     \includegraphics[scale=0.6]{../graphs/edgenew192x128_speedup.eps}
-                    \caption{Running Time Loop 2 with 4 Threads}
-                    \label{loop2-threads4}
+                    \caption{Speedup for image 192x128}
+                    \label{speedup-192x128}
                 \end{figure}
             
+            \paragraph{Medium Input}
+                As we increase the problem size 
+                256x192 512x384
+                \begin{figure}[ht]
+                    \centering
+                    \includegraphics[scale=0.6]{../graphs/edgenew192x128_speedup.eps}
+                    \caption{Speedup for image 192x128}
+                    \label{speedup-192x128}
+                \end{figure}
 
-            %Scaling: performance change input(problem) size and see how it scales   
-            %how performance is affected by the problem size (small problem becomes worse with many processes)
-            % what is the best number of processes for each occasion
-            % average time per iteration
+            \paragraph{Big Input}
+
+            \paragraph{Enormous Input}
+
 
 
 
         \subsubsection{Average Pixel}
             Performance analysis for the average pixel results.
+            % measure average time per iteration
+            % are some inputs easier to be solved?
+            % add tables???
 
 \sectionVspacing
 
