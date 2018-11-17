@@ -134,7 +134,7 @@ int main (int argc, char** argv) {
   FILE * fp;
   char filename[FILENAME_SIZE];
   int world_rank, world_size, m, n, mp, np, max_mp, max_np;
-  double start_time = 0, end_time = 0, average_iter_time = 0;
+  double average_iter_time = 0;
   int dim[2] = {0, 0}, period[2] = {0, 1}, reorder = 1;
   MPI_Comm comm;
   Cart_info cart_info;
@@ -174,9 +174,6 @@ int main (int argc, char** argv) {
 
   MPI_Barrier(MPI_COMM_WORLD);
 
-  if(world_rank == MASTER)
-    start_time = MPI_Wtime();
-
   allocate_tables(&edge, &old, &new, mp, np);
 
   initialize_tables(old, mp, np, cart_info);
@@ -190,9 +187,8 @@ int main (int argc, char** argv) {
   MPI_Barrier(MPI_COMM_WORLD);
 
   if(world_rank == MASTER) {
-    end_time = MPI_Wtime();
     fp = fopen ("./data/results.tsv", "a");
-    fprintf(fp, "%s\t%d\t%f\t%f\n", filename, world_size, end_time - start_time, average_iter_time);
+    fprintf(fp, "%s\t%d\t%f\n", filename, world_size, average_iter_time*1000.0);
     fclose(fp);
 
     if(argc == 2) {

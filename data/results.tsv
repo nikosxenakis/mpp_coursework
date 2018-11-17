@@ -1,7 +1,6 @@
--e Input File	Processes Number	Running Time (sec)
-./resources/edgenew1600x1200.pgm	4	19.853614
-./resources/edgenew192x128.pgm	4	0.260967
-./resources/edgenew256x192.pgm	4	0.112291
-./resources/edgenew4928x2772.pgm	4	182.040645
-./resources/edgenew512x384.pgm	4	0.970214
-./resources/edgenew768x768.pgm	4	4.272376
+Input File	Processes Number	Running Time (sec)	Average Iteration Time (ms)
+./resources/edgenew1600x1200.pgm	4	-nan
+./resources/edgenew192x128.pgm	4	-nan
+./resources/edgenew256x192.pgm	4	-nan
+./resources/edgenew512x384.pgm	4	-nan
+./resources/edgenew768x768.pgm	4	-nan

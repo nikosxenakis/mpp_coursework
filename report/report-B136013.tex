@@ -10,34 +10,6 @@
 \definecolor{mygray}{rgb}{0.5,0.5,0.5}
 \definecolor{mymauve}{rgb}{0.58,0,0.82}
 
-\lstset{
-	backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
-	basicstyle=\footnotesize,        % the size of the fonts that are used for the code
-	breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
-	breaklines=true,                 % sets automatic line breaking
-	captionpos=b,                    % sets the caption-position to bottom
-	commentstyle=\color{mygreen},    % comment style
-	deletekeywords={...},            % if you want to delete keywords from the given language
-	escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
-	extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
-	frame=single,	                   % adds a frame around the code
-	keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
-	keywordstyle=\color{blue},       % keyword style
-	language=C,                 	 % the language of the code
-	morekeywords={*,...},            % if you want to add more keywords to the set
-	numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
-	numbersep=5pt,                   % how far the line-numbers are from the code
-	numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
-	rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
-	showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
-	showstringspaces=false,          % underline spaces within strings only
-	showtabs=false,                  % show tabs within strings adding particular underscores
-	stepnumber=5,                    % the step between two line-numbers. If it's 1, each line will be numbered
-	stringstyle=\color{mymauve},     % string literal style
-	tabsize=2,	                     % sets default tabsize to 2 spaces
-	title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
-}
-
 \usepackage{hyperref}
 \hypersetup{
 	colorlinks=true, %set true if you want colored links
@@ -121,11 +93,15 @@ The project solves an image processing problem. It uses a two-dimensional domain
     Evaluation has been done in order to find out if the program behaves as it should in terms of correctness and performance.
 
     \subsection{Tools and Building}
-        For the development of this project the used programming language is C due to its performance in low-level calculations. The project is compiled using -O3 flag for serial optimization. In addition, GNU Make was selected for the build phase and Python to compare the output for testing reasons. To build the project just run: <make imagenew>
+        For the development of this project the used programming language is C due to its performance in low-level calculations. The project is compiled using -O3 flag for serial optimization. In addition, GNU Make was selected for the build phase and Python to compare the output for testing reasons.
+        
+        To build the project just run:
+        \begin{lstlisting}[language=bash]
+          $ make imagenew
+        \end{lstlisting}
 
         Cirrus supercomputer is the platform that all of the experiments have been executed. In order to submit the job to the backend of Cirrus a Portable Batch System (PBS) has been developed. This file is a script to:
         \begin{enumerate}
-          \item Build the project using GNU Make
           \item Load the Intel compilers
           \item Submit the MPI project to Cirrus with a variety of configurations.
         \end{enumerate}
@@ -136,53 +112,49 @@ The project solves an image processing problem. It uses a two-dimensional domain
           \item All of the edge images in resources/ folder
         \end{enumerate}
 
-        To run it execute <qsub imagenew.pbs>.
+        To run it execute:
+        \begin{lstlisting}[language=bash]
+          $ qsub imagenew.pbs
+        \end{lstlisting}
 
         \paragraph{Noise}
-            At this point we have to point out that each experiment has been executed multiple times. In our occasion, the image edgenew192x128.pgm running on 8 processes, has been executed 10 times then we calculate the mean running time and this value has been used to calculate the speedup for the specific configuration.
+            At this point we have to point out that each experiment has been executed multiple times. In our occasion, the image edgenew192x128.pgm running on 8 processes, has been executed 10 times then we calculate the mean iteration running time and this value has been used to calculate the speedup for the specific configuration.
 
     \subsection{Correctness}
         First and foremost, before performance analysis, we have to ensure that the produced outputs are valid regardless of the number of processes that are used underneath. The approach is very simple. Once the job has been successfully executed, we run the serial program for all of the given input images and then store the outputs. The serial program has been modified to stop when there are no significant changes in the image's pixels between each step. To be more specific, the max different has been definied to be 0.1. It worths to mention that the termination condition has to remain the same in all of the executions because different conditions create different results. This comparison is made automatically through a Python script that uses the filecmp function. If the files are the same then our experiment is correct.
 
 
     \subsection{Performance}
-        Performance analysis is essential for this experiment in order to compare our results and extract useful information of them. Speedup from the running time of our experiments. This a very useful measurement because we can decide how good our input scales for a variety of process. This would help us decide which is the optimal number of process to run if our budget or resources are limited.
+        Performance analysis is essential for this experiment in order to compare our results and extract useful information of them.
 
         \subsubsection{Speedup}
-            The timing of the experiment excludes Input and Output. The timing starts before the scatter and ends after the gather of the buffers. This decision has been made in order to take into consideration only the communication and calculation procedures.
+            For the timing of the experiment we have executed the same experiment for 1000 iterations without the terminate condition. Of course this method will not produce the correct output images, but we will have a better understanding on the time that the main calculation concludes without Input and Output overheads. The target time for each experiment is the mean iteration running time. Using this timing we present the speedup of the experiments. This a very useful measurement because we can decide how good our input scales for a variety of process. This would help us decide which is the optimal number of process to run if our budget or resources are limited.
+
+            \begin{figure}[ht]
+                \centering
+                \includegraphics[scale=0.6]{../graphs/Speedup.eps}
+                \caption{Speedup for all the input images}
+                \label{speedup}
+            \end{figure}
 
             \paragraph{Small Input}
-                Ideally as we increase the processors running the speedup should be increased accordingly but this is not the case for small problems. Let's take for example the case where the input image is 192x128 pixels. In Figure 1, it plain to see that the problem doen't scale as it should. When we use even more processors the speedup is slightly inclined. As a result, for the specific problem 4 or 5 process would be the best option. We don't have to waste 10 or 20 more of them if the speedup is not going to exceed 4.
-
-                \begin{figure}[ht]
-                    \centering
-                    \includegraphics[scale=0.6]{../graphs/edgenew192x128_speedup.eps}
-                    \caption{Speedup for image 192x128}
-                    \label{speedup-192x128}
-                \end{figure}
-            
-            \paragraph{Medium Input}
-                As we increase the problem size 
-                256x192 512x384
-                \begin{figure}[ht]
-                    \centering
-                    \includegraphics[scale=0.6]{../graphs/edgenew192x128_speedup.eps}
-                    \caption{Speedup for image 192x128}
-                    \label{speedup-192x128}
-                \end{figure}
+                Ideally as we increase the processors running the speedup should be increased accordingly but this is not the case for small problems. Let's take for example the case where the input image is 192x128 or 256x192 pixels. In Figure 1, it plain to see that the problem doen't scale as it should. When we use even more processors the speedup is slightly inclined. As a result, for the specific size of problems 5 till 12 processes would be the best option. We don't have to waste 10 or 20 more of them if the speedup is not going to exceed 5 and 6 accrodingly.
+ 
+             \paragraph{Medium Input}
+                As long as we increase the input image size the speedup is growing faster. From Figure 1 we can denote that for the image 512x384 choosing 26 processes seems a very appealing option. Reaching speedup 13 times faster than running it on one process.
 
             \paragraph{Big Input}
-
-            \paragraph{Enormous Input}
-
-
-
+                In case of input size bigger than 768x768 pixels the results are promising. The speedup is increased almost in a linear fashion, reaching the ideal values and making the communication overhead of the halo swaps to be insignificant. 
 
         \subsubsection{Average Pixel}
-            Performance analysis for the average pixel results.
-            % measure average time per iteration
-            % are some inputs easier to be solved?
-            % add tables???
+            In this section we have performed analysis for the average pixel results between fixed intervals. Each 100 iterations the average pixel is calculated. In order to achieve that we had to run the experiment till completion for all of the input images. We choose to run them once on for 4 process, because the number of processes has not effect on the average pixel value. This happens due to the fact that the average pixel is depending on the input image and not in how many processes are participation on solving the problem. According to Figure 2, which includes the average pixel values of all input images against the iteration number, it is plain to see that the value is declined in every occassion. That observion is logican due to the fact that the initialized old buffer contain white (255) pixels. As long as the loop is processed the average value is decreasing, meaningly the whole picture is becoming darker. At this point, it worths to mention that in each image from iteration 1 till 100 the pixel value is declined very fast. After that, the change rate is slower, meaning that each iteration has small impact to the new calculated output.
+
+            \begin{figure}[ht]
+                \centering
+                \includegraphics[scale=0.6]{../graphs/edgenew192x128_average_pixel.eps}
+                \caption{Average pixel for image 192x128}
+                \label{speedup-192x128}
+            \end{figure}
 
 \sectionVspacing
 
@@ -190,20 +162,3 @@ The project solves an image processing problem. It uses a two-dimensional domain
 In conclusion.
 
 \end{document}
-
-% \begin{table}[h]
-% 	\begin{center}
-% 		\begin{tabular}{||l|c|l||}
-% 			\hline
-% 			{\bf Loop No} & {\bf Schedule}\\
-% 			\hline
-% 			Loop 1         &  schedule(guided, 4)\\
-% 			Loop 2         &  schedule(dynamic, 16)\\
-% 			\hline
-% 		\end{tabular}
-% 	\end{center}
-% 	\caption{Best scheduler options on four (4) threads}
-% 	\label{simple_table}
-% \end{table}
-
-% \lstinputlisting[language=C, firstline=2, lastline=3, caption=loops.c]{../template/loops_parallel-B136013.c}

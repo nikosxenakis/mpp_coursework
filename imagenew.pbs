@@ -5,21 +5,16 @@
 #PBS -l walltime=04:00:00
 #PBS -l select=1:ncpus=36
 
-make clean;
-make $BIN;
-
 cd $PBS_O_WORKDIR
-
-BIN=./imagenew;
-
-rm -rf data/results.tsv;
 
 module load mpt
 module load intel-compilers-17
 
+rm -rf data/results.tsv;
+
 export OMP_NUM_THREADS=1
 
-echo -e "Input File\tProcesses Number\tRunning Time (sec)\tAverage Iteration Time(sec)" >> data/results.tsv;
+echo -e "Input File\tProcesses Number\tAverage Iteration Time (ms)" >> data/results.tsv;
 
 for N in 1 2 3 4 5 7 8 11 12 16 20 24 26 32
 do
@@ -29,49 +24,45 @@ do
   for INPUT_FILE in ./resources/*
   do
 
-  	for i in {1..10}
-  	do
+ 	MPIPROG=`basename $PBS_JOBNAME .pbs`
+	MPISIZE=$NPROC
 
-	  	MPIPROG=`basename $PBS_JOBNAME .pbs`
-		MPISIZE=$NPROC
+	# Spread the processes as evenly as possible across the nodes
 
-		# Spread the processes as evenly as possible across the nodes
+	CPN=36                                     # Cores Per Node (physical)
+	NNODE=$( wc -l < $PBS_NODEFILE )           # nodes reserved
+	PPN=$(( (MPISIZE + NNODE - 1) / NNODE ))   # Processes Per Node
 
-		CPN=36                                     # Cores Per Node (physical)
-		NNODE=$( wc -l < $PBS_NODEFILE )           # nodes reserved
-		PPN=$(( (MPISIZE + NNODE - 1) / NNODE ))   # Processes Per Node
+	# Ensure we place a maximum of 36 processes per node to avoid hyperthreads
 
-		# Ensure we place a maximum of 36 processes per node to avoid hyperthreads
+	if [ $PPN -gt $CPN ]
+	then
+	    NMIN=$(( (MPISIZE + CPN - 1) / CPN ))
+	    echo "Error: for $MPISIZE processes you must select at least $NMIN nodes"
 
-		if [ $PPN -gt $CPN ]
-		then
-		    NMIN=$(( (MPISIZE + CPN - 1) / CPN ))
-		    echo "Error: for $MPISIZE processes you must select at least $NMIN nodes"
+	    exit 1
+	fi
 
-		    exit 1
-		fi
+	# Ensure that number of MPI processes is a multiple of number of nodes
 
-		# Ensure that number of MPI processes is a multiple of number of nodes
+	if [ $MPISIZE -ne $(( NNODE * PPN )) ]
+	then
 
-		if [ $MPISIZE -ne $(( NNODE * PPN )) ]
-		then
+	    echo "Error: NPROC=$NPROC must be a multiple of number of nodes=$NNODE"
+	    exit 1
+	fi
 
-		    echo "Error: NPROC=$NPROC must be a multiple of number of nodes=$NNODE"
-		    exit 1
-		fi
+	echo '--------------------------------------------------------------------------------'
 
-		echo '--------------------------------------------------------------------------------'
+	echo 'Running' $MPIPROG 'on' $MPISIZE 'processes over' $NNODE 'node(s)'
+	echo 'Issuing command: mpiexec_mpt -n' $MPISIZE '-ppn' $PPN ./$MPIPROG
+	echo 'Started at' `date`
+	echo '--------------------------------------------------------------------------------'
 
-		echo 'Running' $MPIPROG 'on' $MPISIZE 'processes over' $NNODE 'node(s)'
-		echo 'Issuing command: mpiexec_mpt -n' $MPISIZE '-ppn' $PPN ./$MPIPROG
-		echo 'Started at' `date`
-		echo '--------------------------------------------------------------------------------'
+	(time mpiexec_mpt -n $MPISIZE -ppn $PPN ./$MPIPROG $INPUT_FILE) 2>&1
 
-		(time mpiexec_mpt -n $MPISIZE -ppn $PPN ./$MPIPROG $INPUT_FILE) 2>&1
+	echo '--------------------------------------------------------------------------------'
+	echo 'Finished at' `date`
 
-		echo '--------------------------------------------------------------------------------'
-		echo 'Finished at' `date`
-
-	done
   done
 done

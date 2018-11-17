@@ -1,5 +1,5 @@
 #COMPILER OPTIONS
-CFLAGS := -g -Wall -O3 #-cc=icc 
+CFLAGS := -g -Wall -O3 -cc=icc 
 CC := mpicc $(CFLAGS)
 
 # If the first argument is "run"...

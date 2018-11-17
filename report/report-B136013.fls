@@ -48,10 +48,6 @@ INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/tex/late
 INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/tex/latex/amsmath/amsbsy.sty
 INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/tex/latex/amsmath/amsopn.sty
 INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/tex/latex/amsmath/amsopn.sty
-INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/tex/latex/listings/lstlang1.sty
-INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/tex/latex/listings/lstlang1.sty
-INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/tex/latex/listings/lstmisc.sty
-INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/tex/latex/listings/lstmisc.sty
 INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/tex/latex/hyperref/hyperref.sty
 INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/tex/latex/hyperref/hyperref.sty
 INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/tex/generic/oberdiek/hobsub-hyperref.sty
@@ -145,16 +141,30 @@ INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/fonts/tf
 INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/adobe/times/ptmb8t.tfm
 INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/fonts/vf/adobe/times/ptmb8t.vf
 INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/adobe/times/ptmb8r.tfm
-INPUT ../graphs/edgenew192x128_speedup.eps
-INPUT ../graphs/edgenew192x128_speedup.eps
-INPUT ../graphs/edgenew192x128_speedup.eps
-INPUT ../graphs/edgenew192x128_speedup-eps-converted-to.pdf
-INPUT ../graphs/edgenew192x128_speedup-eps-converted-to.pdf
-INPUT ../graphs/edgenew192x128_speedup.eps
-INPUT ../graphs/edgenew192x128_speedup-eps-converted-to.pdf
-INPUT ../graphs/edgenew192x128_speedup-eps-converted-to.pdf
-INPUT ../graphs/edgenew192x128_speedup-eps-converted-to.pdf
-INPUT ../graphs/edgenew192x128_speedup-eps-converted-to.pdf
+INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/tex/latex/listings/lstlang1.sty
+INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/tex/latex/listings/lstlang1.sty
+INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/tex/latex/listings/lstlang1.sty
+INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/tex/latex/listings/lstlang1.sty
+INPUT ../graphs/Speedup.eps
+INPUT ../graphs/Speedup.eps
+INPUT ../graphs/Speedup.eps
+INPUT ../graphs/Speedup-eps-converted-to.pdf
+INPUT ../graphs/Speedup-eps-converted-to.pdf
+INPUT ../graphs/Speedup.eps
+INPUT ../graphs/Speedup-eps-converted-to.pdf
+INPUT ../graphs/Speedup-eps-converted-to.pdf
+INPUT ../graphs/Speedup-eps-converted-to.pdf
+INPUT ../graphs/Speedup-eps-converted-to.pdf
+INPUT ../graphs/edgenew192x128_average_pixel.eps
+INPUT ../graphs/edgenew192x128_average_pixel.eps
+INPUT ../graphs/edgenew192x128_average_pixel.eps
+INPUT ../graphs/edgenew192x128_average_pixel-eps-converted-to.pdf
+INPUT ../graphs/edgenew192x128_average_pixel-eps-converted-to.pdf
+INPUT ../graphs/edgenew192x128_average_pixel.eps
+INPUT ../graphs/edgenew192x128_average_pixel-eps-converted-to.pdf
+INPUT ../graphs/edgenew192x128_average_pixel-eps-converted-to.pdf
+INPUT ../graphs/edgenew192x128_average_pixel-eps-converted-to.pdf
+INPUT ../graphs/edgenew192x128_average_pixel-eps-converted-to.pdf
 INPUT /Users/xenis656/Desktop/cirrus/MPP/mpp_coursework/report/report-B136013.aux
 INPUT /Users/xenis656/Desktop/cirrus/MPP/mpp_coursework/report/report-B136013.out
 INPUT /Users/xenis656/Desktop/cirrus/MPP/mpp_coursework/report/report-B136013.out

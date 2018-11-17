@@ -8,8 +8,8 @@
 #include "mpi_types.h"
 #include "cart_info.h"
 
-#define MAXITER   1000
-// #define MAXITER   1000000
+// #define MAXITER   1000
+#define MAXITER   1000000
 #define MASTER 0
 #define PRINTFREQ  100
 #define FILENAME_SIZE 128

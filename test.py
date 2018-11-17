@@ -8,7 +8,6 @@ outputs = [
     ['./output/imagenew256x192.pgm', './test_output/imagenew256x192.pgm'],
     ['./output/imagenew512x384.pgm', './test_output/imagenew512x384.pgm'],
     ['./output/imagenew768x768.pgm', './test_output/imagenew768x768.pgm'],
-    ['./output/imagenew4928x2772.pgm', './test_output/imagenew4928x2772.pgm'],
     ['./output/imagenew1600x1200.pgm', './test_output/imagenew1600x1200.pgm']
 ]
 

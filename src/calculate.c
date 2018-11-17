@@ -108,7 +108,7 @@ double calculate(double **edge, double **old, double **new, int m, int n, int mp
 
   for (iter=1; iter<=MAXITER; iter++) {
 
-    if(world_rank == MASTER)
+    if(cart_info.id == MASTER)
       iter_time[iter-1] = MPI_Wtime();
 
     // Send and Receive halo swaps
@@ -124,7 +124,7 @@ double calculate(double **edge, double **old, double **new, int m, int n, int mp
     // calculate borders with halo
     caclulate_halo(old, new, edge, mp, np, cart_info, request, status);
 
-    // if can_terminate every PRINTFREQ
+    //if can_terminate every PRINTFREQ
     if(iter%PRINTFREQ==0 || iter == 1) {
       print_average_pixel(old, iter, cart_info, m, n, mp, np, filename);
 
@@ -138,7 +138,7 @@ double calculate(double **edge, double **old, double **new, int m, int n, int mp
       }
     }
 
-    if(world_rank == MASTER)
+    if(cart_info.id == MASTER)
       iter_time[iter-1] = MPI_Wtime() - iter_time[iter-1];
   }
 
@@ -146,6 +146,6 @@ double calculate(double **edge, double **old, double **new, int m, int n, int mp
   {
     average_iter_time += iter_time[i];
   }
-  average_iter_time /= MAXITER;
+  average_iter_time /= iter;
   return average_iter_time;
 }
