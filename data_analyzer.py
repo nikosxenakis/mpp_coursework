@@ -114,6 +114,10 @@ if os.path.exists(path):
     analyze_data(f, "edgenew512x384")
     f = open(path, 'r')
     analyze_data(f, "edgenew768x768")
+    f = open(path, 'r')
+    analyze_data(f, "edgenew1600x1200")
+    f = open(path, 'r')
+    analyze_data(f, "edgenew4928x2772")
 
 path = './data/'
 ext = '.tsv'
@@ -136,6 +140,18 @@ if os.path.exists(str(path+filename+ext)):
     analyze_average_pixel(f, filename)
 
 filename = 'edgenew768x768_average_pixel'
+
+if os.path.exists(str(path+filename+ext)):
+    f = open(str(path+filename+ext), 'r')
+    analyze_average_pixel(f, filename)
+
+filename = 'edgenew1600x1200_average_pixel'
+
+if os.path.exists(str(path+filename+ext)):
+    f = open(str(path+filename+ext), 'r')
+    analyze_average_pixel(f, filename)
+
+filename = 'edgenew4928x2772_average_pixel'
 
 if os.path.exists(str(path+filename+ext)):
     f = open(str(path+filename+ext), 'r')

@@ -2,7 +2,7 @@
 #
 #PBS -N imagenew
 #PBS -A d167-s1770309
-#PBS -l walltime=00:30:00
+#PBS -l walltime=04:00:00
 #PBS -l select=1:ncpus=36
 
 make clean;
