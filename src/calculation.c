@@ -1,4 +1,4 @@
-#include "../include/calculate.h"
+#include "../include/calculation.h"
 
 double get_average_pixel(double **table, MPI_Comm comm, int m, int n, int mp, int np) {
   double sum = 0, global_sum = 0;

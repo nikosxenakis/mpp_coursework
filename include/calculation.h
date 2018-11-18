@@ -1,5 +1,5 @@
-#ifndef CALCULATE
-#define CALCULATE
+#ifndef CALCULATION
+#define CALCULATION
 
 #include <stdlib.h>
 #include <mpi.h>
