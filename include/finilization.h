@@ -12,10 +12,13 @@
 
 #define MASTER 0
 
+//gathers the worker's buffers to the masterbuf of the master process
 void gather_masterbuf(double **masterbuf, double **old, int mp, int np, Cart_info cart_info, Mpi_Datatypes mpi_Datatypes);
 
+//exports the output and finilizes the program
 void finilization(int world_rank, int world_size, int argc, char **argv, char *filename, double average_iter_time, double **masterbuf, int m, int n);
 
+//frees the allocated tables
 void free_tables(int world_rank, double **masterbuf, double **edge, double **old, double **new);
 
 #endif

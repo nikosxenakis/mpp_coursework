@@ -12,6 +12,7 @@
 #define LEFT_TO_RIGHT 3
 #define RIGHT_TO_LEFT 4
 
+//contains information about the topology
 typedef struct Cart_info {
   int id;
   MPI_Comm comm;
@@ -24,14 +25,19 @@ typedef struct Cart_info {
   int right;
 } Cart_info;
 
+// returns true if the process has a left process
 int has_left(Cart_info cart_info);
 
+// returns true if the process has a right process
 int has_right(Cart_info cart_info);
 
+// returns true if the process has a top process
 int is_top(Cart_info cart_info);
 
+// returns true if the process has a bottom process
 int is_bottom(Cart_info cart_info);
 
+// discovers and create the Cart_Info structure based on the given topology
 Cart_info discoverCart(int id, MPI_Comm comm, int world_size, int dim[2]);
 
 #endif
