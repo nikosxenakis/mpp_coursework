@@ -1,20 +1,26 @@
 \contentsline {section}{\numberline {1}Introduction}{3}{section.1}
 \contentsline {section}{\numberline {2}Project Specification}{3}{section.2}
-\contentsline {section}{\numberline {3}Analysis}{3}{section.3}
-\contentsline {subsection}{\numberline {3.1}MPP API}{3}{subsection.3.1}
-\contentsline {paragraph}{Communication}{3}{section*.2}
-\contentsline {paragraph}{Topology}{4}{section*.3}
-\contentsline {paragraph}{Derived Types}{4}{section*.4}
-\contentsline {subsection}{\numberline {3.2}Design}{4}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}Input/Output}{5}{subsection.3.3}
-\contentsline {section}{\numberline {4}Evaluation}{5}{section.4}
-\contentsline {subsection}{\numberline {4.1}Tools and Building}{5}{subsection.4.1}
-\contentsline {paragraph}{Noise}{6}{section*.5}
-\contentsline {subsection}{\numberline {4.2}Correctness}{6}{subsection.4.2}
-\contentsline {subsection}{\numberline {4.3}Performance}{6}{subsection.4.3}
-\contentsline {subsubsection}{\numberline {4.3.1}Speedup}{6}{subsubsection.4.3.1}
-\contentsline {paragraph}{Small Input}{7}{section*.6}
-\contentsline {paragraph}{Medium Input}{7}{section*.7}
-\contentsline {paragraph}{Big Input}{7}{section*.8}
-\contentsline {subsubsection}{\numberline {4.3.2}Average Pixel}{7}{subsubsection.4.3.2}
-\contentsline {section}{\numberline {5}Conclusion}{8}{section.5}
+\contentsline {section}{\numberline {3}Design Analysis}{3}{section.3}
+\contentsline {subsection}{\numberline {3.1}Initialization}{3}{subsection.3.1}
+\contentsline {paragraph}{Input}{4}{section*.2}
+\contentsline {paragraph}{Decomposition}{4}{section*.3}
+\contentsline {paragraph}{Virtual Topology}{4}{section*.4}
+\contentsline {paragraph}{Discover Topology}{4}{section*.5}
+\contentsline {paragraph}{Derived Types}{5}{section*.6}
+\contentsline {paragraph}{Buffers}{5}{section*.7}
+\contentsline {subsection}{\numberline {3.2}Scatter}{5}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Calculation}{5}{subsection.3.3}
+\contentsline {paragraph}{Periodic Checks}{6}{section*.8}
+\contentsline {paragraph}{Communication}{6}{section*.9}
+\contentsline {subsection}{\numberline {3.4}Gather}{6}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.5}Finalization}{6}{subsection.3.5}
+\contentsline {section}{\numberline {4}Evaluation}{7}{section.4}
+\contentsline {subsection}{\numberline {4.1}Tools and Building}{7}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Correctness}{7}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Performance}{8}{subsection.4.3}
+\contentsline {subsubsection}{\numberline {4.3.1}Speedup}{8}{subsubsection.4.3.1}
+\contentsline {paragraph}{Small Input}{9}{section*.11}
+\contentsline {paragraph}{Medium Input}{9}{section*.12}
+\contentsline {paragraph}{Big Input}{9}{section*.13}
+\contentsline {subsubsection}{\numberline {4.3.2}Average Pixel}{9}{subsubsection.4.3.2}
+\contentsline {section}{\numberline {5}Conclusion}{10}{section.5}
