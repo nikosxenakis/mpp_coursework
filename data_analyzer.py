@@ -26,6 +26,33 @@ def create_plots(title, x_axis_title, y_axis_title, labels, x_values, y_values, 
     fig.savefig('./graphs/' + str(title) + '.eps', format='eps', dpi=1000)
 
 
+def get_time1(data_file, image):
+
+    i = 0;
+    curr_times = 0
+    titles = ()
+    processes = ()
+    speedup = ()
+    run_time = 0
+    mean_run_time = 0
+    time1 = 0
+
+    for line in data_file:
+        data = line.split('\t')
+
+        if i == 0:
+            titles = data
+
+        if i > 0 and data[0] == str("./resources/" + image + ".pgm"):
+            if int(data[1]) == 1:
+                return float(data[2])
+
+        i = i + 1
+
+    return 0
+
+
+
 def analyze_average_iteration(data_file, image):
 
     i = 0;
@@ -57,6 +84,35 @@ def analyze_average_iteration(data_file, image):
     return speedup
 
 
+def analyze_average_big_iteration(data_file, image, time1):
+
+    i = 0;
+    curr_times = 0
+    titles = ()
+    processes = ()
+    speedup = ()
+    run_time = 0
+    mean_run_time = 0
+
+    for line in data_file:
+        data = line.split('\t')
+
+        if i == 0:
+            titles = data
+
+        if i > 0 and data[0] == str("./resources/big/" + image + ".pgm"):
+
+            processes = processes + (int(data[1]),)
+            run_time = float(data[2])
+
+            curr_speedup = time1 / run_time
+            speedup = speedup + ( float("%.2f" % curr_speedup ) ,)
+
+        i = i + 1
+
+    return speedup
+
+
 def get_processes(data_file, image):
     i = 0;
     processes = ()
@@ -71,10 +127,24 @@ def get_processes(data_file, image):
     return processes
 
 
+def get_big_processes(data_file, image):
+    i = 0;
+    processes = ()
+
+    for line in data_file:
+        data = line.split('\t')
+
+        if i > 0 and data[0] == str("./resources/big/" + image + ".pgm"):
+            processes = processes + (int(data[1]),)
+        i = i + 1
+
+    return processes
+
+
 def create_speedup_plot(processes, speedup1, speedup2, speedup3, speedup4, speedup5):
 
     create_plots(
-        str("Speedup"),
+        str("speedup"),
         "Number of Processes",
         str("Speedup"),
         ["192x128", "256x192", "512x384", "768x768", "1600x1200", "ideal"],
@@ -83,6 +153,35 @@ def create_speedup_plot(processes, speedup1, speedup2, speedup3, speedup4, speed
         0.4,
         "upper left"
     )
+
+
+def create_speedup_big_input_plot(processes, speedup1, speedup2):
+
+    create_plots(
+        str("speedupBigInput"),
+        "Number of Processes",
+        str("Speedup of big images"),
+        ["768x768", "1600x1200", "ideal"],
+        processes,
+        [speedup1, speedup2, processes],
+        0.4,
+        "upper left"
+    )
+
+
+def create_speedup_interval_plot(processes, speedup, speedup_interval):
+
+    create_plots(
+        str("speedupInterval"),
+        "Number of Processes",
+        str("Speedup of image 768x768"),
+        ["Without Intervals", "With Intervals"],
+        processes,
+        [speedup, speedup_interval],
+        0.4,
+        "upper left"
+    )
+
 
 
 def analyze_average_pixel(data_file, path):
@@ -102,88 +201,157 @@ def analyze_average_pixel(data_file, path):
             average = average + ( float("%.3f" % float(data[1])) ,)
         i = i + 1
 
+    create_plots(
+        str("average_pixel/")+str(path),
+        "Iterations",
+        str("Average Pixel"),
+        [path],
+        iterations,
+        [average],
+        0.4,
+        "upper right"
+    )
+
     return average
 
 
-def get_iterations(data_file, image):
-    i = 0;
+# def create_pixel_plot(iterations, pixel1, pixel2, pixel3, pixel4, pixel5):
 
-    iterations = ()
-
-    for line in data_file:
-        if i > 0:
-            data = line.split('\t')
-            iterations = iterations + (int(data[0]),)
-        i = i + 1
-
-    return iterations
-
-
-def create_pixel_plot(iterations, pixel1, pixel2, pixel3, pixel4, pixel5):
-
-    create_plots(
-        str("Average Pixel"),
-        "Iterations",
-        str("Average Pixel"),
-        ["192x128", "256x192", "512x384", "768x768"],
-        iterations,
-        [pixel1, pixel2, pixel3, pixel4],
-        0.4,
-        "lower right"
-    )
+#     create_plots(
+#         str("average_pixel/average_pixel"),
+#         "Iterations",
+#         str("Average Pixel"),
+#         ["192x128", "256x192", "512x384", "768x768"],
+#         iterations,
+#         [pixel1, pixel2, pixel3, pixel4],
+#         0.4,
+#         "lower right"
+#     )
 
 
-path = './data/results_average_iteration.tsv'
+# def get_iterations(data_file, image):
+#     i = 0;
 
-if os.path.exists(path):
-    f = open(path, 'r')
-    processes = get_processes(f, "edgenew192x128")
-    f = open(path, 'r')
-    speedup1 = analyze_average_iteration(f, "edgenew192x128")
-    f = open(path, 'r')
-    speedup2 = analyze_average_iteration(f, "edgenew256x192")
-    f = open(path, 'r')
-    speedup3 = analyze_average_iteration(f, "edgenew512x384")
-    f = open(path, 'r')
-    speedup4 = analyze_average_iteration(f, "edgenew768x768")
-    f = open(path, 'r')
-    speedup5 = analyze_average_iteration(f, "edgenew1600x1200")
+#     iterations = ()
 
-    create_speedup_plot(processes, speedup1, speedup2, speedup3, speedup4, speedup5)
+#     for line in data_file:
+#         if i > 0:
+#             data = line.split('\t')
+#             iterations = iterations + (int(data[0]),)
+#         i = i + 1
 
-path = './data/average_pixel/'
-ext = '.tsv'
-pixel1 = ()
-pixel2 = ()
-pixel3 = ()
-pixel4 = ()
-pixel5 = ()
+#     return iterations
 
-filename = 'edgenew192x128_average_pixel'
-if os.path.exists(path):
-    f = open(path + filename + ext, 'r')
-    pixel1 = analyze_average_pixel(f, filename)
 
-filename = 'edgenew256x192_average_pixel'
-if os.path.exists(str(path+filename+ext)):
+def parse_average_pixel():
+    path = './data/average_pixel_data/'
+    ext = '.tsv'
+    pixel1 = ()
+    pixel2 = ()
+    pixel3 = ()
+    pixel4 = ()
+    pixel5 = ()
+
+    filename = 'edgenew192x128_average_pixel'
+    if os.path.exists(path):
+        f = open(path + filename + ext, 'r')
+        pixel1 = analyze_average_pixel(f, filename)
+
+    filename = 'edgenew256x192_average_pixel'
+    if os.path.exists(str(path+filename+ext)):
+        f = open(str(path+filename+ext), 'r')
+        pixel2 = analyze_average_pixel(f, filename)
+
+    filename = 'edgenew512x384_average_pixel'
+    if os.path.exists(str(path+filename+ext)):
+        f = open(str(path+filename+ext), 'r')
+        pixel3 = analyze_average_pixel(f, filename)
+
+    filename = 'edgenew768x768_average_pixel'
+    if os.path.exists(str(path+filename+ext)):
+        f = open(str(path+filename+ext), 'r')
+        pixel4 = analyze_average_pixel(f, filename)
+
+    filename = 'edgenew1600x1200_average_pixel'
     f = open(str(path+filename+ext), 'r')
-    pixel2 = analyze_average_pixel(f, filename)
+    pixel5 = analyze_average_pixel(f, filename)
 
-filename = 'edgenew512x384_average_pixel'
-if os.path.exists(str(path+filename+ext)):
-    f = open(str(path+filename+ext), 'r')
-    pixel3 = analyze_average_pixel(f, filename)
+    # f = open(str(path+filename+ext), 'r')
+    # iterations = get_iterations(f, filename)
 
-filename = 'edgenew768x768_average_pixel'
-if os.path.exists(str(path+filename+ext)):
-    f = open(str(path+filename+ext), 'r')
-    pixel4 = analyze_average_pixel(f, filename)
+    # create_pixel_plot(iterations, pixel1, pixel2, pixel3, pixel4, pixel5)
 
-filename = 'edgenew1600x1200_average_pixel'
-f = open(str(path+filename+ext), 'r')
-pixel5 = analyze_average_pixel(f, filename)
 
-f = open(str(path+filename+ext), 'r')
-iterations = get_iterations(f, filename)
+def parse_running_time():
+    path = './data/results_running_time_one_node.tsv'
 
-create_pixel_plot(iterations, pixel1, pixel2, pixel3, pixel4, pixel5)
+    if os.path.exists(path):
+        f = open(path, 'r')
+        processes = get_processes(f, "edgenew192x128")
+        f = open(path, 'r')
+        speedup1 = analyze_average_iteration(f, "edgenew192x128")
+        f = open(path, 'r')
+        speedup2 = analyze_average_iteration(f, "edgenew256x192")
+        f = open(path, 'r')
+        speedup3 = analyze_average_iteration(f, "edgenew512x384")
+        f = open(path, 'r')
+        speedup4 = analyze_average_iteration(f, "edgenew768x768")
+        f = open(path, 'r')
+        speedup5 = analyze_average_iteration(f, "edgenew1600x1200")
+
+        create_speedup_plot(processes, speedup1, speedup2, speedup3, speedup4, speedup5)
+
+
+def parse_interval():
+    processes = ()
+    speedup = ()
+    speedup_interval = ()
+
+    path = './data/results_running_time_one_node.tsv'
+
+    if os.path.exists(path):
+        f = open(path, 'r')
+        processes = get_processes(f, "edgenew768x768")
+        f = open(path, 'r')
+        speedup = analyze_average_iteration(f, "edgenew768x768")
+
+    path = './data/results_running_time_interval.tsv'
+
+    if os.path.exists(path):
+        f = open(path, 'r')
+        speedup_interval = analyze_average_iteration(f, "edgenew768x768")
+
+    create_speedup_interval_plot(processes, speedup, speedup_interval)
+
+
+def parse_big_input():
+
+    path = './data/results_running_time_one_node.tsv'
+    time1_1 = 0
+    time1_2 = 0
+
+    if os.path.exists(path):
+        f = open(path, 'r')
+        time1_1 = get_time1(f, "edgenew768x768")
+        f = open(path, 'r')
+        time1_2 = get_time1(f, "edgenew1600x1200")
+
+    path = './data/results_running_time_big_input.tsv'
+    if os.path.exists(path):
+        f = open(path, 'r')
+        processes = get_big_processes(f, "edgenew768x768")
+        f = open(path, 'r')
+        speedup1 = analyze_average_big_iteration(f, "edgenew768x768", time1_1)
+        f = open(path, 'r')
+        speedup2 = analyze_average_big_iteration(f, "edgenew1600x1200", time1_2)
+
+        create_speedup_big_input_plot(processes, speedup1, speedup2)
+
+
+parse_big_input()
+
+parse_interval()
+
+parse_running_time()
+
+parse_average_pixel()

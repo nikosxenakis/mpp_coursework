@@ -5,11 +5,13 @@ void gather_masterbuf(double **masterbuf, double **old, int mp, int np, Cart_inf
   MPI_Status send_status, status[cart_info.world_size];
   MPI_Request send_request, request[cart_info.world_size];
 
+  //each process send the reconstructed image to the MASTER
   if(!has_right(cart_info))
     MPI_Isend(&old[1][1], 1, mpi_Datatypes.max_cont_table, MASTER, 0, cart_info.comm, &send_request);
   else
     MPI_Isend(&old[1][1], 1, mpi_Datatypes.cont_table, MASTER, 0, cart_info.comm, &send_request);
 
+  //MASTER collects all of the parts to the masterbuf
   if(cart_info.id == MASTER) {
 
     for (i = 0; i < cart_info.dim[0]; i++) {
@@ -34,10 +36,12 @@ void finilization(int world_rank, int world_size, int argc, char **argv, char *f
   FILE * fp;
 
   if(world_rank == MASTER) {
-    fp = fopen ("./data/results.tsv", "a");
+    //MASTER writes the average iteration time
+    fp = fopen ("./data/results_running_time.tsv", "a");
     fprintf(fp, "%s\t%d\t%f\n", filename, world_size, average_iter_time*1000.0);
     fclose(fp);
 
+    //MASTER exports the new image
     if(argc == 2) {
       strcpy(filename, "./output/image");
       strcat(filename, &(argv[1][16]));

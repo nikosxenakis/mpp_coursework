@@ -21,6 +21,7 @@ void decomposition(int world_size, int m, int n, int dim[2], int *mp, int *np, i
   if(n%dim[1] != 0) {
     dim[0] = 0;
     dim[1] = 1;
+    //calls the decompopsition again with the new restrictions
     decomposition(world_size, m, n, dim, mp, np, max_mp, max_np);
   }
 }
@@ -42,6 +43,7 @@ void initialize_tables(double **old, int m, int n, Cart_info cart_info) {
   int i, j;
   double val;
 
+  //fills old table with white color
   for (i=0; i<m+2;i++) {
     for (j=0;j<n+2;j++) {
       old[i][j]=255.0;
@@ -67,6 +69,7 @@ void initialization(int *world_rank, int *world_size, char *filename, int argc, 
   MPI_Comm_rank(MPI_COMM_WORLD, world_rank);
   MPI_Comm_size(MPI_COMM_WORLD, world_size);
 
+  //reads the image either from terminal or default selection
   if(argc == 2) {
     strcpy(filename, argv[1]);
   }
@@ -76,6 +79,7 @@ void initialization(int *world_rank, int *world_size, char *filename, int argc, 
 
   pgmsize (filename, m, n);
 
+  //MASTER fills the masterbuf with the input image
   if(*world_rank == MASTER) {
     *masterbuf = (double **) arralloc(sizeof(double), 2, *m, *n);
     pgmread(filename, &(*masterbuf)[0][0], *m, *n);
@@ -88,11 +92,13 @@ void scatter_masterbuf(double **masterbuf, double **edge, int mp, int np, Cart_i
   MPI_Status recv_status, status[cart_info.world_size];
   MPI_Request recv_request, request[cart_info.world_size];
 
+  //Processes Receive the splitted masterbuf
   if(!has_right(cart_info))
     MPI_Irecv(&edge[1][1], 1, mpi_Datatypes.max_cont_table, MASTER, 0, cart_info.comm, &recv_request);
   else
     MPI_Irecv(&edge[1][1], 1, mpi_Datatypes.cont_table, MASTER, 0, cart_info.comm, &recv_request);
 
+  //MASTER splits the masterbuf to the processes
   if(cart_info.id == MASTER) {
 
     for (i = 0; i < cart_info.dim[0]; i++) {

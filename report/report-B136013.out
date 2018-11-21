@@ -1,15 +1,16 @@
 \BOOKMARK [1][-]{section.1}{Introduction}{}% 1
-\BOOKMARK [1][-]{section.2}{Project Specification}{}% 2
+\BOOKMARK [1][-]{section.2}{Project Description}{}% 2
 \BOOKMARK [1][-]{section.3}{Design Analysis}{}% 3
 \BOOKMARK [2][-]{subsection.3.1}{Initialization}{section.3}% 4
 \BOOKMARK [2][-]{subsection.3.2}{Scatter}{section.3}% 5
 \BOOKMARK [2][-]{subsection.3.3}{Calculation}{section.3}% 6
 \BOOKMARK [2][-]{subsection.3.4}{Gather}{section.3}% 7
 \BOOKMARK [2][-]{subsection.3.5}{Finalization}{section.3}% 8
-\BOOKMARK [1][-]{section.4}{Evaluation}{}% 9
-\BOOKMARK [2][-]{subsection.4.1}{Tools and Building}{section.4}% 10
-\BOOKMARK [2][-]{subsection.4.2}{Correctness}{section.4}% 11
-\BOOKMARK [2][-]{subsection.4.3}{Performance}{section.4}% 12
-\BOOKMARK [3][-]{subsubsection.4.3.1}{Speedup}{subsection.4.3}% 13
-\BOOKMARK [3][-]{subsubsection.4.3.2}{Average Pixel}{subsection.4.3}% 14
-\BOOKMARK [1][-]{section.5}{Conclusion}{}% 15
+\BOOKMARK [1][-]{section.4}{Tools}{}% 9
+\BOOKMARK [1][-]{section.5}{Evaluation}{}% 10
+\BOOKMARK [2][-]{subsection.5.1}{Correctness}{section.5}% 11
+\BOOKMARK [2][-]{subsection.5.2}{Performance}{section.5}% 12
+\BOOKMARK [3][-]{subsubsection.5.2.1}{Speedup}{subsection.5.2}% 13
+\BOOKMARK [3][-]{subsubsection.5.2.2}{Intervals}{subsection.5.2}% 14
+\BOOKMARK [3][-]{subsubsection.5.2.3}{Average Pixel}{subsection.5.2}% 15
+\BOOKMARK [1][-]{section.6}{Conclusion}{}% 16
