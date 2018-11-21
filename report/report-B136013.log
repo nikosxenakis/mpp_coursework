@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6800) (preloaded format=pdflatex 2018.10.18)  21 NOV 2018 20:24
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6800) (preloaded format=pdflatex 2018.10.18)  21 NOV 2018 21:12
 entering extended mode
 **./report-B136013.tex
 (report-B136013.tex
@@ -552,10 +552,10 @@ File: lstlang1.sty 2018/09/02 1.7 listings language file
 
 ]
 Package epstopdf Info: Source file: <../graphs/speedup.eps>
-(epstopdf)                    date: 2018-11-21 20:23:58
+(epstopdf)                    date: 2018-11-21 21:11:45
 (epstopdf)                    size: 28191 bytes
 (epstopdf)             Output file: <../graphs/speedup-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-11-20 19:12:25
+(epstopdf)                    date: 2018-11-21 20:24:30
 (epstopdf)                    size: 14425 bytes
 (epstopdf)             Command: <epstopdf --outfile=../graphs/speedup-eps-conve
 rted-to.pdf ../graphs/speedup.eps>
@@ -564,7 +564,7 @@ runsystem(epstopdf --outfile=../graphs/speedup-eps-converted-to.pdf ../graphs/s
 peedup.eps)...executed (allowed).
 
 Package epstopdf Info: Result file: <../graphs/speedup-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-11-21 20:24:30
+(epstopdf)                    date: 2018-11-21 21:12:46
 (epstopdf)                    size: 14425 bytes.
 <../graphs/speedup-eps-converted-to.pdf, id=156, 462.72874pt x 346.29375pt>
 File: ../graphs/speedup-eps-converted-to.pdf Graphic file (type pdf)
@@ -574,11 +574,11 @@ line 189.
 (pdftex.def)             Requested size: 370.1835pt x 277.03537pt.
  [8]
 Package epstopdf Info: Source file: <../graphs/speedupBigInput.eps>
-(epstopdf)                    date: 2018-11-21 20:23:58
-(epstopdf)                    size: 26403 bytes
+(epstopdf)                    date: 2018-11-21 21:11:44
+(epstopdf)                    size: 25983 bytes
 (epstopdf)             Output file: <../graphs/speedupBigInput-eps-converted-to
 .pdf>
-(epstopdf)                    date: 2018-11-21 19:30:20
+(epstopdf)                    date: 2018-11-21 20:24:31
 (epstopdf)                    size: 13824 bytes
 (epstopdf)             Command: <epstopdf --outfile=../graphs/speedupBigInput-e
 ps-converted-to.pdf ../graphs/speedupBigInput.eps>
@@ -588,8 +588,8 @@ graphs/speedupBigInput.eps)...executed (allowed).
 
 Package epstopdf Info: Result file: <../graphs/speedupBigInput-eps-converted-to
 .pdf>
-(epstopdf)                    date: 2018-11-21 20:24:31
-(epstopdf)                    size: 13824 bytes.
+(epstopdf)                    date: 2018-11-21 21:12:48
+(epstopdf)                    size: 13753 bytes.
 <../graphs/speedupBigInput-eps-converted-to.pdf, id=168, 462.72874pt x 346.2937
 5pt>
 File: ../graphs/speedupBigInput-eps-converted-to.pdf Graphic file (type pdf)
@@ -606,11 +606,11 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [9 <../graphs/speedup-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <../graphs/speedupInterval.eps>
-(epstopdf)                    date: 2018-11-21 20:23:58
+(epstopdf)                    date: 2018-11-21 21:11:45
 (epstopdf)                    size: 26309 bytes
 (epstopdf)             Output file: <../graphs/speedupInterval-eps-converted-to
 .pdf>
-(epstopdf)                    date: 2018-11-20 19:12:26
+(epstopdf)                    date: 2018-11-21 20:24:32
 (epstopdf)                    size: 15983 bytes
 (epstopdf)             Command: <epstopdf --outfile=../graphs/speedupInterval-e
 ps-converted-to.pdf ../graphs/speedupInterval.eps>
@@ -620,7 +620,7 @@ graphs/speedupInterval.eps)...executed (allowed).
 
 Package epstopdf Info: Result file: <../graphs/speedupInterval-eps-converted-to
 .pdf>
-(epstopdf)                    date: 2018-11-21 20:24:32
+(epstopdf)                    date: 2018-11-21 21:12:49
 (epstopdf)                    size: 15983 bytes.
 <../graphs/speedupInterval-eps-converted-to.pdf, id=212, 462.72874pt x 346.2937
 5pt>
@@ -632,11 +632,11 @@ n input line 236.
  [10 <../graphs/speedupBigInput-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <../graphs/average_pixel/edgenew192x128_ave
 rage_pixel.eps>
-(epstopdf)                    date: 2018-11-21 20:23:58
+(epstopdf)                    date: 2018-11-21 21:11:45
 (epstopdf)                    size: 23505 bytes
 (epstopdf)             Output file: <../graphs/average_pixel/edgenew192x128_ave
 rage_pixel-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-11-20 18:34:53
+(epstopdf)                    date: 2018-11-21 20:24:33
 (epstopdf)                    size: 13531 bytes
 (epstopdf)             Command: <epstopdf --outfile=../graphs/average_pixel/edg
 enew192x128_average_pixel-eps-converted-to.pdf ../graphs/average_pixel/edgenew1
@@ -648,7 +648,7 @@ s)...executed (allowed).
 
 Package epstopdf Info: Result file: <../graphs/average_pixel/edgenew192x128_ave
 rage_pixel-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-11-21 20:24:33
+(epstopdf)                    date: 2018-11-21 21:12:50
 (epstopdf)                    size: 13531 bytes.
 <../graphs/average_pixel/edgenew192x128_average_pixel-eps-converted-to.pdf, id=
 250, 462.72874pt x 346.29375pt>
@@ -661,11 +661,11 @@ ps-converted-to.pdf  used on input line 247.
 (pdftex.def)             Requested size: 175.06905pt x 131.01703pt.
 Package epstopdf Info: Source file: <../graphs/average_pixel/edgenew256x192_ave
 rage_pixel.eps>
-(epstopdf)                    date: 2018-11-21 20:23:59
+(epstopdf)                    date: 2018-11-21 21:11:45
 (epstopdf)                    size: 22531 bytes
 (epstopdf)             Output file: <../graphs/average_pixel/edgenew256x192_ave
 rage_pixel-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-11-20 18:34:53
+(epstopdf)                    date: 2018-11-21 20:24:34
 (epstopdf)                    size: 13487 bytes
 (epstopdf)             Command: <epstopdf --outfile=../graphs/average_pixel/edg
 enew256x192_average_pixel-eps-converted-to.pdf ../graphs/average_pixel/edgenew2
@@ -677,7 +677,7 @@ s)...executed (allowed).
 
 Package epstopdf Info: Result file: <../graphs/average_pixel/edgenew256x192_ave
 rage_pixel-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-11-21 20:24:34
+(epstopdf)                    date: 2018-11-21 21:12:51
 (epstopdf)                    size: 13487 bytes.
 <../graphs/average_pixel/edgenew256x192_average_pixel-eps-converted-to.pdf, id=
 251, 462.72874pt x 346.29375pt>
@@ -690,11 +690,11 @@ ps-converted-to.pdf  used on input line 249.
 (pdftex.def)             Requested size: 175.06905pt x 131.01703pt.
 Package epstopdf Info: Source file: <../graphs/average_pixel/edgenew768x768_ave
 rage_pixel.eps>
-(epstopdf)                    date: 2018-11-21 20:23:59
+(epstopdf)                    date: 2018-11-21 21:11:45
 (epstopdf)                    size: 27080 bytes
 (epstopdf)             Output file: <../graphs/average_pixel/edgenew768x768_ave
 rage_pixel-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-11-20 18:34:54
+(epstopdf)                    date: 2018-11-21 20:24:36
 (epstopdf)                    size: 14074 bytes
 (epstopdf)             Command: <epstopdf --outfile=../graphs/average_pixel/edg
 enew768x768_average_pixel-eps-converted-to.pdf ../graphs/average_pixel/edgenew7
@@ -706,7 +706,7 @@ s)...executed (allowed).
 
 Package epstopdf Info: Result file: <../graphs/average_pixel/edgenew768x768_ave
 rage_pixel-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-11-21 20:24:36
+(epstopdf)                    date: 2018-11-21 21:12:53
 (epstopdf)                    size: 14074 bytes.
 <../graphs/average_pixel/edgenew768x768_average_pixel-eps-converted-to.pdf, id=
 252, 462.72874pt x 346.29375pt>
@@ -719,11 +719,11 @@ ps-converted-to.pdf  used on input line 251.
 (pdftex.def)             Requested size: 175.06905pt x 131.01703pt.
 Package epstopdf Info: Source file: <../graphs/average_pixel/edgenew1600x1200_a
 verage_pixel.eps>
-(epstopdf)                    date: 2018-11-21 20:23:59
+(epstopdf)                    date: 2018-11-21 21:11:45
 (epstopdf)                    size: 31180 bytes
 (epstopdf)             Output file: <../graphs/average_pixel/edgenew1600x1200_a
 verage_pixel-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-11-20 18:34:54
+(epstopdf)                    date: 2018-11-21 20:24:37
 (epstopdf)                    size: 14879 bytes
 (epstopdf)             Command: <epstopdf --outfile=../graphs/average_pixel/edg
 enew1600x1200_average_pixel-eps-converted-to.pdf ../graphs/average_pixel/edgene
@@ -735,7 +735,7 @@ l.eps)...executed (allowed).
 
 Package epstopdf Info: Result file: <../graphs/average_pixel/edgenew1600x1200_a
 verage_pixel-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-11-21 20:24:37
+(epstopdf)                    date: 2018-11-21 21:12:54
 (epstopdf)                    size: 14879 bytes.
 <../graphs/average_pixel/edgenew1600x1200_average_pixel-eps-converted-to.pdf, i
 d=253, 462.72874pt x 346.29375pt>
@@ -765,7 +765,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 267.
 Here is how much of TeX's memory you used:
  9920 strings out of 492971
  149622 string characters out of 3124857
- 425894 words of memory out of 3000000
+ 426894 words of memory out of 3000000
  13608 multiletter control sequences out of 15000+200000
  30119 words of font info for 47 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -782,7 +782,7 @@ texmfs/install/fonts/type1/public/amsfonts/cm/cmr8.pfb></Users/xenis656/Library
 type1/public/amsfonts/cm/cmsy8.pfb></Users/xenis656/Library/Application Support
 /MiKTeX/texmfs/install/fonts/type1/urw/times/utmb8a.pfb></Users/xenis656/Librar
 y/Application Support/MiKTeX/texmfs/install/fonts/type1/urw/times/utmr8a.pfb>
-Output written on report-B136013.pdf (12 pages, 237933 bytes).
+Output written on report-B136013.pdf (12 pages, 237864 bytes).
 PDF statistics:
  486 PDF objects out of 1000 (max. 8388607)
  74 named destinations out of 1000 (max. 500000)

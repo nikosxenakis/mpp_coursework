@@ -21,21 +21,15 @@ Input File	Processes Number	Average Iteration Time (ms)
 ./resources/big/edgenew768x768.pgm	78	0.045608
 ./resources/big/edgenew1600x1200.pgm	84	0.112196
 ./resources/big/edgenew768x768.pgm	84	0.064516
-./resources/big/edgenew1600x1200.pgm	90	0.248066
-./resources/big/edgenew768x768.pgm	90	0.153176
 ./resources/big/edgenew1600x1200.pgm	99	0.147600
 ./resources/big/edgenew768x768.pgm	99	0.253083
 ./resources/big/edgenew1600x1200.pgm	100	0.115363
 ./resources/big/edgenew768x768.pgm	100	0.211398
 ./resources/big/edgenew1600x1200.pgm	116	0.089882
-./resources/big/edgenew768x768.pgm	116	0.058273
+./resources/ big/edgenew768x768.pgm	116	0.058273
 ./resources/big/edgenew1600x1200.pgm	132	0.127656
 ./resources/big/edgenew768x768.pgm	132	0.313812
-./resources/big/edgenew1600x1200.pgm	135	0.358441
-./resources/big/edgenew768x768.pgm	135	0.183065
 ./resources/big/edgenew1600x1200.pgm	150	0.078279
 ./resources/big/edgenew768x768.pgm	150	0.045669
-./resources/big/edgenew1600x1200.pgm	165	0.351899
-./resources/big/edgenew768x768.pgm	165	0.208752
 ./resources/big/edgenew1600x1200.pgm	180	0.072692
 ./resources/big/edgenew768x768.pgm	180	0.103459
