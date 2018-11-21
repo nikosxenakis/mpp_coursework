@@ -18,8 +18,8 @@ extern double calculate(double **edge, double **old, double **new, int m, int n,
 #endif
 
 //preprocessor definitions for testing various configurations
-// #define PROD
-#define TIMING_TEST
+#define PROD
+// #define TIMING_TEST
 // #define AVERAGE_PIXEL_TEST
 // #define TIMING_WITH_INTERVALS_TEST
 
