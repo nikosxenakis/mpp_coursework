@@ -19,12 +19,21 @@ double get_average_pixel(double **table, MPI_Comm comm, int m, int n, int mp, in
 void print_average_pixel(double **table, int iter, Cart_info cart_info, int m, int n, int mp, int np, char *filename) {
   double average_pixel;
   FILE * fp;
-  char average_pixel_filename[FILENAME_SIZE];
+  char average_pixel_filename[FILENAME_SIZE], tmp_name[FILENAME_SIZE], c;
+  int i=0;
 
   average_pixel = get_average_pixel(table, cart_info.comm, m, n, mp, np);
   if(cart_info.id == MASTER) {
-    strcpy(average_pixel_filename, "./data/average_pixel/");
-    strncat(average_pixel_filename, filename, 14);
+    strcpy(average_pixel_filename, AVERAGE_PIXEL_FOLDER);
+    
+    while(filename[i] != '.') {
+      tmp_name[i] = filename[i];
+      i++;
+    }
+    tmp_name[i] = '\0';
+
+    strcat(average_pixel_filename, tmp_name);
+
     strcat(average_pixel_filename, "_average_pixel.tsv");
     if(iter == 1) {
       fp = fopen (average_pixel_filename, "w");

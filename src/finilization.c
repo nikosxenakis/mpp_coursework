@@ -37,10 +37,9 @@ void finilization(int world_rank, int world_size, int argc, char **argv, char *f
 
   if(world_rank == MASTER) {
     //MASTER writes the average iteration time
-    fp = fopen ("./data/results_running_time.tsv", "a");
+    fp = fopen (TIME_RESULTS, "a");
     fprintf(fp, "%s\t%d\t%f\n", filename, world_size, average_iter_time*1000.0);
     fclose(fp);
-
     //MASTER exports the new image
     if(argc == 2) {
       strcpy(filename, "./output/image");

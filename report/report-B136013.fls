@@ -161,77 +161,12 @@ INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/tex/late
 INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/tex/latex/listings/lstlang1.sty
 INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/tex/latex/listings/lstlang1.sty
 INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/tex/latex/listings/lstlang1.sty
-INPUT ../graphs/speedup.eps
-INPUT ../graphs/speedup.eps
-INPUT ../graphs/speedup.eps
-INPUT ../graphs/speedup-eps-converted-to.pdf
-INPUT ../graphs/speedup-eps-converted-to.pdf
-INPUT ../graphs/speedup.eps
-INPUT ../graphs/speedup-eps-converted-to.pdf
-INPUT ../graphs/speedup-eps-converted-to.pdf
-INPUT ../graphs/speedup-eps-converted-to.pdf
-INPUT ../graphs/speedup-eps-converted-to.pdf
-INPUT ../graphs/speedupBigInput.eps
-INPUT ../graphs/speedupBigInput.eps
-INPUT ../graphs/speedupBigInput.eps
-INPUT ../graphs/speedupBigInput-eps-converted-to.pdf
-INPUT ../graphs/speedupBigInput-eps-converted-to.pdf
-INPUT ../graphs/speedupBigInput.eps
-INPUT ../graphs/speedupBigInput-eps-converted-to.pdf
-INPUT ../graphs/speedupBigInput-eps-converted-to.pdf
-INPUT ../graphs/speedupBigInput-eps-converted-to.pdf
-INPUT ../graphs/speedupBigInput-eps-converted-to.pdf
-INPUT ../graphs/speedupInterval.eps
-INPUT ../graphs/speedupInterval.eps
-INPUT ../graphs/speedupInterval.eps
-INPUT ../graphs/speedupInterval-eps-converted-to.pdf
-INPUT ../graphs/speedupInterval-eps-converted-to.pdf
-INPUT ../graphs/speedupInterval.eps
-INPUT ../graphs/speedupInterval-eps-converted-to.pdf
-INPUT ../graphs/speedupInterval-eps-converted-to.pdf
-INPUT ../graphs/speedupInterval-eps-converted-to.pdf
-INPUT ../graphs/speedupInterval-eps-converted-to.pdf
-INPUT ../graphs/average_pixel/edgenew192x128_average_pixel.eps
-INPUT ../graphs/average_pixel/edgenew192x128_average_pixel.eps
-INPUT ../graphs/average_pixel/edgenew192x128_average_pixel.eps
-INPUT ../graphs/average_pixel/edgenew192x128_average_pixel-eps-converted-to.pdf
-INPUT ../graphs/average_pixel/edgenew192x128_average_pixel-eps-converted-to.pdf
-INPUT ../graphs/average_pixel/edgenew192x128_average_pixel.eps
-INPUT ../graphs/average_pixel/edgenew192x128_average_pixel-eps-converted-to.pdf
-INPUT ../graphs/average_pixel/edgenew192x128_average_pixel-eps-converted-to.pdf
-INPUT ../graphs/average_pixel/edgenew192x128_average_pixel-eps-converted-to.pdf
-INPUT ../graphs/average_pixel/edgenew192x128_average_pixel-eps-converted-to.pdf
+INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/tex/latex/psnfss/t1pcr.fd
+INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/tex/latex/psnfss/t1pcr.fd
+INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/adobe/courier/pcrr8t.tfm
+INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/fonts/vf/adobe/courier/pcrr8t.vf
+INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/adobe/courier/pcrr8r.tfm
 INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/adobe/times/ptmr8t.tfm
-INPUT ../graphs/average_pixel/edgenew256x192_average_pixel.eps
-INPUT ../graphs/average_pixel/edgenew256x192_average_pixel.eps
-INPUT ../graphs/average_pixel/edgenew256x192_average_pixel.eps
-INPUT ../graphs/average_pixel/edgenew256x192_average_pixel-eps-converted-to.pdf
-INPUT ../graphs/average_pixel/edgenew256x192_average_pixel-eps-converted-to.pdf
-INPUT ../graphs/average_pixel/edgenew256x192_average_pixel.eps
-INPUT ../graphs/average_pixel/edgenew256x192_average_pixel-eps-converted-to.pdf
-INPUT ../graphs/average_pixel/edgenew256x192_average_pixel-eps-converted-to.pdf
-INPUT ../graphs/average_pixel/edgenew256x192_average_pixel-eps-converted-to.pdf
-INPUT ../graphs/average_pixel/edgenew256x192_average_pixel-eps-converted-to.pdf
-INPUT ../graphs/average_pixel/edgenew768x768_average_pixel.eps
-INPUT ../graphs/average_pixel/edgenew768x768_average_pixel.eps
-INPUT ../graphs/average_pixel/edgenew768x768_average_pixel.eps
-INPUT ../graphs/average_pixel/edgenew768x768_average_pixel-eps-converted-to.pdf
-INPUT ../graphs/average_pixel/edgenew768x768_average_pixel-eps-converted-to.pdf
-INPUT ../graphs/average_pixel/edgenew768x768_average_pixel.eps
-INPUT ../graphs/average_pixel/edgenew768x768_average_pixel-eps-converted-to.pdf
-INPUT ../graphs/average_pixel/edgenew768x768_average_pixel-eps-converted-to.pdf
-INPUT ../graphs/average_pixel/edgenew768x768_average_pixel-eps-converted-to.pdf
-INPUT ../graphs/average_pixel/edgenew768x768_average_pixel-eps-converted-to.pdf
-INPUT ../graphs/average_pixel/edgenew1600x1200_average_pixel.eps
-INPUT ../graphs/average_pixel/edgenew1600x1200_average_pixel.eps
-INPUT ../graphs/average_pixel/edgenew1600x1200_average_pixel.eps
-INPUT ../graphs/average_pixel/edgenew1600x1200_average_pixel-eps-converted-to.pdf
-INPUT ../graphs/average_pixel/edgenew1600x1200_average_pixel-eps-converted-to.pdf
-INPUT ../graphs/average_pixel/edgenew1600x1200_average_pixel.eps
-INPUT ../graphs/average_pixel/edgenew1600x1200_average_pixel-eps-converted-to.pdf
-INPUT ../graphs/average_pixel/edgenew1600x1200_average_pixel-eps-converted-to.pdf
-INPUT ../graphs/average_pixel/edgenew1600x1200_average_pixel-eps-converted-to.pdf
-INPUT ../graphs/average_pixel/edgenew1600x1200_average_pixel-eps-converted-to.pdf
 INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/fonts/vf/adobe/times/ptmr8t.vf
 INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/adobe/times/ptmr8r.tfm
 INPUT /Users/xenis656/Desktop/cirrus/MPP/mpp_coursework/report/report-B136013.aux
@@ -250,6 +185,8 @@ INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/fonts/ty
 INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmsy8.pfb
 INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmsy8.pfb
+INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/urw/courier/ucrr8a.pfb
+INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/urw/courier/ucrr8a.pfb
 INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/urw/times/utmb8a.pfb
 INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/urw/times/utmb8a.pfb
 INPUT /Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/urw/times/utmr8a.pfb

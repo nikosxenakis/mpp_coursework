@@ -15,13 +15,13 @@
 \contentsline {subsection}{\numberline {3.4}Gather}{6}{subsection.3.4}
 \contentsline {subsection}{\numberline {3.5}Finalization}{6}{subsection.3.5}
 \contentsline {section}{\numberline {4}Tools}{7}{section.4}
-\contentsline {section}{\numberline {5}Evaluation}{7}{section.5}
-\contentsline {subsection}{\numberline {5.1}Correctness}{7}{subsection.5.1}
+\contentsline {section}{\numberline {5}Evaluation}{8}{section.5}
+\contentsline {subsection}{\numberline {5.1}Correctness}{8}{subsection.5.1}
 \contentsline {subsection}{\numberline {5.2}Performance}{8}{subsection.5.2}
 \contentsline {subsubsection}{\numberline {5.2.1}Speedup}{8}{subsubsection.5.2.1}
-\contentsline {paragraph}{Small Input}{8}{section*.11}
+\contentsline {paragraph}{Small Input}{9}{section*.11}
 \contentsline {paragraph}{Medium Input}{9}{section*.12}
 \contentsline {paragraph}{Big Input}{9}{section*.13}
 \contentsline {subsubsection}{\numberline {5.2.2}Intervals}{10}{subsubsection.5.2.2}
 \contentsline {subsubsection}{\numberline {5.2.3}Average Pixel}{10}{subsubsection.5.2.3}
-\contentsline {section}{\numberline {6}Conclusion}{11}{section.6}
+\contentsline {section}{\numberline {6}Conclusion}{13}{section.6}

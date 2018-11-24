@@ -2,49 +2,52 @@
 CFLAGS := -g -Wall -O3 -cc=icc 
 CC := mpicc $(CFLAGS)
 
-# If the first argument is "run"...
-ifeq (run,$(firstword $(MAKECMDGOALS)))
-  # use the rest as arguments for "run"
-  RUN_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
-  # ...and turn them into do-nothing targets
-  $(eval $(RUN_ARGS):;@:)
-endif
-
 #DIRECTORIES
 BASE_DIR := .
 SRC_DIR := $(BASE_DIR)/src
 HEADER_DIR := $(BASE_DIR)/include
 BUILD_DIR := $(BASE_DIR)/build
+SERIAL_DIR := $(BASE_DIR)/serial
 
 #FILES
-BIN := imagenew
-SERIAL := serial
 SRC_FILES := $(wildcard $(SRC_DIR)/*.c)
 OBJ_FILES := $(patsubst $(SRC_DIR)/%.c, $(BUILD_DIR)/%.o, $(SRC_FILES))
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c $(HEADER_DIR)/%.h
 	@mkdir -p $(BUILD_DIR)
-	$(CC) -c -o $@ $<
-
-$(BIN): $(OBJ_FILES)
-	@echo " Linking..."
-	$(CC) $^ $(BASE_DIR)/main.c -o $@
-
-$(SERIAL): $(BUILD_DIR)/pgmio.o
-	@echo " Linking..."
-	$(CC) $^ $(BASE_DIR)/serial.c -o $@
-
-all: $(BIN) $(SERIAL)
-	@echo " executables ready."
-
-run: $(BIN)
-	mpirun -n 4 ./$(BIN) $(RUN_ARGS)
-
-test: test.py
-	python test.py
+	$(CC) -D $(mode) -c -o $@ $<
 
 clean:
 	@echo " Cleaning..."
-	rm -rf $(BIN) $(SERIAL) $(BUILD_DIR)
+	@rm -rf serial imagenew imagenew_timing imagenew_average_pixel imagenew_timing_intervals $(BUILD_DIR)
 
-.PHONY: clean all run
+clean_build:
+	@echo " Cleaning..."
+	@rm -rf $(BUILD_DIR)
+
+serial:
+	@echo " Creating serial executable..."
+	make $(BUILD_DIR)/pgmio.o
+	@$(CC) $^ $(SERIAL_DIR)/serial.c -o $@
+
+imagenew:
+	@echo " Creating imagenew executable..."
+	make $(OBJ_FILES) mode=PROD
+	@$(CC) $(OBJ_FILES) $(BASE_DIR)/main.c -o $@
+
+imagenew_timing:
+	@echo " Creating imagenew_timing executable..."
+	make $(OBJ_FILES) mode=TIMING_TEST
+	@$(CC) $(OBJ_FILES) $(BASE_DIR)/main.c -o $@
+
+imagenew_average_pixel:
+	@echo " Creating imagenew_average_pixel executable..."
+	make $(OBJ_FILES) mode=AVERAGE_PIXEL_TEST
+	@$(CC) $(OBJ_FILES) $(BASE_DIR)/main.c -o $@
+
+imagenew_timing_intervals:
+	@echo " Creating imagenew_timing_intervals executable..."
+	make $(OBJ_FILES) mode=TIMING_WITH_INTERVALS_TEST
+	@$(CC) $(OBJ_FILES) $(BASE_DIR)/main.c -o $@
+
+.PHONY: clean clean_build all test serial imagenew imagenew_timing imagenew_average_pixel imagenew_timing_intervals

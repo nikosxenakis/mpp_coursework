@@ -9,6 +9,7 @@
 #include "pgmio.h"
 #include "mpi_types.h"
 #include "cart_info.h"
+#include "parameters.h"
 
 #define MASTER 0
 
@@ -22,3 +23,4 @@ extern void finilization(int world_rank, int world_size, int argc, char **argv, 
 extern void free_tables(int world_rank, double **masterbuf, double **edge, double **old, double **new);
 
 #endif
+

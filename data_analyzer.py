@@ -2,6 +2,40 @@
 # data_analyzer.py
 import os
 import matplotlib.pyplot as plt
+import csv
+from operator import itemgetter
+from matplotlib.ticker import MultipleLocator
+
+def sort_timings():
+    path = './data/time_results_timing_test.tsv'
+
+    f = open(path, 'r')
+    file_str = ""
+    i = 0
+    for line in f:
+        if i > 0:
+            file_str = file_str + str(line)
+        i = i + 1
+    f.close()
+    f = open(path, 'w')
+    f.write(file_str)
+    f.close()
+
+    reader = csv.reader(open(path), delimiter="\t")
+    file_str = ""
+    for line in sorted(reader, key=lambda x: int(x[1])):
+        i = 0
+        for item in line:
+            if i > 0:
+                file_str = file_str + "\t"
+            file_str = file_str + str(item)
+            i = i + 1
+        file_str = file_str + "\n"
+
+    f = open(path, 'w')
+    f.write("Input File\tProcesses Number\tAverage Iteration Time (ms)\n")
+    f.write(file_str)
+    f.close()
 
 
 def create_plots(title, x_axis_title, y_axis_title, labels, x_values, y_values, alpha, legent_pos):
@@ -21,9 +55,111 @@ def create_plots(title, x_axis_title, y_axis_title, labels, x_values, y_values, 
         lines.append(plt.plot(x_list, y_list, label=labels[i], linewidth=2, color=colors[i]))
         i = i + 1
 
+    if title == "speedupBigInput":
+        ml = MultipleLocator(36)
+        ax.xaxis.set_minor_locator(ml)
+        ax.xaxis.grid(which="minor", color='k', linestyle='-.', linewidth=0.7)
+
     plt.legend(loc=legent_pos)
 
     fig.savefig('./graphs/' + str(title) + '.eps', format='eps', dpi=1000)
+
+
+def analyze_average_iteration_interval(data_file, image):
+
+    i = 0;
+    curr_times = 0
+    processes = ()
+    speedup = ()
+    run_time = 0
+    mean_run_time = 0
+    time1 = 0
+
+    for line in data_file:
+        data = line.split('\t')
+
+        if i > 0 and data[0] == str("./resources/" + image + ".pgm"):
+            if int(data[1]) == 1:
+                time1 = float(data[2])
+            if int(data[1]) <= 16:
+                processes = processes + (int(data[1]),)
+                run_time = float(data[2])
+                curr_speedup = time1 / run_time
+                speedup = speedup + ( float("%.2f" % curr_speedup ) ,)
+
+        i = i + 1
+
+    sorted(speedup)
+    return speedup
+
+
+def analyze_average_iteration(data_file, image):
+
+    i = 0;
+    curr_times = 0
+    processes = ()
+    speedup = ()
+    run_time = 0
+    mean_run_time = 0
+    time1 = 0
+
+    for line in data_file:
+        data = line.split('\t')
+
+        if i > 0 and data[0] == str("./resources/" + image + ".pgm"):
+            if int(data[1]) == 1:
+                time1 = float(data[2])
+            if int(data[1]) <= 36:
+                processes = processes + (int(data[1]),)
+                run_time = float(data[2])
+                curr_speedup = time1 / run_time
+                speedup = speedup + ( float("%.2f" % curr_speedup ) ,)
+
+        i = i + 1
+
+    sorted(speedup)
+    return speedup
+
+
+def get_big_processes(data_file, image):
+    i = 0;
+    processes = ()
+
+    for line in data_file:
+        data = line.split('\t')
+
+        if i > 0 and data[0] == str("./resources/" + image + ".pgm") and int(data[1]) >= 42:
+            processes = processes + (int(data[1]),)
+        i = i + 1
+
+    sorted(processes)
+    return processes
+
+
+def analyze_average_big_iteration(data_file, image):
+
+    i = 0;
+    speedup = ()
+    run_time = 0
+    time1 = 0
+
+    for line in data_file:
+        data = line.split('\t')
+
+        if i > 0 and data[0] == str("./resources/" + image + ".pgm"):
+
+            if int(data[1]) == 1:
+                time1 = float(data[2])
+
+            if int(data[1]) >= 42:
+                run_time = float(data[2])
+                curr_speedup = time1 / run_time
+                speedup = speedup + ( float("%.2f" % curr_speedup ) ,)
+
+        i = i + 1
+
+    sorted(speedup)
+    return speedup
 
 
 def get_time1(data_file, image):
@@ -53,65 +189,6 @@ def get_time1(data_file, image):
 
 
 
-def analyze_average_iteration(data_file, image):
-
-    i = 0;
-    curr_times = 0
-    titles = ()
-    processes = ()
-    speedup = ()
-    run_time = 0
-    mean_run_time = 0
-    time1 = 0
-
-    for line in data_file:
-        data = line.split('\t')
-
-        if i == 0:
-            titles = data
-
-        if i > 0 and data[0] == str("./resources/" + image + ".pgm"):
-            if int(data[1]) == 1:
-                time1 = float(data[2])
-
-            processes = processes + (int(data[1]),)
-            run_time = float(data[2])
-            curr_speedup = time1 / run_time
-            speedup = speedup + ( float("%.2f" % curr_speedup ) ,)
-
-        i = i + 1
-
-    return speedup
-
-
-def analyze_average_big_iteration(data_file, image, time1):
-
-    i = 0;
-    curr_times = 0
-    titles = ()
-    processes = ()
-    speedup = ()
-    run_time = 0
-    mean_run_time = 0
-
-    for line in data_file:
-        data = line.split('\t')
-
-        if i == 0:
-            titles = data
-
-        if i > 0 and data[0] == str("./resources/big/" + image + ".pgm"):
-
-            processes = processes + (int(data[1]),)
-            run_time = float(data[2])
-
-            curr_speedup = time1 / run_time
-            speedup = speedup + ( float("%.2f" % curr_speedup ) ,)
-
-        i = i + 1
-
-    return speedup
-
 
 def get_processes(data_file, image):
     i = 0;
@@ -120,24 +197,11 @@ def get_processes(data_file, image):
     for line in data_file:
         data = line.split('\t')
 
-        if i > 0 and data[0] == str("./resources/" + image + ".pgm"):
+        if i > 0 and data[0] == str("./resources/" + image + ".pgm") and int(data[1]) <= 36:
             processes = processes + (int(data[1]),)
         i = i + 1
 
-    return processes
-
-
-def get_big_processes(data_file, image):
-    i = 0;
-    processes = ()
-
-    for line in data_file:
-        data = line.split('\t')
-
-        if i > 0 and data[0] == str("./resources/big/" + image + ".pgm"):
-            processes = processes + (int(data[1]),)
-        i = i + 1
-
+    sorted(processes)
     return processes
 
 
@@ -244,7 +308,7 @@ def analyze_average_pixel(data_file, path):
 
 
 def parse_average_pixel():
-    path = './data/average_pixel_data/'
+    path = './data/average_pixel_test/'
     ext = '.tsv'
     pixel1 = ()
     pixel2 = ()
@@ -253,24 +317,20 @@ def parse_average_pixel():
     pixel5 = ()
 
     filename = 'edgenew192x128_average_pixel'
-    if os.path.exists(path):
-        f = open(path + filename + ext, 'r')
-        pixel1 = analyze_average_pixel(f, filename)
+    f = open(path + filename + ext, 'r')
+    pixel1 = analyze_average_pixel(f, filename)
 
     filename = 'edgenew256x192_average_pixel'
-    if os.path.exists(str(path+filename+ext)):
-        f = open(str(path+filename+ext), 'r')
-        pixel2 = analyze_average_pixel(f, filename)
+    f = open(str(path+filename+ext), 'r')
+    pixel2 = analyze_average_pixel(f, filename)
 
     filename = 'edgenew512x384_average_pixel'
-    if os.path.exists(str(path+filename+ext)):
-        f = open(str(path+filename+ext), 'r')
-        pixel3 = analyze_average_pixel(f, filename)
+    f = open(str(path+filename+ext), 'r')
+    pixel3 = analyze_average_pixel(f, filename)
 
     filename = 'edgenew768x768_average_pixel'
-    if os.path.exists(str(path+filename+ext)):
-        f = open(str(path+filename+ext), 'r')
-        pixel4 = analyze_average_pixel(f, filename)
+    f = open(str(path+filename+ext), 'r')
+    pixel4 = analyze_average_pixel(f, filename)
 
     filename = 'edgenew1600x1200_average_pixel'
     f = open(str(path+filename+ext), 'r')
@@ -283,23 +343,22 @@ def parse_average_pixel():
 
 
 def parse_running_time():
-    path = './data/results_running_time_one_node.tsv'
+    path = './data/time_results_timing_test.tsv'
 
-    if os.path.exists(path):
-        f = open(path, 'r')
-        processes = get_processes(f, "edgenew192x128")
-        f = open(path, 'r')
-        speedup1 = analyze_average_iteration(f, "edgenew192x128")
-        f = open(path, 'r')
-        speedup2 = analyze_average_iteration(f, "edgenew256x192")
-        f = open(path, 'r')
-        speedup3 = analyze_average_iteration(f, "edgenew512x384")
-        f = open(path, 'r')
-        speedup4 = analyze_average_iteration(f, "edgenew768x768")
-        f = open(path, 'r')
-        speedup5 = analyze_average_iteration(f, "edgenew1600x1200")
+    f = open(path, 'r')
+    processes = get_processes(f, "edgenew192x128")
+    f = open(path, 'r')
+    speedup1 = analyze_average_iteration(f, "edgenew192x128")
+    f = open(path, 'r')
+    speedup2 = analyze_average_iteration(f, "edgenew256x192")
+    f = open(path, 'r')
+    speedup3 = analyze_average_iteration(f, "edgenew512x384")
+    f = open(path, 'r')
+    speedup4 = analyze_average_iteration(f, "edgenew768x768")
+    f = open(path, 'r')
+    speedup5 = analyze_average_iteration(f, "edgenew1600x1200")
 
-        create_speedup_plot(processes, speedup1, speedup2, speedup3, speedup4, speedup5)
+    create_speedup_plot(processes, speedup1, speedup2, speedup3, speedup4, speedup5)
 
 
 def parse_interval():
@@ -307,51 +366,39 @@ def parse_interval():
     speedup = ()
     speedup_interval = ()
 
-    path = './data/results_running_time_one_node.tsv'
+    path = './data/time_results_timing_test.tsv'
+    f = open(path, 'r')
+    processes = get_processes(f, "edgenew768x768")
+    f = open(path, 'r')
+    speedup = analyze_average_iteration_interval(f, "edgenew768x768")
 
-    if os.path.exists(path):
-        f = open(path, 'r')
-        processes = get_processes(f, "edgenew768x768")
-        f = open(path, 'r')
-        speedup = analyze_average_iteration(f, "edgenew768x768")
-
-    path = './data/results_running_time_interval.tsv'
-
-    if os.path.exists(path):
-        f = open(path, 'r')
-        speedup_interval = analyze_average_iteration(f, "edgenew768x768")
+    path = './data/time_results_timing_intervals_test.tsv'
+    f = open(path, 'r')
+    speedup_interval = analyze_average_iteration_interval(f, "edgenew768x768")
 
     create_speedup_interval_plot(processes, speedup, speedup_interval)
 
 
 def parse_big_input():
 
-    path = './data/results_running_time_one_node.tsv'
-    time1_1 = 0
-    time1_2 = 0
+    path = './data/time_results_timing_test.tsv'
 
-    if os.path.exists(path):
-        f = open(path, 'r')
-        time1_1 = get_time1(f, "edgenew768x768")
-        f = open(path, 'r')
-        time1_2 = get_time1(f, "edgenew1600x1200")
+    f = open(path, 'r')
+    processes = get_big_processes(f, "edgenew768x768")
+    f = open(path, 'r')
+    speedup1 = analyze_average_big_iteration(f, "edgenew768x768")
+    f = open(path, 'r')
+    speedup2 = analyze_average_big_iteration(f, "edgenew1600x1200")
 
-    path = './data/results_running_time_big_input.tsv'
-    if os.path.exists(path):
-        f = open(path, 'r')
-        processes = get_big_processes(f, "edgenew768x768")
-        f = open(path, 'r')
-        speedup1 = analyze_average_big_iteration(f, "edgenew768x768", time1_1)
-        f = open(path, 'r')
-        speedup2 = analyze_average_big_iteration(f, "edgenew1600x1200", time1_2)
-
-        create_speedup_big_input_plot(processes, speedup1, speedup2)
+    create_speedup_big_input_plot(processes, speedup1, speedup2)
 
 
-parse_big_input()
+sort_timings()
 
-parse_interval()
+parse_average_pixel()
 
 parse_running_time()
 
-parse_average_pixel()
+parse_interval()
+
+parse_big_input()

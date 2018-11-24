@@ -1,73 +1,67 @@
 #!/bin/bash --login
 #
 #PBS -N imagenew
+#PBS -l place=excl
 #PBS -A d167-s1770309
-#PBS -l walltime=01:00:00
+#PBS -l walltime=0:30:00
 #PBS -l select=1:ncpus=36
 
 cd $PBS_O_WORKDIR
 
+#load compilers
 module load mpt
 module load intel-compilers-17
 
-RESULTS_FILE=data/results_running_time.tsv
+#log file for Cirrus monitoring
+LOG_FILE=data/cirrus_log.txt
 
-rm log.txt
-
+#run on 1 thread
 export OMP_NUM_THREADS=1
 
-echo -e "Input File\tProcesses Number\tAverage Iteration Time (ms)" > $RESULTS_FILE;
+#parses the arguments to the script
+set -f
+PROC_LIST=(${PROC_LIST//_/ })
+RESOURCES_LIST=(${RESOURCES_LIST//_/ })
 
-# for N in 200 220 240 260 280 300 320 340 360
-# for N in 36 42 48 54 60 66 72 78 84 90 99
-# for N in 16
-for N in 1 2 3 4 5 7 8 11 12 16 20 24 26 32
+for MPISIZE in "${PROC_LIST[@]}"
 do
-		
-  NPROC=$N
+	for INPUT_FILE in "${RESOURCES_LIST[@]}"
+	do
 
-  for INPUT_FILE in ./resources/big/*
-  do
+		# MPIPROG=`basename $PBS_JOBNAME .pbs`
+		# MPIPROG set but the arguments
 
- 	MPIPROG=`basename $PBS_JOBNAME .pbs`
-	MPISIZE=$NPROC
+		# Spread the processes as evenly as possible across the nodes
+		CPN=36                                     # Cores Per Node (physical)
+		NNODE=$( wc -l < $PBS_NODEFILE )           # nodes reserved
+		PPN=$(( (MPISIZE + NNODE - 1) / NNODE ))   # Processes Per Node
 
-	# Spread the processes as evenly as possible across the nodes
+		# Ensure we place a maximum of 36 processes per node to avoid hyperthreads
+		if [ $PPN -gt $CPN ]
+		then
+		    NMIN=$(( (MPISIZE + CPN - 1) / CPN ))
+		    echo "Error: for $MPISIZE processes you must select at least $NMIN nodes" >> $LOG_FILE
+		    exit 1
+		fi
 
-	CPN=36                                     # Cores Per Node (physical)
-	NNODE=$( wc -l < $PBS_NODEFILE )           # nodes reserved
-	PPN=$(( (MPISIZE + NNODE - 1) / NNODE ))   # Processes Per Node
+		# Ensure that number of MPI processes is a multiple of number of nodes
+		if [ $MPISIZE -ne $(( NNODE * PPN )) ]
+		then
+		    echo "Error: NPROC=$NPROC must be a multiple of number of nodes=$NNODE" >> $LOG_FILE
+		    exit 1
+		fi
 
-	# Ensure we place a maximum of 36 processes per node to avoid hyperthreads
+		echo '--------------------------------------------------------------------------------' >> $LOG_FILE
 
-	if [ $PPN -gt $CPN ]
-	then
-	    NMIN=$(( (MPISIZE + CPN - 1) / CPN ))
-	    echo "Error: for $MPISIZE processes you must select at least $NMIN nodes" > log.txt
+		echo 'Running' $MPIPROG 'on' $MPISIZE 'processes over' $NNODE 'node(s)' >> $LOG_FILE
+		echo 'Issuing command: mpiexec_mpt -n' $MPISIZE '-ppn' $PPN ./$MPIPROG >> $LOG_FILE
+		echo 'Started at' `date` >> $LOG_FILE
+		echo '--------------------------------------------------------------------------------' >> $LOG_FILE
 
-	    exit 1
-	fi
+		(time mpiexec_mpt -n $MPISIZE -ppn $PPN ./$MPIPROG $INPUT_FILE) 2>&1
 
-	# Ensure that number of MPI processes is a multiple of number of nodes
+		echo '--------------------------------------------------------------------------------' >> $LOG_FILE
+		echo 'Finished at' `date` >> $LOG_FILE
 
-	if [ $MPISIZE -ne $(( NNODE * PPN )) ]
-	then
-
-	    echo "Error: NPROC=$NPROC must be a multiple of number of nodes=$NNODE" >> log.txt
-	    exit 1
-	fi
-
-	echo '--------------------------------------------------------------------------------' >> log.txt
-
-	echo 'Running' $MPIPROG 'on' $MPISIZE 'processes over' $NNODE 'node(s)' >> log.txt
-	echo 'Issuing command: mpiexec_mpt -n' $MPISIZE '-ppn' $PPN ./$MPIPROG >> log.txt
-	echo 'Started at' `date` >> log.txt
-	echo '--------------------------------------------------------------------------------' >> log.txt
-
-	(time mpiexec_mpt -n $MPISIZE -ppn $PPN ./$MPIPROG $INPUT_FILE) 2>&1
-
-	echo '--------------------------------------------------------------------------------' >> log.txt
-	echo 'Finished at' `date` >> log.txt
-
-  done
+	done
 done
