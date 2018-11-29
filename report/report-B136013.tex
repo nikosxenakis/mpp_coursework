@@ -137,8 +137,8 @@
 \sectionVspacing
 \clearpage
 
-\section{Tools}
-	This project is developed in C programming language due to its performance in low-level calculations. We used mpicc compiler with -O3 flag for serial optimization. In addition, GNU Make was selected for the build phase and Python as the scripting language to compare the output for testing reasons. Cirrus supercomputer is the platform that all of the experiments have been executed. In order to submit the job to the backend of Cirrus a Portable Batch System (PBS) has been created. In case you want to rerun all of the experiments that we used for the evaluation, run
+\section{Tools and Building}
+	This project is developed in C programming language due to its performance in low-level calculations. We used mpicc compiler with -O3 flag for serial optimization. In addition, GNU Make was selected for the build phase and Python as the scripting language to compare the output for testing reasons. Cirrus supercomputer is the platform that all of the experiments have been executed. In order to submit the job to the backend of Cirrus a Portable Batch System (PBS) has been created. In case you want to rerun all of the experiments that we used for the evaluation in the backend of Cirrus, run
   	\begin{lstlisting}[language=bash]
 		$ ./run.sh
 	\end{lstlisting}
@@ -157,7 +157,6 @@
     \item The average iteration time
     \item The average iteration time for big input files
     \item The average iteration time with terminate condition calls
-    \item The production executable correctness
   \end{enumerate}
 
 	 For each of the above experiments, a different executable has been created with minor configuration through C preprocessor define commands. These configurations include 
@@ -177,14 +176,14 @@
     Evaluation has been done in order to find out if the program behaves as it should in terms of correctness and performance.
 
     \subsection{Correctness}
-        First and foremost, before performance analysis, we have to ensure that the produced outputs are valid regardless of the number of processes that are used underneath. The approach is very simple. Once the job has been successfully executed till completion (using production mode imagenew executable), we run the serial program for all of the given input images and then store the outputs to the test\_output/ folder. The serial program has been modified to stop when there are no significant changes in the image's pixels between each step. To be more specific, the max different has been defined to be 0.1. It worths to mention that the termination condition has to remain the same in all of the executions because different conditions create different results. This comparison is made automatically through a Python script that uses the filecmp function. If the files are the same then our experiment is correct.
+        First and foremost, before performance analysis, we have to ensure that the produced outputs are valid regardless of the number of processes that are used underneath. The approach is very simple. We run the serial program for all of the given input images, the output is placed in the test\_output/ folder. Then we run the experiment using 16 processes in the frontend of Cirrus (convinient) in production mode, the output images will be stored in output/ folder. The serial program has been modified to stop when there are no significant changes in the image's pixels between each step. To be more specific, the max difference has been defined to be 0.1. It worths to mention that the termination condition has to remain the same in all of the executions because different conditions create different results. This comparison is made automatically through a Python script that uses the filecmp function. If the files are the same then our experiment is correct.
 
-        To check if your produced images are correct run
+        To run the imagenew executable for all of the images in the frontend of Cirrus and test the results run
         \begin{lstlisting}[language=bash]
-          $ python test.py
+          $ ./run_correctness.sh
         \end{lstlisting}
 
-        The test will print to the standard output if each image produced in the output/ folder is exactly the same as its pair in the test\_output/ folder.
+        This bash script makes the production mode executable, run the correctness experiment and compares the results. In the end, a report in the standard output will inform us if each image produced in the output/ folder is exactly the same as its pair in the test\_output/ folder (correct or not).
 
     \subsection{Performance}
         Performance analysis is essential for this experiment in order to compare our results and extract useful information about them.

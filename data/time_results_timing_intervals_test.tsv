@@ -1,11 +1,11 @@
 Input File	Processes Number	Average Iteration Time (ms)
-./resources/edgenew768x768.pgm	1	2.377702
-./resources/edgenew768x768.pgm	2	1.329789
-./resources/edgenew768x768.pgm	3	1.018121
-./resources/edgenew768x768.pgm	4	0.807986
-./resources/edgenew768x768.pgm	5	0.718282
-./resources/edgenew768x768.pgm	7	0.575412
-./resources/edgenew768x768.pgm	8	0.584774
-./resources/edgenew768x768.pgm	11	0.479744
-./resources/edgenew768x768.pgm	12	0.514688
-./resources/edgenew768x768.pgm	16	0.441671
+./resources/edgenew768x768.pgm	1	2.383204
+./resources/edgenew768x768.pgm	2	1.336587
+./resources/edgenew768x768.pgm	3	0.993970
+./resources/edgenew768x768.pgm	4	0.821591
+./resources/edgenew768x768.pgm	5	0.731154
+./resources/edgenew768x768.pgm	7	0.593713
+./resources/edgenew768x768.pgm	8	0.562645
+./resources/edgenew768x768.pgm	11	0.526445
+./resources/edgenew768x768.pgm	12	0.519188
+./resources/edgenew768x768.pgm	16	0.421166

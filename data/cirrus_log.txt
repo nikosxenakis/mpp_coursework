@@ -1,889 +1,861 @@
 --------------------------------------------------------------------------------
 Running imagenew_average_pixel on 16 processes over 1 node(s)
 Issuing command: mpiexec_mpt -n 16 -ppn 16 ./imagenew_average_pixel
-Started at Tue Nov 27 14:14:09 GMT 2018
+Started at Thu Nov 29 12:34:41 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:14:10 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_average_pixel on 16 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 16 -ppn 16 ./imagenew_average_pixel
-Started at Tue Nov 27 14:14:10 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:14:10 GMT 2018
+Finished at Thu Nov 29 12:34:41 GMT 2018
 --------------------------------------------------------------------------------
 Running imagenew_average_pixel on 16 processes over 1 node(s)
 Issuing command: mpiexec_mpt -n 16 -ppn 16 ./imagenew_average_pixel
-Started at Tue Nov 27 14:14:10 GMT 2018
+Started at Thu Nov 29 12:34:41 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:14:10 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_average_pixel on 16 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 16 -ppn 16 ./imagenew_average_pixel
-Started at Tue Nov 27 14:14:10 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:14:11 GMT 2018
+Finished at Thu Nov 29 12:34:41 GMT 2018
 --------------------------------------------------------------------------------
 Running imagenew_average_pixel on 16 processes over 1 node(s)
 Issuing command: mpiexec_mpt -n 16 -ppn 16 ./imagenew_average_pixel
-Started at Tue Nov 27 14:14:11 GMT 2018
+Started at Thu Nov 29 12:34:41 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:14:14 GMT 2018
+Finished at Thu Nov 29 12:34:42 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_average_pixel on 16 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 16 -ppn 16 ./imagenew_average_pixel
+Started at Thu Nov 29 12:34:42 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:34:43 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_average_pixel on 16 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 16 -ppn 16 ./imagenew_average_pixel
+Started at Thu Nov 29 12:34:43 GMT 2018
+--------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 Running imagenew_timing on 1 processes over 1 node(s)
 Issuing command: mpiexec_mpt -n 1 -ppn 1 ./imagenew_timing
-Started at Tue Nov 27 14:17:24 GMT 2018
+Started at Thu Nov 29 12:34:45 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:24 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 1 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 1 -ppn 1 ./imagenew_timing
-Started at Tue Nov 27 14:17:24 GMT 2018
+Running imagenew_timing on 40 processes over 4 node(s)
+Issuing command: mpiexec_mpt -n 40 -ppn 10 ./imagenew_timing
+Started at Thu Nov 29 12:34:45 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:24 GMT 2018
+Finished at Thu Nov 29 12:34:45 GMT 2018
 --------------------------------------------------------------------------------
 Running imagenew_timing on 1 processes over 1 node(s)
 Issuing command: mpiexec_mpt -n 1 -ppn 1 ./imagenew_timing
-Started at Tue Nov 27 14:17:24 GMT 2018
+Started at Thu Nov 29 12:34:45 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:25 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 1 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 1 -ppn 1 ./imagenew_timing
-Started at Tue Nov 27 14:17:25 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:27 GMT 2018
+Finished at Thu Nov 29 12:34:45 GMT 2018
 --------------------------------------------------------------------------------
 Running imagenew_timing on 1 processes over 1 node(s)
 Issuing command: mpiexec_mpt -n 1 -ppn 1 ./imagenew_timing
-Started at Tue Nov 27 14:17:27 GMT 2018
+Started at Thu Nov 29 12:34:45 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:35 GMT 2018
+Finished at Thu Nov 29 12:34:46 GMT 2018
 --------------------------------------------------------------------------------
-Running imagenew_timing on 2 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 2 -ppn 2 ./imagenew_timing
-Started at Tue Nov 27 14:17:35 GMT 2018
+Running imagenew_timing on 40 processes over 4 node(s)
+Issuing command: mpiexec_mpt -n 40 -ppn 10 ./imagenew_timing
+Started at Thu Nov 29 12:34:46 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:36 GMT 2018
+Finished at Thu Nov 29 12:34:46 GMT 2018
 --------------------------------------------------------------------------------
-Running imagenew_timing on 2 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 2 -ppn 2 ./imagenew_timing
-Started at Tue Nov 27 14:17:36 GMT 2018
+Finished at Thu Nov 29 12:34:46 GMT 2018
 --------------------------------------------------------------------------------
+Running imagenew_timing on 1 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 1 -ppn 1 ./imagenew_timing
+Started at Thu Nov 29 12:34:46 GMT 2018
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:36 GMT 2018
 --------------------------------------------------------------------------------
-Running imagenew_timing on 2 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 2 -ppn 2 ./imagenew_timing
-Started at Tue Nov 27 14:17:36 GMT 2018
+Finished at Thu Nov 29 12:34:47 GMT 2018
 --------------------------------------------------------------------------------
+Running imagenew_timing on 48 processes over 4 node(s)
+Issuing command: mpiexec_mpt -n 48 -ppn 12 ./imagenew_timing
+Started at Thu Nov 29 12:34:47 GMT 2018
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:36 GMT 2018
 --------------------------------------------------------------------------------
-Running imagenew_timing on 2 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 2 -ppn 2 ./imagenew_timing
-Started at Tue Nov 27 14:17:36 GMT 2018
+Finished at Thu Nov 29 12:34:48 GMT 2018
 --------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:38 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 2 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 2 -ppn 2 ./imagenew_timing
-Started at Tue Nov 27 14:17:38 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:42 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 3 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 3 -ppn 3 ./imagenew_timing
-Started at Tue Nov 27 14:17:42 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:42 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 3 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 3 -ppn 3 ./imagenew_timing
-Started at Tue Nov 27 14:17:42 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:42 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 3 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 3 -ppn 3 ./imagenew_timing
-Started at Tue Nov 27 14:17:42 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:43 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 3 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 3 -ppn 3 ./imagenew_timing
-Started at Tue Nov 27 14:17:43 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:44 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 3 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 3 -ppn 3 ./imagenew_timing
-Started at Tue Nov 27 14:17:44 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:47 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 4 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 4 -ppn 4 ./imagenew_timing
-Started at Tue Nov 27 14:17:47 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:47 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 4 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 4 -ppn 4 ./imagenew_timing
-Started at Tue Nov 27 14:17:47 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:47 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 4 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 4 -ppn 4 ./imagenew_timing
-Started at Tue Nov 27 14:17:47 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:48 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 4 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 4 -ppn 4 ./imagenew_timing
-Started at Tue Nov 27 14:17:48 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:48 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 4 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 4 -ppn 4 ./imagenew_timing
-Started at Tue Nov 27 14:17:48 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:51 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 5 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 5 -ppn 5 ./imagenew_timing
-Started at Tue Nov 27 14:17:51 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:51 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 5 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 5 -ppn 5 ./imagenew_timing
-Started at Tue Nov 27 14:17:51 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:51 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 5 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 5 -ppn 5 ./imagenew_timing
-Started at Tue Nov 27 14:17:51 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:52 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 5 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 5 -ppn 5 ./imagenew_timing
-Started at Tue Nov 27 14:17:52 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:52 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 5 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 5 -ppn 5 ./imagenew_timing
-Started at Tue Nov 27 14:17:52 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:54 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 7 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 7 -ppn 7 ./imagenew_timing
-Started at Tue Nov 27 14:17:54 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:54 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 7 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 7 -ppn 7 ./imagenew_timing
-Started at Tue Nov 27 14:17:54 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:55 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 7 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 7 -ppn 7 ./imagenew_timing
-Started at Tue Nov 27 14:17:55 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:55 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 7 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 7 -ppn 7 ./imagenew_timing
-Started at Tue Nov 27 14:17:55 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:55 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 7 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 7 -ppn 7 ./imagenew_timing
-Started at Tue Nov 27 14:17:55 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:57 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 8 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 8 -ppn 8 ./imagenew_timing
-Started at Tue Nov 27 14:17:57 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:57 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 8 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 8 -ppn 8 ./imagenew_timing
-Started at Tue Nov 27 14:17:57 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:57 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 8 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 8 -ppn 8 ./imagenew_timing
-Started at Tue Nov 27 14:17:57 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:58 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 8 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 8 -ppn 8 ./imagenew_timing
-Started at Tue Nov 27 14:17:58 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:17:58 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 8 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 8 -ppn 8 ./imagenew_timing
-Started at Tue Nov 27 14:17:58 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:00 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 11 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 11 -ppn 11 ./imagenew_timing
-Started at Tue Nov 27 14:18:00 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:00 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 11 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 11 -ppn 11 ./imagenew_timing
-Started at Tue Nov 27 14:18:00 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:00 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 11 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 11 -ppn 11 ./imagenew_timing
-Started at Tue Nov 27 14:18:00 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:00 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 11 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 11 -ppn 11 ./imagenew_timing
-Started at Tue Nov 27 14:18:00 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:01 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 11 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 11 -ppn 11 ./imagenew_timing
-Started at Tue Nov 27 14:18:01 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:02 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 12 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 12 -ppn 12 ./imagenew_timing
-Started at Tue Nov 27 14:18:02 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:02 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 12 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 12 -ppn 12 ./imagenew_timing
-Started at Tue Nov 27 14:18:02 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:02 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 12 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 12 -ppn 12 ./imagenew_timing
-Started at Tue Nov 27 14:18:02 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:03 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 12 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 12 -ppn 12 ./imagenew_timing
-Started at Tue Nov 27 14:18:03 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:03 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 12 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 12 -ppn 12 ./imagenew_timing
-Started at Tue Nov 27 14:18:03 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:04 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 16 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 16 -ppn 16 ./imagenew_timing
-Started at Tue Nov 27 14:18:04 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:05 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 16 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 16 -ppn 16 ./imagenew_timing
-Started at Tue Nov 27 14:18:05 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:05 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 16 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 16 -ppn 16 ./imagenew_timing
-Started at Tue Nov 27 14:18:05 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:05 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 16 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 16 -ppn 16 ./imagenew_timing
-Started at Tue Nov 27 14:18:05 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:05 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 16 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 16 -ppn 16 ./imagenew_timing
-Started at Tue Nov 27 14:18:05 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:06 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 20 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 20 -ppn 20 ./imagenew_timing
-Started at Tue Nov 27 14:18:06 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:07 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 20 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 20 -ppn 20 ./imagenew_timing
-Started at Tue Nov 27 14:18:07 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:07 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 20 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 20 -ppn 20 ./imagenew_timing
-Started at Tue Nov 27 14:18:07 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:07 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 20 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 20 -ppn 20 ./imagenew_timing
-Started at Tue Nov 27 14:18:07 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:07 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 20 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 20 -ppn 20 ./imagenew_timing
-Started at Tue Nov 27 14:18:07 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:08 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 24 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 24 -ppn 24 ./imagenew_timing
-Started at Tue Nov 27 14:18:08 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:08 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 24 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 24 -ppn 24 ./imagenew_timing
-Started at Tue Nov 27 14:18:08 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:09 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 24 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 24 -ppn 24 ./imagenew_timing
-Started at Tue Nov 27 14:18:09 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:09 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 24 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 24 -ppn 24 ./imagenew_timing
-Started at Tue Nov 27 14:18:09 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:09 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 24 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 24 -ppn 24 ./imagenew_timing
-Started at Tue Nov 27 14:18:09 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:10 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 28 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 28 -ppn 28 ./imagenew_timing
-Started at Tue Nov 27 14:18:10 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:10 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 28 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 28 -ppn 28 ./imagenew_timing
-Started at Tue Nov 27 14:18:10 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:10 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 28 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 28 -ppn 28 ./imagenew_timing
-Started at Tue Nov 27 14:18:10 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:11 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 28 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 28 -ppn 28 ./imagenew_timing
-Started at Tue Nov 27 14:18:11 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:11 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 28 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 28 -ppn 28 ./imagenew_timing
-Started at Tue Nov 27 14:18:11 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:12 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 32 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 32 -ppn 32 ./imagenew_timing
-Started at Tue Nov 27 14:18:12 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:12 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 32 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 32 -ppn 32 ./imagenew_timing
-Started at Tue Nov 27 14:18:12 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:12 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 32 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 32 -ppn 32 ./imagenew_timing
-Started at Tue Nov 27 14:18:12 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:12 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 32 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 32 -ppn 32 ./imagenew_timing
-Started at Tue Nov 27 14:18:12 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:13 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 32 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 32 -ppn 32 ./imagenew_timing
-Started at Tue Nov 27 14:18:13 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:13 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 36 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 36 -ppn 36 ./imagenew_timing
-Started at Tue Nov 27 14:18:13 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:14 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 36 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 36 -ppn 36 ./imagenew_timing
-Started at Tue Nov 27 14:18:14 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:14 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 36 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 36 -ppn 36 ./imagenew_timing
-Started at Tue Nov 27 14:18:14 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:14 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 36 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 36 -ppn 36 ./imagenew_timing
-Started at Tue Nov 27 14:18:14 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:14 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 36 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 36 -ppn 36 ./imagenew_timing
-Started at Tue Nov 27 14:18:14 GMT 2018
+Running imagenew_timing on 48 processes over 4 node(s)
+Issuing command: mpiexec_mpt -n 48 -ppn 12 ./imagenew_timing
+Started at Thu Nov 29 12:34:48 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 Running imagenew_timing_intervals on 1 processes over 1 node(s)
 Issuing command: mpiexec_mpt -n 1 -ppn 1 ./imagenew_timing_intervals
-Started at Tue Nov 27 14:18:15 GMT 2018
+Started at Thu Nov 29 12:34:48 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:15 GMT 2018
+Finished at Thu Nov 29 12:34:48 GMT 2018
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:18 GMT 2018
+Running imagenew_timing on 1 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 1 -ppn 1 ./imagenew_timing
+Started at Thu Nov 29 12:34:48 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:34:49 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 52 processes over 4 node(s)
+Issuing command: mpiexec_mpt -n 52 -ppn 13 ./imagenew_timing
+Started at Thu Nov 29 12:34:49 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:34:50 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 52 processes over 4 node(s)
+Issuing command: mpiexec_mpt -n 52 -ppn 13 ./imagenew_timing
+Started at Thu Nov 29 12:34:50 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:34:51 GMT 2018
 --------------------------------------------------------------------------------
 Running imagenew_timing_intervals on 2 processes over 1 node(s)
 Issuing command: mpiexec_mpt -n 2 -ppn 2 ./imagenew_timing_intervals
-Started at Tue Nov 27 14:18:18 GMT 2018
+Started at Thu Nov 29 12:34:51 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:20 GMT 2018
+Finished at Thu Nov 29 12:34:52 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 60 processes over 4 node(s)
+Issuing command: mpiexec_mpt -n 60 -ppn 15 ./imagenew_timing
+Started at Thu Nov 29 12:34:52 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Running imagenew on 16 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 16 -ppn 16 ./imagenew
+Started at Thu Nov 29 12:34:52 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:34:52 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew on 16 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 16 -ppn 16 ./imagenew
+Started at Thu Nov 29 12:34:52 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:34:53 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 60 processes over 4 node(s)
+Issuing command: mpiexec_mpt -n 60 -ppn 15 ./imagenew_timing
+Started at Thu Nov 29 12:34:53 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:34:53 GMT 2018
 --------------------------------------------------------------------------------
 Running imagenew_timing_intervals on 3 processes over 1 node(s)
 Issuing command: mpiexec_mpt -n 3 -ppn 3 ./imagenew_timing_intervals
-Started at Tue Nov 27 14:18:20 GMT 2018
+Started at Thu Nov 29 12:34:53 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:22 GMT 2018
+Finished at Thu Nov 29 12:34:54 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew on 16 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 16 -ppn 16 ./imagenew
+Started at Thu Nov 29 12:34:54 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:34:55 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 64 processes over 4 node(s)
+Issuing command: mpiexec_mpt -n 64 -ppn 16 ./imagenew_timing
+Started at Thu Nov 29 12:34:55 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:34:55 GMT 2018
 --------------------------------------------------------------------------------
 Running imagenew_timing_intervals on 4 processes over 1 node(s)
 Issuing command: mpiexec_mpt -n 4 -ppn 4 ./imagenew_timing_intervals
-Started at Tue Nov 27 14:18:22 GMT 2018
+Started at Thu Nov 29 12:34:55 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:23 GMT 2018
+Finished at Thu Nov 29 12:34:56 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew on 16 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 16 -ppn 16 ./imagenew
+Started at Thu Nov 29 12:34:56 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:34:56 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 64 processes over 4 node(s)
+Issuing command: mpiexec_mpt -n 64 -ppn 16 ./imagenew_timing
+Started at Thu Nov 29 12:34:56 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:34:56 GMT 2018
 --------------------------------------------------------------------------------
 Running imagenew_timing_intervals on 5 processes over 1 node(s)
 Issuing command: mpiexec_mpt -n 5 -ppn 5 ./imagenew_timing_intervals
-Started at Tue Nov 27 14:18:23 GMT 2018
+Started at Thu Nov 29 12:34:56 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:24 GMT 2018
+Finished at Thu Nov 29 12:34:57 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 2 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 2 -ppn 2 ./imagenew_timing
+Started at Thu Nov 29 12:34:57 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:34:57 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 2 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 2 -ppn 2 ./imagenew_timing
+Started at Thu Nov 29 12:34:57 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:34:57 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 2 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 2 -ppn 2 ./imagenew_timing
+Started at Thu Nov 29 12:34:57 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:34:57 GMT 2018
 --------------------------------------------------------------------------------
 Running imagenew_timing_intervals on 7 processes over 1 node(s)
 Issuing command: mpiexec_mpt -n 7 -ppn 7 ./imagenew_timing_intervals
-Started at Tue Nov 27 14:18:24 GMT 2018
+Started at Thu Nov 29 12:34:57 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:25 GMT 2018
+Finished at Thu Nov 29 12:34:57 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew on 16 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 16 -ppn 16 ./imagenew
+Started at Thu Nov 29 12:34:57 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:34:57 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 2 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 2 -ppn 2 ./imagenew_timing
+Started at Thu Nov 29 12:34:57 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:34:58 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 72 processes over 4 node(s)
+Issuing command: mpiexec_mpt -n 72 -ppn 18 ./imagenew_timing
+Started at Thu Nov 29 12:34:58 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:34:58 GMT 2018
 --------------------------------------------------------------------------------
 Running imagenew_timing_intervals on 8 processes over 1 node(s)
 Issuing command: mpiexec_mpt -n 8 -ppn 8 ./imagenew_timing_intervals
-Started at Tue Nov 27 14:18:25 GMT 2018
+Started at Thu Nov 29 12:34:58 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:26 GMT 2018
+Finished at Thu Nov 29 12:34:59 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 2 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 2 -ppn 2 ./imagenew_timing
+Started at Thu Nov 29 12:34:59 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:34:59 GMT 2018
 --------------------------------------------------------------------------------
 Running imagenew_timing_intervals on 11 processes over 1 node(s)
 Issuing command: mpiexec_mpt -n 11 -ppn 11 ./imagenew_timing_intervals
-Started at Tue Nov 27 14:18:26 GMT 2018
+Started at Thu Nov 29 12:34:59 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:27 GMT 2018
+Finished at Thu Nov 29 12:34:59 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 72 processes over 4 node(s)
+Issuing command: mpiexec_mpt -n 72 -ppn 18 ./imagenew_timing
+Started at Thu Nov 29 12:34:59 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:00 GMT 2018
 --------------------------------------------------------------------------------
 Running imagenew_timing_intervals on 12 processes over 1 node(s)
 Issuing command: mpiexec_mpt -n 12 -ppn 12 ./imagenew_timing_intervals
-Started at Tue Nov 27 14:18:27 GMT 2018
+Started at Thu Nov 29 12:35:00 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:28 GMT 2018
+Finished at Thu Nov 29 12:35:01 GMT 2018
 --------------------------------------------------------------------------------
 Running imagenew_timing_intervals on 16 processes over 1 node(s)
 Issuing command: mpiexec_mpt -n 16 -ppn 16 ./imagenew_timing_intervals
-Started at Tue Nov 27 14:18:28 GMT 2018
+Started at Thu Nov 29 12:35:01 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:28 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew on 16 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 16 -ppn 16 ./imagenew
-Started at Tue Nov 27 14:18:37 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:37 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew on 16 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 16 -ppn 16 ./imagenew
-Started at Tue Nov 27 14:18:37 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:37 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew on 16 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 16 -ppn 16 ./imagenew
-Started at Tue Nov 27 14:18:37 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:38 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew on 16 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 16 -ppn 16 ./imagenew
-Started at Tue Nov 27 14:18:38 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:38 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew on 16 processes over 1 node(s)
-Issuing command: mpiexec_mpt -n 16 -ppn 16 ./imagenew
-Started at Tue Nov 27 14:18:38 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:18:40 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 40 processes over 4 node(s)
-Issuing command: mpiexec_mpt -n 40 -ppn 10 ./imagenew_timing
-Started at Tue Nov 27 14:31:16 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:31:17 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 40 processes over 4 node(s)
-Issuing command: mpiexec_mpt -n 40 -ppn 10 ./imagenew_timing
-Started at Tue Nov 27 14:31:17 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:31:18 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 48 processes over 4 node(s)
-Issuing command: mpiexec_mpt -n 48 -ppn 12 ./imagenew_timing
-Started at Tue Nov 27 14:31:18 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:31:19 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 48 processes over 4 node(s)
-Issuing command: mpiexec_mpt -n 48 -ppn 12 ./imagenew_timing
-Started at Tue Nov 27 14:31:19 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:31:20 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 52 processes over 4 node(s)
-Issuing command: mpiexec_mpt -n 52 -ppn 13 ./imagenew_timing
-Started at Tue Nov 27 14:31:20 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:31:21 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 52 processes over 4 node(s)
-Issuing command: mpiexec_mpt -n 52 -ppn 13 ./imagenew_timing
-Started at Tue Nov 27 14:31:21 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:31:22 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 60 processes over 4 node(s)
-Issuing command: mpiexec_mpt -n 60 -ppn 15 ./imagenew_timing
-Started at Tue Nov 27 14:31:22 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:31:24 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 60 processes over 4 node(s)
-Issuing command: mpiexec_mpt -n 60 -ppn 15 ./imagenew_timing
-Started at Tue Nov 27 14:31:24 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:31:25 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 64 processes over 4 node(s)
-Issuing command: mpiexec_mpt -n 64 -ppn 16 ./imagenew_timing
-Started at Tue Nov 27 14:31:25 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:31:26 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 64 processes over 4 node(s)
-Issuing command: mpiexec_mpt -n 64 -ppn 16 ./imagenew_timing
-Started at Tue Nov 27 14:31:26 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:31:28 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 72 processes over 4 node(s)
-Issuing command: mpiexec_mpt -n 72 -ppn 18 ./imagenew_timing
-Started at Tue Nov 27 14:31:28 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:31:29 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 72 processes over 4 node(s)
-Issuing command: mpiexec_mpt -n 72 -ppn 18 ./imagenew_timing
-Started at Tue Nov 27 14:31:29 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:31:31 GMT 2018
+Finished at Thu Nov 29 12:35:01 GMT 2018
 --------------------------------------------------------------------------------
 Running imagenew_timing on 80 processes over 4 node(s)
 Issuing command: mpiexec_mpt -n 80 -ppn 20 ./imagenew_timing
-Started at Tue Nov 27 14:31:31 GMT 2018
+Started at Thu Nov 29 12:35:01 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:31:33 GMT 2018
+Finished at Thu Nov 29 12:35:02 GMT 2018
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:03 GMT 2018
 --------------------------------------------------------------------------------
 Running imagenew_timing on 80 processes over 4 node(s)
 Issuing command: mpiexec_mpt -n 80 -ppn 20 ./imagenew_timing
-Started at Tue Nov 27 14:31:33 GMT 2018
+Started at Thu Nov 29 12:35:03 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:31:35 GMT 2018
+Finished at Thu Nov 29 12:35:03 GMT 2018
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:03 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 3 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 3 -ppn 3 ./imagenew_timing
+Started at Thu Nov 29 12:35:03 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:03 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 3 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 3 -ppn 3 ./imagenew_timing
+Started at Thu Nov 29 12:35:03 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:03 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 3 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 3 -ppn 3 ./imagenew_timing
+Started at Thu Nov 29 12:35:03 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:04 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 3 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 3 -ppn 3 ./imagenew_timing
+Started at Thu Nov 29 12:35:04 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:05 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 3 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 3 -ppn 3 ./imagenew_timing
+Started at Thu Nov 29 12:35:05 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:05 GMT 2018
 --------------------------------------------------------------------------------
 Running imagenew_timing on 88 processes over 4 node(s)
 Issuing command: mpiexec_mpt -n 88 -ppn 22 ./imagenew_timing
-Started at Tue Nov 27 14:31:35 GMT 2018
+Started at Thu Nov 29 12:35:05 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:31:37 GMT 2018
+Finished at Thu Nov 29 12:35:07 GMT 2018
 --------------------------------------------------------------------------------
 Running imagenew_timing on 88 processes over 4 node(s)
 Issuing command: mpiexec_mpt -n 88 -ppn 22 ./imagenew_timing
-Started at Tue Nov 27 14:31:37 GMT 2018
+Started at Thu Nov 29 12:35:07 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:31:39 GMT 2018
+Finished at Thu Nov 29 12:35:08 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 4 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 4 -ppn 4 ./imagenew_timing
+Started at Thu Nov 29 12:35:08 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:08 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 4 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 4 -ppn 4 ./imagenew_timing
+Started at Thu Nov 29 12:35:08 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:08 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 4 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 4 -ppn 4 ./imagenew_timing
+Started at Thu Nov 29 12:35:08 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:09 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 4 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 4 -ppn 4 ./imagenew_timing
+Started at Thu Nov 29 12:35:09 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:10 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 4 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 4 -ppn 4 ./imagenew_timing
+Started at Thu Nov 29 12:35:10 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:10 GMT 2018
 --------------------------------------------------------------------------------
 Running imagenew_timing on 96 processes over 4 node(s)
 Issuing command: mpiexec_mpt -n 96 -ppn 24 ./imagenew_timing
-Started at Tue Nov 27 14:31:39 GMT 2018
+Started at Thu Nov 29 12:35:10 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:31:41 GMT 2018
+Finished at Thu Nov 29 12:35:12 GMT 2018
 --------------------------------------------------------------------------------
 Running imagenew_timing on 96 processes over 4 node(s)
 Issuing command: mpiexec_mpt -n 96 -ppn 24 ./imagenew_timing
-Started at Tue Nov 27 14:31:41 GMT 2018
+Started at Thu Nov 29 12:35:12 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:31:44 GMT 2018
+Finished at Thu Nov 29 12:35:12 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 5 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 5 -ppn 5 ./imagenew_timing
+Started at Thu Nov 29 12:35:12 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:12 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 5 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 5 -ppn 5 ./imagenew_timing
+Started at Thu Nov 29 12:35:12 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:13 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 5 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 5 -ppn 5 ./imagenew_timing
+Started at Thu Nov 29 12:35:13 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:13 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 5 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 5 -ppn 5 ./imagenew_timing
+Started at Thu Nov 29 12:35:13 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:14 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 5 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 5 -ppn 5 ./imagenew_timing
+Started at Thu Nov 29 12:35:14 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:15 GMT 2018
 --------------------------------------------------------------------------------
 Running imagenew_timing on 104 processes over 4 node(s)
 Issuing command: mpiexec_mpt -n 104 -ppn 26 ./imagenew_timing
-Started at Tue Nov 27 14:31:44 GMT 2018
+Started at Thu Nov 29 12:35:15 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:31:47 GMT 2018
+Finished at Thu Nov 29 12:35:16 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 7 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 7 -ppn 7 ./imagenew_timing
+Started at Thu Nov 29 12:35:16 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:16 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 7 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 7 -ppn 7 ./imagenew_timing
+Started at Thu Nov 29 12:35:16 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:16 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 7 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 7 -ppn 7 ./imagenew_timing
+Started at Thu Nov 29 12:35:16 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:16 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 7 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 7 -ppn 7 ./imagenew_timing
+Started at Thu Nov 29 12:35:16 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:17 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 7 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 7 -ppn 7 ./imagenew_timing
+Started at Thu Nov 29 12:35:17 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:18 GMT 2018
 --------------------------------------------------------------------------------
 Running imagenew_timing on 104 processes over 4 node(s)
 Issuing command: mpiexec_mpt -n 104 -ppn 26 ./imagenew_timing
-Started at Tue Nov 27 14:31:47 GMT 2018
+Started at Thu Nov 29 12:35:18 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:31:50 GMT 2018
+Finished at Thu Nov 29 12:35:19 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 8 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 8 -ppn 8 ./imagenew_timing
+Started at Thu Nov 29 12:35:19 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:19 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 8 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 8 -ppn 8 ./imagenew_timing
+Started at Thu Nov 29 12:35:19 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:19 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 8 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 8 -ppn 8 ./imagenew_timing
+Started at Thu Nov 29 12:35:19 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:19 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 8 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 8 -ppn 8 ./imagenew_timing
+Started at Thu Nov 29 12:35:19 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:20 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 8 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 8 -ppn 8 ./imagenew_timing
+Started at Thu Nov 29 12:35:20 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:21 GMT 2018
 --------------------------------------------------------------------------------
 Running imagenew_timing on 112 processes over 4 node(s)
 Issuing command: mpiexec_mpt -n 112 -ppn 28 ./imagenew_timing
-Started at Tue Nov 27 14:31:50 GMT 2018
+Started at Thu Nov 29 12:35:21 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:31:53 GMT 2018
+Finished at Thu Nov 29 12:35:21 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 11 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 11 -ppn 11 ./imagenew_timing
+Started at Thu Nov 29 12:35:21 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:21 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 11 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 11 -ppn 11 ./imagenew_timing
+Started at Thu Nov 29 12:35:21 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:21 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 11 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 11 -ppn 11 ./imagenew_timing
+Started at Thu Nov 29 12:35:21 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:22 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 11 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 11 -ppn 11 ./imagenew_timing
+Started at Thu Nov 29 12:35:22 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:22 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 11 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 11 -ppn 11 ./imagenew_timing
+Started at Thu Nov 29 12:35:22 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:24 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 12 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 12 -ppn 12 ./imagenew_timing
+Started at Thu Nov 29 12:35:24 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:24 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 12 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 12 -ppn 12 ./imagenew_timing
+Started at Thu Nov 29 12:35:24 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:24 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 12 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 12 -ppn 12 ./imagenew_timing
+Started at Thu Nov 29 12:35:24 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:24 GMT 2018
 --------------------------------------------------------------------------------
 Running imagenew_timing on 112 processes over 4 node(s)
 Issuing command: mpiexec_mpt -n 112 -ppn 28 ./imagenew_timing
-Started at Tue Nov 27 14:31:53 GMT 2018
+Started at Thu Nov 29 12:35:24 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:31:56 GMT 2018
+Finished at Thu Nov 29 12:35:24 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 12 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 12 -ppn 12 ./imagenew_timing
+Started at Thu Nov 29 12:35:24 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:25 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 12 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 12 -ppn 12 ./imagenew_timing
+Started at Thu Nov 29 12:35:25 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:26 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 16 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 16 -ppn 16 ./imagenew_timing
+Started at Thu Nov 29 12:35:26 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:26 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 16 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 16 -ppn 16 ./imagenew_timing
+Started at Thu Nov 29 12:35:26 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:26 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 16 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 16 -ppn 16 ./imagenew_timing
+Started at Thu Nov 29 12:35:26 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:26 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 16 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 16 -ppn 16 ./imagenew_timing
+Started at Thu Nov 29 12:35:26 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:27 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 16 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 16 -ppn 16 ./imagenew_timing
+Started at Thu Nov 29 12:35:27 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:27 GMT 2018
 --------------------------------------------------------------------------------
 Running imagenew_timing on 116 processes over 4 node(s)
 Issuing command: mpiexec_mpt -n 116 -ppn 29 ./imagenew_timing
-Started at Tue Nov 27 14:31:56 GMT 2018
+Started at Thu Nov 29 12:35:27 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:31:59 GMT 2018
+Finished at Thu Nov 29 12:35:28 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 20 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 20 -ppn 20 ./imagenew_timing
+Started at Thu Nov 29 12:35:28 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:28 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 20 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 20 -ppn 20 ./imagenew_timing
+Started at Thu Nov 29 12:35:28 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:28 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 20 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 20 -ppn 20 ./imagenew_timing
+Started at Thu Nov 29 12:35:28 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:28 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 20 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 20 -ppn 20 ./imagenew_timing
+Started at Thu Nov 29 12:35:28 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:29 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 20 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 20 -ppn 20 ./imagenew_timing
+Started at Thu Nov 29 12:35:29 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:30 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 24 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 24 -ppn 24 ./imagenew_timing
+Started at Thu Nov 29 12:35:30 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:30 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 24 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 24 -ppn 24 ./imagenew_timing
+Started at Thu Nov 29 12:35:30 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:30 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 24 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 24 -ppn 24 ./imagenew_timing
+Started at Thu Nov 29 12:35:30 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:30 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 24 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 24 -ppn 24 ./imagenew_timing
+Started at Thu Nov 29 12:35:30 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:30 GMT 2018
 --------------------------------------------------------------------------------
 Running imagenew_timing on 116 processes over 4 node(s)
 Issuing command: mpiexec_mpt -n 116 -ppn 29 ./imagenew_timing
-Started at Tue Nov 27 14:31:59 GMT 2018
+Started at Thu Nov 29 12:35:30 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:32:02 GMT 2018
+Finished at Thu Nov 29 12:35:31 GMT 2018
 --------------------------------------------------------------------------------
-Running imagenew_timing on 124 processes over 4 node(s)
-Issuing command: mpiexec_mpt -n 124 -ppn 31 ./imagenew_timing
-Started at Tue Nov 27 14:32:02 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:32:06 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 124 processes over 4 node(s)
-Issuing command: mpiexec_mpt -n 124 -ppn 31 ./imagenew_timing
-Started at Tue Nov 27 14:32:06 GMT 2018
+Running imagenew_timing on 24 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 24 -ppn 24 ./imagenew_timing
+Started at Thu Nov 29 12:35:31 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:32:09 GMT 2018
+Finished at Thu Nov 29 12:35:32 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 28 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 28 -ppn 28 ./imagenew_timing
+Started at Thu Nov 29 12:35:32 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:32 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 28 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 28 -ppn 28 ./imagenew_timing
+Started at Thu Nov 29 12:35:32 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:32 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 28 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 28 -ppn 28 ./imagenew_timing
+Started at Thu Nov 29 12:35:32 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:32 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 28 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 28 -ppn 28 ./imagenew_timing
+Started at Thu Nov 29 12:35:32 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:32 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 28 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 28 -ppn 28 ./imagenew_timing
+Started at Thu Nov 29 12:35:32 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:33 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 32 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 32 -ppn 32 ./imagenew_timing
+Started at Thu Nov 29 12:35:33 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:34 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 32 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 32 -ppn 32 ./imagenew_timing
+Started at Thu Nov 29 12:35:34 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:34 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 32 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 32 -ppn 32 ./imagenew_timing
+Started at Thu Nov 29 12:35:34 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:34 GMT 2018
 --------------------------------------------------------------------------------
 Running imagenew_timing on 128 processes over 4 node(s)
 Issuing command: mpiexec_mpt -n 128 -ppn 32 ./imagenew_timing
-Started at Tue Nov 27 14:32:09 GMT 2018
+Started at Thu Nov 29 12:35:34 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:32:13 GMT 2018
+Finished at Thu Nov 29 12:35:34 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 32 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 32 -ppn 32 ./imagenew_timing
+Started at Thu Nov 29 12:35:34 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:34 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 32 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 32 -ppn 32 ./imagenew_timing
+Started at Thu Nov 29 12:35:34 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:35 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 36 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 36 -ppn 36 ./imagenew_timing
+Started at Thu Nov 29 12:35:35 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:35 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 36 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 36 -ppn 36 ./imagenew_timing
+Started at Thu Nov 29 12:35:35 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:35 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 36 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 36 -ppn 36 ./imagenew_timing
+Started at Thu Nov 29 12:35:35 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:36 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 36 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 36 -ppn 36 ./imagenew_timing
+Started at Thu Nov 29 12:35:36 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:36 GMT 2018
+--------------------------------------------------------------------------------
+Running imagenew_timing on 36 processes over 1 node(s)
+Issuing command: mpiexec_mpt -n 36 -ppn 36 ./imagenew_timing
+Started at Thu Nov 29 12:35:36 GMT 2018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:37 GMT 2018
+--------------------------------------------------------------------------------
+Finished at Thu Nov 29 12:35:38 GMT 2018
 --------------------------------------------------------------------------------
 Running imagenew_timing on 128 processes over 4 node(s)
 Issuing command: mpiexec_mpt -n 128 -ppn 32 ./imagenew_timing
-Started at Tue Nov 27 14:32:13 GMT 2018
+Started at Thu Nov 29 12:35:38 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:32:17 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 136 processes over 4 node(s)
-Issuing command: mpiexec_mpt -n 136 -ppn 34 ./imagenew_timing
-Started at Tue Nov 27 14:32:17 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:32:21 GMT 2018
+Finished at Thu Nov 29 12:35:42 GMT 2018
 --------------------------------------------------------------------------------
 Running imagenew_timing on 136 processes over 4 node(s)
 Issuing command: mpiexec_mpt -n 136 -ppn 34 ./imagenew_timing
-Started at Tue Nov 27 14:32:21 GMT 2018
+Started at Thu Nov 29 12:35:42 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:32:25 GMT 2018
+Finished at Thu Nov 29 12:35:46 GMT 2018
 --------------------------------------------------------------------------------
-Running imagenew_timing on 144 processes over 4 node(s)
-Issuing command: mpiexec_mpt -n 144 -ppn 36 ./imagenew_timing
-Started at Tue Nov 27 14:32:25 GMT 2018
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:32:30 GMT 2018
---------------------------------------------------------------------------------
-Running imagenew_timing on 144 processes over 4 node(s)
-Issuing command: mpiexec_mpt -n 144 -ppn 36 ./imagenew_timing
-Started at Tue Nov 27 14:32:30 GMT 2018
+Running imagenew_timing on 136 processes over 4 node(s)
+Issuing command: mpiexec_mpt -n 136 -ppn 34 ./imagenew_timing
+Started at Thu Nov 29 12:35:46 GMT 2018
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-Finished at Tue Nov 27 14:32:34 GMT 2018
+Finished at Thu Nov 29 12:35:50 GMT 2018

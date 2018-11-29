@@ -3,7 +3,7 @@
 #PBS -N imagenew
 #PBS -l place=excl
 #PBS -A d167-s1770309
-#PBS -l walltime=0:30:00
+#PBS -l walltime=0:10:00
 #PBS -l select=1:ncpus=36
 
 cd $PBS_O_WORKDIR

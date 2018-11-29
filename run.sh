@@ -9,7 +9,7 @@ BUILD_FOLDER=./build
 TIMING_HEADER="Input File\tProcesses Number\tAverage Iteration Time (ms)"
 RESOURCES_LIST="./resources/edgenew192x128.pgm_./resources/edgenew256x192.pgm_./resources/edgenew512x384.pgm_./resources/edgenew768x768.pgm_./resources/edgenew1600x1200.pgm"
 RESOURCES_BIG_LIST="./resources/edgenew768x768.pgm_./resources/edgenew1600x1200.pgm"
-# RESERVATION="-q R380254"
+# RESERVATION="-q R382844"
 
 #make required folders
 mkdir -p $DATA_FOLDER
@@ -68,10 +68,10 @@ NODES_NUM=select=1:ncpus=36
 PROC_LIST="1_2_3_4_5_7_8_11_12_16"
 qsub $RESERVATION -v PROC_LIST="${PROC_LIST}",RESOURCES_LIST="./resources/edgenew768x768.pgm",MPIPROG="imagenew_timing_intervals" -l $NODES_NUM imagenew.pbs
 
-# check correctness in production
+# running production mode executable
 make clean_build
 make imagenew
-echo "checking correctness in production..."
+echo "running production mode executable..."
 echo -e $TIMING_HEADER > $DATA_FOLDER/time_results_prod.tsv
 PROC_LIST="16"
 qsub $RESERVATION -v PROC_LIST="${PROC_LIST}",RESOURCES_LIST="${RESOURCES_LIST}",MPIPROG="imagenew" -l $NODES_NUM imagenew.pbs

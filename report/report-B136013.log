@@ -1,7 +1,7 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6800) (preloaded format=pdflatex 2018.10.18)  27 NOV 2018 14:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6800) (preloaded format=pdflatex 2018.10.18)  29 NOV 2018 12:37
 entering extended mode
-**./report-B136013.tex
-(report-B136013.tex
+**/Users/xenis656/Desktop/cirrus/MPP/mpp_coursework/report/report-B136013.tex
+(/Users/xenis656/Desktop/cirrus/MPP/mpp_coursework/report/report-B136013.tex
 LaTeX2e <2018-04-01> patch level 5
 
 ("/Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/tex/latex/b
@@ -23,7 +23,7 @@ File: size12.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 \abovecaptionskip=\skip41
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
-) (epcc.sty
+) (/Users/xenis656/Desktop/cirrus/MPP/mpp_coursework/report/epcc.sty
 EPCC's LaTeX 2e local style file $Revision: 3.6 $ $Date: 1998/01/09 09:32:33 $
 
 ("/Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/tex/latex/p
@@ -44,7 +44,7 @@ Package: t1enc 1994/06/01 Standard LaTeX package
 \headsidemargin=\skip50
 \footsidemargin=\skip51
 \footheight=\skip52
- (fancyheadings.sty
+(/Users/xenis656/Desktop/cirrus/MPP/mpp_coursework/report/fancyheadings.sty
 \headrulewidth=\dimen103
 \footrulewidth=\dimen104
 \plainheadrulewidth=\dimen105
@@ -136,7 +136,6 @@ Package color Info: Driver file: pdftex.def on input line 147.
 msmath/amsmath.sty"
 Package: amsmath 2017/09/02 v2.17a AMS math features
 \@mathmargin=\skip53
-
 For additional information on amsmath, use the `?' option.
 
 ("/Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/tex/latex/a
@@ -444,7 +443,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 \Hy@SectionHShift=\skip66
 )
 Package hyperref Info: Option `colorlinks' set `true' on input line 22.
- (report-B136013.aux)
+(/Users/xenis656/Desktop/cirrus/MPP/mpp_coursework/report/report-B136013.aux)
 \openout1 = `report-B136013.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 26.
@@ -518,7 +517,8 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 26.
 LaTeX Info: Redefining \pageref on input line 26.
 LaTeX Info: Redefining \nameref on input line 26.
- (report-B136013.out) (report-B136013.out)
+(/Users/xenis656/Desktop/cirrus/MPP/mpp_coursework/report/report-B136013.out) (
+/Users/xenis656/Desktop/cirrus/MPP/mpp_coursework/report/report-B136013.out)
 \@outlinefile=\write3
 \openout3 = `report-B136013.out'.
 
@@ -532,29 +532,29 @@ File: logos/crest_bw.pdf Graphic file (type pdf)
 <use logos/crest_bw.pdf>
 Package pdftex.def Info: logos/crest_bw.pdf  used on input line 33.
 (pdftex.def)             Requested size: 363.3566pt x 367.37158pt.
-
 [1
-
 
 Non-PDF special ignored!
 <special> ps: /RCSident ($Id: epcc.sty,v 3.6 1998/01/09 09:32:33 st Exp $) ...
 {/Users/xenis656/Library/Application Support/MiKTeX/texmfs/data/pdftex/config/p
-dftex.map} <./logos/logo_black.pdf> <./logos/crest_bw.pdf>]
+dftex.map} </Users/xenis656/Desktop/cirrus/MPP/mpp_coursework/report/logos/logo
+_black.pdf> </Users/xenis656/Desktop/cirrus/MPP/mpp_coursework/report/logos/cre
+st_bw.pdf>]
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <17.28> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 39.
- (report-B136013.toc
+(/Users/xenis656/Desktop/cirrus/MPP/mpp_coursework/report/report-B136013.toc
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 1.
 )
 \tf@toc=\write4
 \openout4 = `report-B136013.toc'.
 
- [2
+[2
 
 ]
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.4> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 63.
- [3
+[3
 
 ]
 LaTeX Font Info:    Try loading font information for OMS+ptm on input line 88.
@@ -565,7 +565,7 @@ File: omsptm.fd
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 88.
- [4] [5] [6]
+[4] [5] [6]
 ("/Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/tex/latex/l
 istings/lstlang1.sty"
 File: lstlang1.sty 2018/09/02 1.7 listings language file
@@ -575,172 +575,202 @@ istings/lstlang1.sty"
 File: lstlang1.sty 2018/09/02 1.7 listings language file
 ) [7
 
-]
+] [8]
 Package epstopdf Info: Source file: <../graphs/speedup.eps>
-(epstopdf)                    date: 2018-11-27 14:45:36
-(epstopdf)                    size: 28895 bytes
+(epstopdf)                    date: 2018-11-29 12:36:20
+(epstopdf)                    size: 28901 bytes
 (epstopdf)             Output file: <../graphs/speedup-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-11-27 14:45:44
-(epstopdf)                    size: 14488 bytes
 (epstopdf)             Command: <epstopdf --outfile=../graphs/speedup-eps-conve
 rted-to.pdf ../graphs/speedup.eps>
-(epstopdf)             \includegraphics on input line 197.
-Package epstopdf Info: Output file is already uptodate.
-<../graphs/speedup-eps-converted-to.pdf, id=158, 462.72874pt x 346.29375pt>
+(epstopdf)             \includegraphics on input line 196.
+runsystem(epstopdf --outfile=../graphs/speedup-eps-converted-to.pdf ../graphs/s
+peedup.eps)...executed (allowed).
+
+Package epstopdf Info: Result file: <../graphs/speedup-eps-converted-to.pdf>
+(epstopdf)                    date: 2018-11-29 12:38:10
+(epstopdf)                    size: 14479 bytes.
+<../graphs/speedup-eps-converted-to.pdf, id=163, 462.72874pt x 346.29375pt>
 File: ../graphs/speedup-eps-converted-to.pdf Graphic file (type pdf)
 <use ../graphs/speedup-eps-converted-to.pdf>
 Package pdftex.def Info: ../graphs/speedup-eps-converted-to.pdf  used on input 
-line 197.
+line 196.
 (pdftex.def)             Requested size: 370.1835pt x 277.03537pt.
- [8] [9 <../graphs/speedup-eps-converted-to.pdf>]
+[9 <../graphs/speedup-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <../graphs/speedupBigInput.eps>
-(epstopdf)                    date: 2018-11-27 14:45:37
-(epstopdf)                    size: 23279 bytes
+(epstopdf)                    date: 2018-11-29 12:36:21
+(epstopdf)                    size: 23269 bytes
 (epstopdf)             Output file: <../graphs/speedupBigInput-eps-converted-to
 .pdf>
-(epstopdf)                    date: 2018-11-27 14:45:44
-(epstopdf)                    size: 13127 bytes
 (epstopdf)             Command: <epstopdf --outfile=../graphs/speedupBigInput-e
 ps-converted-to.pdf ../graphs/speedupBigInput.eps>
-(epstopdf)             \includegraphics on input line 216.
-Package epstopdf Info: Output file is already uptodate.
-<../graphs/speedupBigInput-eps-converted-to.pdf, id=210, 462.72874pt x 346.2937
+(epstopdf)             \includegraphics on input line 215.
+runsystem(epstopdf --outfile=../graphs/speedupBigInput-eps-converted-to.pdf ../
+graphs/speedupBigInput.eps)...executed (allowed).
+
+Package epstopdf Info: Result file: <../graphs/speedupBigInput-eps-converted-to
+.pdf>
+(epstopdf)                    date: 2018-11-29 12:38:12
+(epstopdf)                    size: 13118 bytes.
+<../graphs/speedupBigInput-eps-converted-to.pdf, id=208, 462.72874pt x 346.2937
 5pt>
 File: ../graphs/speedupBigInput-eps-converted-to.pdf Graphic file (type pdf)
 <use ../graphs/speedupBigInput-eps-converted-to.pdf>
 Package pdftex.def Info: ../graphs/speedupBigInput-eps-converted-to.pdf  used o
-n input line 216.
+n input line 215.
 (pdftex.def)             Requested size: 370.1835pt x 277.03537pt.
 Package epstopdf Info: Source file: <../graphs/average_pixel/edgenew192x128_ave
 rage_pixel.eps>
-(epstopdf)                    date: 2018-11-27 14:45:36
+(epstopdf)                    date: 2018-11-29 12:36:20
 (epstopdf)                    size: 23505 bytes
 (epstopdf)             Output file: <../graphs/average_pixel/edgenew192x128_ave
 rage_pixel-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-11-27 14:45:45
-(epstopdf)                    size: 13531 bytes
 (epstopdf)             Command: <epstopdf --outfile=../graphs/average_pixel/edg
 enew192x128_average_pixel-eps-converted-to.pdf ../graphs/average_pixel/edgenew1
 92x128_average_pixel.eps>
-(epstopdf)             \includegraphics on input line 227.
-Package epstopdf Info: Output file is already uptodate.
+(epstopdf)             \includegraphics on input line 226.
+runsystem(epstopdf --outfile=../graphs/average_pixel/edgenew192x128_average_pix
+el-eps-converted-to.pdf ../graphs/average_pixel/edgenew192x128_average_pixel.ep
+s)...executed (allowed).
+
+Package epstopdf Info: Result file: <../graphs/average_pixel/edgenew192x128_ave
+rage_pixel-eps-converted-to.pdf>
+(epstopdf)                    date: 2018-11-29 12:38:14
+(epstopdf)                    size: 13531 bytes.
 <../graphs/average_pixel/edgenew192x128_average_pixel-eps-converted-to.pdf, id=
-211, 462.72874pt x 346.29375pt>
+209, 462.72874pt x 346.29375pt>
 File: ../graphs/average_pixel/edgenew192x128_average_pixel-eps-converted-to.pdf
  Graphic file (type pdf)
 <use ../graphs/average_pixel/edgenew192x128_average_pixel-eps-converted-to.pdf>
 
 Package pdftex.def Info: ../graphs/average_pixel/edgenew192x128_average_pixel-e
-ps-converted-to.pdf  used on input line 227.
+ps-converted-to.pdf  used on input line 226.
 (pdftex.def)             Requested size: 175.06905pt x 131.01703pt.
 Package epstopdf Info: Source file: <../graphs/average_pixel/edgenew256x192_ave
 rage_pixel.eps>
-(epstopdf)                    date: 2018-11-27 14:45:36
+(epstopdf)                    date: 2018-11-29 12:36:20
 (epstopdf)                    size: 22531 bytes
 (epstopdf)             Output file: <../graphs/average_pixel/edgenew256x192_ave
 rage_pixel-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-11-27 14:45:46
-(epstopdf)                    size: 13487 bytes
 (epstopdf)             Command: <epstopdf --outfile=../graphs/average_pixel/edg
 enew256x192_average_pixel-eps-converted-to.pdf ../graphs/average_pixel/edgenew2
 56x192_average_pixel.eps>
-(epstopdf)             \includegraphics on input line 229.
-Package epstopdf Info: Output file is already uptodate.
+(epstopdf)             \includegraphics on input line 228.
+runsystem(epstopdf --outfile=../graphs/average_pixel/edgenew256x192_average_pix
+el-eps-converted-to.pdf ../graphs/average_pixel/edgenew256x192_average_pixel.ep
+s)...executed (allowed).
+
+Package epstopdf Info: Result file: <../graphs/average_pixel/edgenew256x192_ave
+rage_pixel-eps-converted-to.pdf>
+(epstopdf)                    date: 2018-11-29 12:38:16
+(epstopdf)                    size: 13487 bytes.
 <../graphs/average_pixel/edgenew256x192_average_pixel-eps-converted-to.pdf, id=
-212, 462.72874pt x 346.29375pt>
+210, 462.72874pt x 346.29375pt>
 File: ../graphs/average_pixel/edgenew256x192_average_pixel-eps-converted-to.pdf
  Graphic file (type pdf)
 <use ../graphs/average_pixel/edgenew256x192_average_pixel-eps-converted-to.pdf>
 
 Package pdftex.def Info: ../graphs/average_pixel/edgenew256x192_average_pixel-e
-ps-converted-to.pdf  used on input line 229.
+ps-converted-to.pdf  used on input line 228.
 (pdftex.def)             Requested size: 175.06905pt x 131.01703pt.
 Package epstopdf Info: Source file: <../graphs/average_pixel/edgenew768x768_ave
 rage_pixel.eps>
-(epstopdf)                    date: 2018-11-27 14:45:36
+(epstopdf)                    date: 2018-11-29 12:36:20
 (epstopdf)                    size: 27080 bytes
 (epstopdf)             Output file: <../graphs/average_pixel/edgenew768x768_ave
 rage_pixel-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-11-27 14:45:46
-(epstopdf)                    size: 14074 bytes
 (epstopdf)             Command: <epstopdf --outfile=../graphs/average_pixel/edg
 enew768x768_average_pixel-eps-converted-to.pdf ../graphs/average_pixel/edgenew7
 68x768_average_pixel.eps>
-(epstopdf)             \includegraphics on input line 231.
-Package epstopdf Info: Output file is already uptodate.
+(epstopdf)             \includegraphics on input line 230.
+runsystem(epstopdf --outfile=../graphs/average_pixel/edgenew768x768_average_pix
+el-eps-converted-to.pdf ../graphs/average_pixel/edgenew768x768_average_pixel.ep
+s)...executed (allowed).
+
+Package epstopdf Info: Result file: <../graphs/average_pixel/edgenew768x768_ave
+rage_pixel-eps-converted-to.pdf>
+(epstopdf)                    date: 2018-11-29 12:38:18
+(epstopdf)                    size: 14074 bytes.
 <../graphs/average_pixel/edgenew768x768_average_pixel-eps-converted-to.pdf, id=
-213, 462.72874pt x 346.29375pt>
+211, 462.72874pt x 346.29375pt>
 File: ../graphs/average_pixel/edgenew768x768_average_pixel-eps-converted-to.pdf
  Graphic file (type pdf)
 <use ../graphs/average_pixel/edgenew768x768_average_pixel-eps-converted-to.pdf>
 
 Package pdftex.def Info: ../graphs/average_pixel/edgenew768x768_average_pixel-e
-ps-converted-to.pdf  used on input line 231.
+ps-converted-to.pdf  used on input line 230.
 (pdftex.def)             Requested size: 175.06905pt x 131.01703pt.
 Package epstopdf Info: Source file: <../graphs/average_pixel/edgenew1600x1200_a
 verage_pixel.eps>
-(epstopdf)                    date: 2018-11-27 14:45:36
+(epstopdf)                    date: 2018-11-29 12:36:20
 (epstopdf)                    size: 31180 bytes
 (epstopdf)             Output file: <../graphs/average_pixel/edgenew1600x1200_a
 verage_pixel-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-11-27 14:45:46
-(epstopdf)                    size: 14879 bytes
 (epstopdf)             Command: <epstopdf --outfile=../graphs/average_pixel/edg
 enew1600x1200_average_pixel-eps-converted-to.pdf ../graphs/average_pixel/edgene
 w1600x1200_average_pixel.eps>
-(epstopdf)             \includegraphics on input line 233.
-Package epstopdf Info: Output file is already uptodate.
+(epstopdf)             \includegraphics on input line 232.
+runsystem(epstopdf --outfile=../graphs/average_pixel/edgenew1600x1200_average_p
+ixel-eps-converted-to.pdf ../graphs/average_pixel/edgenew1600x1200_average_pixe
+l.eps)...executed (allowed).
+
+Package epstopdf Info: Result file: <../graphs/average_pixel/edgenew1600x1200_a
+verage_pixel-eps-converted-to.pdf>
+(epstopdf)                    date: 2018-11-29 12:38:20
+(epstopdf)                    size: 14879 bytes.
 <../graphs/average_pixel/edgenew1600x1200_average_pixel-eps-converted-to.pdf, i
-d=214, 462.72874pt x 346.29375pt>
+d=212, 462.72874pt x 346.29375pt>
 File: ../graphs/average_pixel/edgenew1600x1200_average_pixel-eps-converted-to.p
 df Graphic file (type pdf)
 <use ../graphs/average_pixel/edgenew1600x1200_average_pixel-eps-converted-to.pd
 f>
 Package pdftex.def Info: ../graphs/average_pixel/edgenew1600x1200_average_pixel
--eps-converted-to.pdf  used on input line 233.
+-eps-converted-to.pdf  used on input line 232.
 (pdftex.def)             Requested size: 175.06905pt x 131.01703pt.
-
 [10 <../graphs/speedupBigInput-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <../graphs/speedupInterval.eps>
-(epstopdf)                    date: 2018-11-27 14:45:37
-(epstopdf)                    size: 24590 bytes
+(epstopdf)                    date: 2018-11-29 12:36:21
+(epstopdf)                    size: 24274 bytes
 (epstopdf)             Output file: <../graphs/speedupInterval-eps-converted-to
 .pdf>
-(epstopdf)                    date: 2018-11-27 14:45:45
-(epstopdf)                    size: 14465 bytes
 (epstopdf)             Command: <epstopdf --outfile=../graphs/speedupInterval-e
 ps-converted-to.pdf ../graphs/speedupInterval.eps>
-(epstopdf)             \includegraphics on input line 246.
-Package epstopdf Info: Output file is already uptodate.
-<../graphs/speedupInterval-eps-converted-to.pdf, id=250, 462.72874pt x 346.2937
+(epstopdf)             \includegraphics on input line 245.
+runsystem(epstopdf --outfile=../graphs/speedupInterval-eps-converted-to.pdf ../
+graphs/speedupInterval.eps)...executed (allowed).
+
+Package epstopdf Info: Result file: <../graphs/speedupInterval-eps-converted-to
+.pdf>
+(epstopdf)                    date: 2018-11-29 12:38:22
+(epstopdf)                    size: 14447 bytes.
+<../graphs/speedupInterval-eps-converted-to.pdf, id=249, 462.72874pt x 346.2937
 5pt>
 File: ../graphs/speedupInterval-eps-converted-to.pdf Graphic file (type pdf)
 <use ../graphs/speedupInterval-eps-converted-to.pdf>
 Package pdftex.def Info: ../graphs/speedupInterval-eps-converted-to.pdf  used o
-n input line 246.
+n input line 245.
 (pdftex.def)             Requested size: 277.63939pt x 207.77785pt.
- [11 <../graphs/average_pixel/edgenew192x128_average_pixel-eps-converted-to.pdf
-> <../graphs/average_pixel/edgenew256x192_average_pixel-eps-converted-to.pdf> <
-../graphs/average_pixel/edgenew768x768_average_pixel-eps-converted-to.pdf> <../
-graphs/average_pixel/edgenew1600x1200_average_pixel-eps-converted-to.pdf>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 258.
- [12 <../graphs/speedupInterval-eps-converted-to.pdf>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 258.
- (report-B136013.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 258.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 258.
+[11 <../graphs/average_pixel/edgenew192x128_average_pixel-eps-converted-to.pdf>
+ <../graphs/average_pixel/edgenew256x192_average_pixel-eps-converted-to.pdf> <.
+./graphs/average_pixel/edgenew768x768_average_pixel-eps-converted-to.pdf> <../g
+raphs/average_pixel/edgenew1600x1200_average_pixel-eps-converted-to.pdf>]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 257.
+[12 <../graphs/speedupInterval-eps-converted-to.pdf>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 257.
+(/Users/xenis656/Desktop/cirrus/MPP/mpp_coursework/report/report-B136013.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 257.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 257.
 Package rerunfilecheck Info: File `report-B136013.out' has not changed.
-(rerunfilecheck)             Checksum: 8FBE1C59178920CB265BD98524052BD5;909.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 258.
+(rerunfilecheck)             Checksum: 28E4F0C5002412767503E5988B6BFB48;922.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 257.
  ) 
 Here is how much of TeX's memory you used:
  10333 strings out of 492971
- 156635 string characters out of 3124857
- 435468 words of memory out of 3000000
- 13998 multiletter control sequences out of 15000+200000
+ 157218 string characters out of 3124857
+ 434577 words of memory out of 3000000
+ 13999 multiletter control sequences out of 15000+200000
  30119 words of font info for 47 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 47i,12n,99p,963b,1181s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 47i,12n,99p,1066b,1181s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/Users/xenis656/Library/Application Support/MiKTeX/texmfs/install/fonts/enc/
 dvips/base/8r.enc}</Users/xenis656/Library/Application Support/MiKTeX/texmfs/in
 stall/fonts/type1/public/amsfonts/cm/cmmi12.pfb></Users/xenis656/Library/Applic
@@ -753,9 +783,10 @@ texmfs/install/fonts/type1/public/amsfonts/cm/cmr8.pfb></Users/xenis656/Library
 type1/public/amsfonts/cm/cmsy8.pfb></Users/xenis656/Library/Application Support
 /MiKTeX/texmfs/install/fonts/type1/urw/times/utmb8a.pfb></Users/xenis656/Librar
 y/Application Support/MiKTeX/texmfs/install/fonts/type1/urw/times/utmr8a.pfb>
-Output written on report-B136013.pdf (12 pages, 236091 bytes).
+Output written on /Users/xenis656/Desktop/cirrus/MPP/mpp_coursework/report/repo
+rt-B136013.pdf (12 pages, 236307 bytes).
 PDF statistics:
- 481 PDF objects out of 1000 (max. 8388607)
- 75 named destinations out of 1000 (max. 500000)
+ 480 PDF objects out of 1000 (max. 8388607)
+ 74 named destinations out of 1000 (max. 500000)
  174 words of extra memory for PDF output out of 10000 (max. 10000000)
 
