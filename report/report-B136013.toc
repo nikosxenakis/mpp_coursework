@@ -22,6 +22,6 @@
 \contentsline {paragraph}{Small Input}{9}{section*.11}
 \contentsline {paragraph}{Medium Input}{9}{section*.12}
 \contentsline {paragraph}{Big Input}{9}{section*.13}
-\contentsline {subsubsection}{\numberline {5.2.2}Intervals}{10}{subsubsection.5.2.2}
-\contentsline {subsubsection}{\numberline {5.2.3}Average Pixel}{10}{subsubsection.5.2.3}
-\contentsline {section}{\numberline {6}Conclusion}{13}{section.6}
+\contentsline {subsubsection}{\numberline {5.2.2}Average Pixel}{10}{subsubsection.5.2.2}
+\contentsline {subsubsection}{\numberline {5.2.3}Intervals}{11}{subsubsection.5.2.3}
+\contentsline {section}{\numberline {6}Conclusion}{12}{section.6}

@@ -1,3 +1,5 @@
+//B136013
+
 #include "include/mpi_types.h"
 #include "include/cart_info.h"
 #include "include/initialization.h"
@@ -11,7 +13,7 @@ int main (int argc, char** argv) {
   char filename[FILENAME_SIZE];
   int world_rank, world_size, m, n, mp, np, max_mp, max_np;
   double average_iter_time = 0;
-  int dim[2] = {0, 0}, period[2] = {0, 1}, reorder = 1;
+  int dim[2] = {0, 0}, period[2] = {0, 1}, reorder = 0;
   MPI_Comm comm;
   Cart_info cart_info;
   Mpi_Datatypes mpi_Datatypes;

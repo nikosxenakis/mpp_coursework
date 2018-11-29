@@ -22,7 +22,7 @@ clean:
 	@rm -rf serial imagenew imagenew_timing imagenew_average_pixel imagenew_timing_intervals $(BUILD_DIR)
 
 clean_build:
-	@echo " Cleaning..."
+	@echo " Cleaning build files..."
 	@rm -rf $(BUILD_DIR)
 
 serial:

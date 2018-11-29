@@ -44,7 +44,7 @@ do
 		    exit 1
 		fi
 
-		# Ensure that number of MPI processes is a multiple of number of nodes
+		Ensure that number of MPI processes is a multiple of number of nodes
 		if [ $MPISIZE -ne $(( NNODE * PPN )) ]
 		then
 		    echo "Error: NPROC=$NPROC must be a multiple of number of nodes=$NNODE" >> $LOG_FILE

@@ -61,8 +61,8 @@
 	The design and control flow of the project is basically the same as the case study with a different implementation. The implementation of the project uses mainly the basic functions of the MPI API. Some of these features perform non-blocking communication, create a virtual topology and use derived types.
 
     \subsection{Initialization}
-      In the initialization phase, MPI\_Init, MPI\_Comm\_rank and MPI\_Comm\_size functions are called to establish the communication for the active processes and for each process to learn its place in this network. Then program does a series of tasks
-
+	  In the initialization phase, MPI\_Init, MPI\_Comm\_rank, and MPI\_Comm\_size functions are called to establish the communication for the active processes and for each process to learn its place in this network. Then the program does a series of tasks
+		 
       \begin{enumerate}
         \item Reads the input image
         \item Decomposes of the problem
@@ -73,16 +73,16 @@
       \end{enumerate}
 
       \paragraph{Input}
-			   The input of this experiment is an edge image and the number of process that are required to solve the problem. Every process reads the size of the input image but only the master process reads the raw data and stores it to its masterbuffer.
+			   The input of this experiment is an edge image and the number of processes that are required to solve the problem. Every process reads the size of the input image but only the master process reads the raw data and stores it to its masterbuffer.
 
       \paragraph{Decomposition}
         In general, the algorithm has been designed to deal with any number of processes even for the occasion that they are not exactly divisible by the matrix size. The approach that we chose is that the border processes are going to deal with the extra workload. Decomposition process produces the size of the problem each process has to solve.
 
       \paragraph{Virtual Topology}
-        In terms of the produced virtual topology, the main function was MPI\_Cart\_create that creates the new 2 dimension topology. Reorder of the given processes to the new topology is permited for optimazation reasons.
+        In terms of the produced virtual topology, the main function was MPI\_Cart\_create that creates the new 2 dimension topology. Reorder of the given processes to the new topology is permitted for optimization reasons.
 
       \paragraph{Discover Topology}
-        In this phase, it is necessary for each process to discover its place in the virtual topology and a new data structure called Cart\_Info. Cart\_Info contains all of the information a process needs to know when it comes to communication without the extra overhead of calling MPI functions to obtain these information on repeat. These information are the
+        In this phase, it is necessary for each process to discover its place in the virtual topology and a new data structure called Cart\_Info. Cart\_Info contains all of the information a process needs to know when it comes to communication without the extra overhead of calling MPI functions to obtain this information on repeat. This information are the
 
       \begin{itemize}
 			  \item World rank
@@ -90,22 +90,22 @@
 			  \item World size
 			  \item Its coordinates
 			  \item Virtual topology's dimensions
-			  \item The world ranks of its neghbours
+			  \item The world ranks of its neighbors
 			\end{itemize}
 
-			In addition, methods like MPI\_Cart\_coords and MPI\_Cart\_rank have been used to identify the neighbor's ranks or coordinates. We have to say at this point that if a neighbour doen't exist it is set a MPI\_PROC\_NULL which helps as to avoid condition statements in the send functions.
+			In addition, methods like MPI\_Cart\_coords and MPI\_Cart\_rank have been used to identify the neighbor's ranks or coordinates. We have to say at this point that if a neighbor does not exist it is set a MPI\_PROC\_NULL which helps as to avoid condition statements in the send functions.
 
         \paragraph{Derived Types}
-            In order to reduce the code volume and avoid unnecessary memory allocations derived types are used extensively. Derived types such as row, column, and table are declared once in the main function. MPI\_Type\_vector has been the function that creates these derived types. Derived Types are used in the communication phase like the non-blocking functions. Their main goal is to avoid memory copies for the send and receive buffer. What we managed to is to read and write directly from and to the target buffers. As we mentioned before our Decomposition may assign different problem sizes to the process. In order to keep up code in a generic form, different implementations for the derived types have been the tool to address this issue.
+            In order to reduce the code volume and avoid unnecessary memory allocations derived types are used extensively. Derived types such as row, column, and table are declared once in the main function. MPI\_Type\_vector has been the function that creates these derived types. Derived Types are used in the communication phase like the non-blocking functions. Their main goal is to avoid memory copies for the send and receive buffer. What we managed to is to read and write directly from and to the target buffers. As we mentioned before our Decomposition may assign different problem sizes to the process. In order to keep up the code in a generic form, different implementations for the derived types have been the tool to address this issue.
 
         \paragraph{Buffers}
-			Once we gathered these information we are able to dynamically allocate and initialize our buffers. All of the processes allocate the necessary buffers for the calculations using the sizes that decomposition phase has ordered. After that, the old buffer is initilized with the white (255) value. The boundary conditions are applied. To be more specific, if the worker has been assigned a part of the image which belongs to the left or right side, then sawtooth values are computed and stored.
+			Once we gathered this information we are able to dynamically allocate and initialize our buffers. All of the processes allocate the necessary buffers for the calculations using the sizes that the decomposition phase has produced. After that, the old buffer is initialized with the white (255) value. The boundary conditions are applied. To be more specific, if the worker has been assigned a part of the image which belongs to the left or right side, then sawtooth values are computed and stored.
 
     \subsection{Scatter}
-        At this point the data exchange takes place. The master scatters the image which is stored in the masterbuffer directly to the edge buffers of the workers. Like in all of the communucation processes MPI\_Isend and MPI\_Irecv functions are used accordingly. More of the communication phase will be explained in the following section.
+        At this point the data exchange takes place. The master scatters the image which is stored in the masterbuffer directly to the edge buffers of the workers. Like in all of the communication processes MPI\_Isend and MPI\_Irecv functions are used accordingly. More of the communication phase will be explained in the following section.
 
     \subsection{Calculation}
-        At this point the main loop is ready to start. The calculation phase is decomposed as followed
+        At this point, the main loop is ready to start. The calculation phase is decomposed as followed
         \begin{enumerate}
           \item Halo swaps are sent to the neighbors
           \item The middle calculations are computed (excluding borders)
@@ -116,23 +116,23 @@
         \end{enumerate}
 
         \paragraph{Periodic Checks}
-        	As mentioned before, at specific intervals in the loop the algorithm does some extra work. This work includes the logging of the average pixel's value. A Tab Seperated Value (TSV) file is generated to store this information. In addition a function is called to check if the execution can stop, which is the only way to exit the loop. This method checks the maximum difference between the pixels and if this value is below 0.1 for each of them the process is stopped. We have to point out that intervals have been set to 100 loop iterations as a design desicion. In extension MPI\_Allreduce function has been used twice in the periodic checks. First, to calculate the average pixel value which is part of the Output. Second, to calculate the max difference of the pixels.
+        	As mentioned before, at specific intervals in the loop the algorithm does some extra work. This work includes the logging of the average pixel's value. A Tab Separated Value (TSV) file is generated to store this information. In addition, a function is called to check if the execution can stop, which is the only way to exit the loop. This method checks the maximum difference between the pixels and if this value is below 0.1 for each of them the process is stopped. We have to point out that intervals have been set to 100 loop iterations as a design decision. In extension, MPI\_Allreduce function has been used twice in the periodic checks. First, to calculate the average pixel value which is part of the Output. Second, to calculate the max difference of the pixels.
 
         \paragraph{Communication}
-            The corestone of the communication process are the MPI\_Isend and MPI\_Irecv functions. These methods are used for the halo swaps which are necessary for the calculations and the custom Scatter and Gather mechanisms. In the end of each of these procedures the program calls the MPI\_Wait function to ensure that there are not ongoing communications so the algorithm can resume its execution.
+            The cornerstone of the communication process are the MPI\_Isend and MPI\_Irecv functions. These methods are used for the halo swaps which are necessary for the calculations and the custom Scatter and Gather mechanisms. At the end of each of these procedures, the program calls the MPI\_Wait function to ensure that there are not ongoing communications so the algorithm can resume its execution.
 
     \subsection{Gather}
     	Using the same tools as Scatter, Gather process is implemented, only in the opposite direction. The master gathers all of the old buffers and reconstructs the masterbuffer which will be written to the new output image.
 
     \subsection{Finalization}
-    	The main job is done now the master process has gathered the calculated results. It will create the necessary files and store the logged information. To be more specific, the output are
+    	The main job is done now the master process has gathered the calculated results. It will create the necessary files and store the logged information. In detail, the outputs are
 
       \begin{itemize}
 		    \item A new reconstructed image
 		    \item A TSV file that contains the input file, number of processes and average iteration running time (ms)
 		  \end{itemize}
 
-    	In the end each process will free the allocated buffers and call MPI\_Finalize function to end properly the communication between the processes.
+    	In the end, each process will free the allocated buffers and call MPI\_Finalize function to end properly the communication between the processes.
 
 \sectionVspacing
 \clearpage
@@ -157,10 +157,10 @@
     \item The average iteration time
     \item The average iteration time for big input files
     \item The average iteration time with terminate condition calls
-    \item The production exeutable correctness
+    \item The production executable correctness
   \end{enumerate}
 
-	 For each of the above experiments a different executable has been created with minor configuration through C preprocessor define commands. These configurations include 
+	 For each of the above experiments, a different executable has been created with minor configuration through C preprocessor define commands. These configurations include 
 	
 	\begin{itemize}
 		\item MAXITER the maximum iterations number
@@ -169,15 +169,15 @@
 		\item TIME\_RESULTS the file to store the timing results
 	\end{itemize}
 
-	All of the results will be save in the data/ folder in different files. Once the submitted jobs are completed, a Python script is responsible to analyse the data and create the graphs. To run the script execute \Colorbox{mygray}{\lstinline|python data\_analyzer.py|}. In addition, we have created our edge files, to reproduce that run \Colorbox{mygray}{\lstinline|./converter.sh|} in converter/ folder.
+	All of the data results will be saved in the data/ folder in different files. Once the submitted jobs are completed, a Python script is responsible to analyze the data and create the graphs. To run the script execute \Colorbox{mygray}{\lstinline|python data_analyzer.py|}. In addition, we have created our edge files, to reproduce that run \Colorbox{mygray}{\lstinline|./converter.sh|} in converter/ folder.
 	
-  	In the following section we evaluate these results.
+  	In the following section, we evaluate these results.
   
 \section{Evaluation}
     Evaluation has been done in order to find out if the program behaves as it should in terms of correctness and performance.
 
     \subsection{Correctness}
-        First and foremost, before performance analysis, we have to ensure that the produced outputs are valid regardless of the number of processes that are used underneath. The approach is very simple. Once the job has been successfully executed till completion (using production mode imagenew executable), we run the serial program for all of the given input images and then store the outputs. The serial program has been modified to stop when there are no significant changes in the image's pixels between each step. To be more specific, the max different has been definied to be 0.1. It worths to mention that the termination condition has to remain the same in all of the executions because different conditions create different results. This comparison is made automatically through a Python script that uses the filecmp function. If the files are the same then our experiment is correct.
+        First and foremost, before performance analysis, we have to ensure that the produced outputs are valid regardless of the number of processes that are used underneath. The approach is very simple. Once the job has been successfully executed till completion (using production mode imagenew executable), we run the serial program for all of the given input images and then store the outputs to the test\_output/ folder. The serial program has been modified to stop when there are no significant changes in the image's pixels between each step. To be more specific, the max different has been defined to be 0.1. It worths to mention that the termination condition has to remain the same in all of the executions because different conditions create different results. This comparison is made automatically through a Python script that uses the filecmp function. If the files are the same then our experiment is correct.
 
         To check if your produced images are correct run
         \begin{lstlisting}[language=bash]
@@ -187,10 +187,10 @@
         The test will print to the standard output if each image produced in the output/ folder is exactly the same as its pair in the test\_output/ folder.
 
     \subsection{Performance}
-        Performance analysis is essential for this experiment in order to compare our results and extract useful information of them.
+        Performance analysis is essential for this experiment in order to compare our results and extract useful information about them.
 
         \subsubsection{Speedup}
-          For the timing of the experiment we have executed the project for 1500 iterations without the terminate condition and average pixel prints. Of course this method will not produce the correct output images, but this is not a problem in this part of the performance analysis. We just need to take a representative sample of calculation loop timing without wasting CPU time. The logged time for each experiment is the mean iteration running time. Using this measurement we present the speedup of the experiments. This a very useful experiment because we can decide how good our input scales for a variety of process. This would help us decide which is the optimal number of process to run if our budget or resources are limited.
+          For the timing of the experiment, we have executed the project for 1500 iterations without the terminate condition and average pixel prints. Of course, this method will not produce the correct output images, but this is not a problem in this part of the performance analysis. We just need to take a representative sample of calculation loop timing without wasting CPU time. The logged time for each experiment is the mean iteration running time. Using this measurement we present the speedup of the experiments. This a very useful experiment because we can decide how good our input scales for a variety of process. This would help us decide which is the optimal number of processes to run if our budget or resources are limited.
 
           \begin{figure}[ht]
             \centering
@@ -200,15 +200,16 @@
           \end{figure}
 
           \paragraph{Small Input}
-            Running on 1 node from 1 to 36 cores speedup is increasing or stays constant. Let's take for example the case where the input image is 192x128 or 256x192 pixels. In Figure \ref{speedup}, it plain to see that the problem doen't scale as it should. When we use even more processors the speedup is slightly inclined. This possibly because the arithmetic calcluations consume a little amound of time as opposed to the halo swaps. As a result, for the specific size of problems 10 till 15 processes would be the best option. We don't have to waste 10 or 20 more cores if the speedup is not going to exceed 5 and 6 accrodingly.
+            Running on 1 node from 1 to 36 cores speedup is increasing or stays constant. Let's take for example the case where the input image is 192x128 or 256x192 pixels. In Figure \ref{speedup}, it plain to see that the problem does not scale as it should. When we use even more processors the speedup is slightly inclined. This possibly because the arithmetic calculations consume a little amount of time as opposed to the halo swaps. As a result, for the specific size of problems 10 till 15 processes would be the best option. We don't have to waste 10 or 20 more cores if the speedup is not going to exceed 5 and 6 accordingly.
 
           \paragraph{Medium Input}
             As long as we increase the input image size the speedup is growing faster. From Figure \ref{speedup} we can denote that for the image 512x384 choosing 32 processes seems a very appealing option. Reaching speedup 15 times faster than running it on one process.
 
           \paragraph{Big Input}
-            In case of input size bigger than 768x768 pixels, running on 1 node the results are promising. Speedup is increased almost in a linear fashion, reaching the ideal values and making the communication overhead of the halo swaps to be insignificant. So we decided to do a further investigation and run the experiment for the big images on more nodes. In Figure \ref{speedupBigInput} we see the speedup results running on 2, 3 and 4 nodes from 42 to 144 number of processes for the big input files.
-        
-        	Figure \ref{speedupBigInput} has been divided in 3 vertical slices. The first one is running on 2 nodes, the second on 3 and the last one on 4. In each division, we can observe local extrema. These points are showing which are best the number of processes for the given nodes in order to utilize as good as possible the whole system. To be more specific, choosing 58, 87 and 116 processes is the most profitable configuration on 2, 3 and 4 nodes accordingly.
+
+        	In case of input size bigger than 768x768 pixels, running on 1 node the results are promising. Speedup is increased almost in a linear fashion, reaching the ideal values and making the communication overhead of the halo swaps to be insignificant. So we decided to do a further investigation and run the experiment for the big images on more nodes. In Figure \ref{speedupBigInput} we see the speedup results running on 4 nodes from 40 to 136 number of processes for the big input files.
+
+			As a result, the speedup continues to increase. The images are big enough to be divided into more than 40 processes so the speedup keeps increasing as long as we increase the number of processes without negative effects in the performance.
         	
         	\begin{figure}[ht]
         		\centering
@@ -217,21 +218,9 @@
         		\label{speedupBigInput}
         	\end{figure}
 
-            At this point we have to point out that while creating the virtual topology, reorder option has been enabled. This gives the ability to the MPI to place neighbour processes to the same node, in order to reduce communication across the nodes.
-          
-        \subsubsection{Intervals}
-          We made the design decision to print the average pixel and check the terminate condition every 100 iterations. That decision has been made in order to reduce the execution time. We made an experiment running for 1500 iterations the image 768x768 with and without intervals on 1 to 16 processors. From Figure \ref{speedupWithInterval} we can denote that adding the intervals reduces drastically the speedup of the experiment. 
-
-          \begin{figure}[ht]
-              \centering
-              \includegraphics[scale=0.6]{../graphs/speedupInterval.eps}
-              \caption{Speedup for all the input images}
-              \label{speedupWithInterval}
-          \end{figure}
-
         \subsubsection{Average Pixel}
 
-        	In this section we have performed analysis regarding the average pixel results. Each iteration the average pixel is calculated. In order to achieve that we had to run the experiment till completion for all of the input images. We choose to run them once on 16 process, because the number of processes has not effect on the average pixel value. This happens due to the fact that the average pixel is depending on the input image (size, edges) and not in how many processes are participation on solving the problem.
+        	In this section, we have performed an analysis regarding the average pixel results. In each iteration, the average pixel is calculated. In order to achieve that we had to run the experiment till completion for all of the input images. We chose to execute it just once on 16 processes. Obviously, we did not have to run it again on a different processors configuration. This occurs due to the fact that the average pixel is depending on the input image (size, edges) and not in how many processes are participation in solving the problem. The specific experiment has been run using the imagenew\_average\_pixel target.
 
         	\begin{figure}[ht]
     			  \centering
@@ -246,14 +235,24 @@
   			    \label{average_pixel}
     		\end{figure}
 
-            According to Figure 2, which includes the average pixel values of 4 input images against the iteration number we can make some useful observations. First of all, the number of iterations is in some occasions independent of the size of the input image. This is because the number of iterations untill we can terminate the process is depending on how much easy is to reconstruct the specific image. For example, we can see doing a comparison in Figure 2 between  (a) and (b) that image 192x128 is indeed smaller than 256x192 but it takes 300 more iterations to be terminated.
+            According to Figure 2, which includes the average pixel values of 4 input images against the iteration number we can make some useful observations. First of all, the number of iterations is on some occasions independent of the size of the input image. This is because the number of iterations until we can terminate the process is depending on how much easy is to reconstruct the specific image. For example, we can see doing a comparison in Figure 2 between  (a) and (b) that image 192x128 is indeed smaller than 256x192 but it takes 300 more iterations to be terminated.
 
-            Secondly, it is plain to see that the average pixel's value is declined in every occassion. That observion is logical due to the fact that the initialized old buffer contain white (255) pixels. As long as the loop is processed the average value is decreasing, meaningly the whole picture is becoming darker. At this point, it worths to mention that in each image for the first iterations the pixel value is declined very fast. After that, the change rate is slower, meaning that each iteration has small impact to the new calculated output.
+            Secondly, it is plain to see that the average pixel's value is declined in every occasion. That observation is logical due to the fact that the initialized old buffer contain white (255) pixels. As long as the loop is processed the average value is decreasing, meaningly the whole picture is becoming darker. At this point, it worths to mention that in each image for the first iterations the pixel value is declined very fast. After that, the change rate is slower, meaning that each iteration has a small impact on the newly calculated output.
+
+        \subsubsection{Intervals}
+We made the design decision to print the average pixel and check the terminate condition every 100 iterations. That decision has been made in order to reduce the execution time. We made an experiment running for 1500 iterations the image 768x768 with and without intervals on 1 to 16 processors. The imagenew\_timing\_intervals executable has been created for this purpose.
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=0.6]{../graphs/speedupInterval.eps}
+	\caption{Speedup for all the input images}
+	\label{speedupWithInterval}
+\end{figure}
+
+According to Figure \ref{speedupWithInterval}, we can denote that adding the intervals reduces drastically the speedup of the experiment. For example, running on 16 processes we could improve the speedup from 6 to 13.
 
 \sectionVspacing
-\clearpage
 
 \section{Conclusion}
-	In conclusion, depending on the size of given problem the answer for the best approach to solve it, always varies. We could easily say that as long as the problem size is increased we have to do the same with the resources, in order to achieve the minimum running time. But the truth is that if we want to exploit the best out of our system, further investigation is required. Luckily, this doesn't mean that we have to run our experiment until completion to identify the best approach. A small number of iterations of the main calculation loop are enough to identify the best suited system configurations. This choice is based on the experiment results, but always taking into account our available resources and budget, which is energy consumption and as always the given time.
+	In conclusion, depending on the size of the given problem the answer for the best approach to solve it always varies. We could easily say that as long as the problem size is increased we have to do the same with the resources, in order to achieve the minimum running time. But the truth is that if we want to exploit the best out of our system, further investigation is required. Luckily, this doesn't mean that we have to run our experiment until completion to identify the best approach. A small number of iterations of the main calculation loop are enough to identify the best suited-system configurations. This choice is based on the experiment results, but always taking into account our available resources and budget, which is energy consumption and as always the given time.
 
 \end{document}

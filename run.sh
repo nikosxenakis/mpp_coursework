@@ -1,18 +1,20 @@
 #!/bin/bash
+#B136013
 #
 #define variables
 DATA_FOLDER=./data
 GRAPHS_FOLDER=./graphs
 OUTPUT_FOLDER=./output
-BIN=./imagenew;
+BUILD_FOLDER=./build
 TIMING_HEADER="Input File\tProcesses Number\tAverage Iteration Time (ms)"
 RESOURCES_LIST="./resources/edgenew192x128.pgm_./resources/edgenew256x192.pgm_./resources/edgenew512x384.pgm_./resources/edgenew768x768.pgm_./resources/edgenew1600x1200.pgm"
 RESOURCES_BIG_LIST="./resources/edgenew768x768.pgm_./resources/edgenew1600x1200.pgm"
-RESERVATION="-q R380254"
+# RESERVATION="-q R380254"
 
 #make required folders
 mkdir -p $DATA_FOLDER
 mkdir -p $GRAPHS_FOLDER
+mkdir -p $BUILD_FOLDER
 
 #clean folders
 rm -rf $DATA_FOLDER/*
@@ -53,14 +55,8 @@ qsub $RESERVATION -v PROC_LIST="${PROC_LIST}",RESOURCES_LIST="${RESOURCES_LIST}"
 
 # check average iteration time for big input
 echo "checking average iteration time for big input..."
-NODES_NUM=select=2:ncpus=36
-PROC_LIST="42_46_50_54_58_62_66_72"
-qsub -v PROC_LIST="${PROC_LIST}",RESOURCES_LIST="${RESOURCES_BIG_LIST}",MPIPROG="imagenew_timing" -l $NODES_NUM imagenew.pbs
-NODES_NUM=select=3:ncpus=36
-PROC_LIST="75_81_87_93_99_107"
-qsub -v PROC_LIST="${PROC_LIST}",RESOURCES_LIST="${RESOURCES_BIG_LIST}",MPIPROG="imagenew_timing" -l $NODES_NUM imagenew.pbs
 NODES_NUM=select=4:ncpus=36
-PROC_LIST="108_116_124_132_140_144"
+PROC_LIST="40_48_52_60_64_72_80_88_96_104_112_116_128_136"
 qsub $RESERVATION -v PROC_LIST="${PROC_LIST}",RESOURCES_LIST="${RESOURCES_BIG_LIST}",MPIPROG="imagenew_timing" -l $NODES_NUM imagenew.pbs
 
 # check average iteration time with intervals in each iteration
@@ -80,4 +76,4 @@ echo -e $TIMING_HEADER > $DATA_FOLDER/time_results_prod.tsv
 PROC_LIST="16"
 qsub $RESERVATION -v PROC_LIST="${PROC_LIST}",RESOURCES_LIST="${RESOURCES_LIST}",MPIPROG="imagenew" -l $NODES_NUM imagenew.pbs
 
-echo "wait for the experiments to finish, then run \$python data_analyzer.py"
+echo "wait for the experiments to finish, then run \$python data_analyzer.py to create the appropriate graphs"

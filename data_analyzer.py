@@ -1,5 +1,7 @@
 #!/usr/bin/env python2
 # data_analyzer.py
+#B136013
+#
 import os
 import matplotlib.pyplot as plt
 import csv
@@ -55,10 +57,10 @@ def create_plots(title, x_axis_title, y_axis_title, labels, x_values, y_values, 
         lines.append(plt.plot(x_list, y_list, label=labels[i], linewidth=2, color=colors[i]))
         i = i + 1
 
-    if title == "speedupBigInput":
-        ml = MultipleLocator(36)
-        ax.xaxis.set_minor_locator(ml)
-        ax.xaxis.grid(which="minor", color='k', linestyle='-.', linewidth=0.7)
+    # if title == "speedupBigInput":
+    #     ml = MultipleLocator(36)
+    #     ax.xaxis.set_minor_locator(ml)
+    #     ax.xaxis.grid(which="minor", color='k', linestyle='-.', linewidth=0.7)
 
     plt.legend(loc=legent_pos)
 
@@ -66,7 +68,6 @@ def create_plots(title, x_axis_title, y_axis_title, labels, x_values, y_values, 
 
 
 def analyze_average_iteration_interval(data_file, image):
-
     i = 0;
     curr_times = 0
     processes = ()
@@ -94,7 +95,6 @@ def analyze_average_iteration_interval(data_file, image):
 
 
 def analyze_average_iteration(data_file, image):
-
     i = 0;
     curr_times = 0
     processes = ()
@@ -137,7 +137,6 @@ def get_big_processes(data_file, image):
 
 
 def analyze_average_big_iteration(data_file, image):
-
     i = 0;
     speedup = ()
     run_time = 0
@@ -163,7 +162,6 @@ def analyze_average_big_iteration(data_file, image):
 
 
 def get_time1(data_file, image):
-
     i = 0;
     curr_times = 0
     titles = ()
@@ -184,10 +182,7 @@ def get_time1(data_file, image):
                 return float(data[2])
 
         i = i + 1
-
     return 0
-
-
 
 
 def get_processes(data_file, image):
@@ -206,7 +201,6 @@ def get_processes(data_file, image):
 
 
 def create_speedup_plot(processes, speedup1, speedup2, speedup3, speedup4, speedup5):
-
     create_plots(
         str("speedup"),
         "Number of Processes",
@@ -220,7 +214,6 @@ def create_speedup_plot(processes, speedup1, speedup2, speedup3, speedup4, speed
 
 
 def create_speedup_big_input_plot(processes, speedup1, speedup2):
-
     create_plots(
         str("speedupBigInput"),
         "Number of Processes",
@@ -234,7 +227,6 @@ def create_speedup_big_input_plot(processes, speedup1, speedup2):
 
 
 def create_speedup_interval_plot(processes, speedup, speedup_interval):
-
     create_plots(
         str("speedupInterval"),
         "Number of Processes",
@@ -249,7 +241,6 @@ def create_speedup_interval_plot(processes, speedup, speedup_interval):
 
 
 def analyze_average_pixel(data_file, path):
-
     i = 0;
 
     titles = ()
@@ -277,34 +268,6 @@ def analyze_average_pixel(data_file, path):
     )
 
     return average
-
-
-# def create_pixel_plot(iterations, pixel1, pixel2, pixel3, pixel4, pixel5):
-
-#     create_plots(
-#         str("average_pixel/average_pixel"),
-#         "Iterations",
-#         str("Average Pixel"),
-#         ["192x128", "256x192", "512x384", "768x768"],
-#         iterations,
-#         [pixel1, pixel2, pixel3, pixel4],
-#         0.4,
-#         "lower right"
-#     )
-
-
-# def get_iterations(data_file, image):
-#     i = 0;
-
-#     iterations = ()
-
-#     for line in data_file:
-#         if i > 0:
-#             data = line.split('\t')
-#             iterations = iterations + (int(data[0]),)
-#         i = i + 1
-
-#     return iterations
 
 
 def parse_average_pixel():
@@ -336,17 +299,13 @@ def parse_average_pixel():
     f = open(str(path+filename+ext), 'r')
     pixel5 = analyze_average_pixel(f, filename)
 
-    # f = open(str(path+filename+ext), 'r')
-    # iterations = get_iterations(f, filename)
-
-    # create_pixel_plot(iterations, pixel1, pixel2, pixel3, pixel4, pixel5)
-
 
 def parse_running_time():
     path = './data/time_results_timing_test.tsv'
 
     f = open(path, 'r')
     processes = get_processes(f, "edgenew192x128")
+
     f = open(path, 'r')
     speedup1 = analyze_average_iteration(f, "edgenew192x128")
     f = open(path, 'r')
@@ -393,12 +352,17 @@ def parse_big_input():
     create_speedup_big_input_plot(processes, speedup1, speedup2)
 
 
+#sorts the timings in time_results_timing_test.tsv file
 sort_timings()
 
+#parses and export the graphs of the average pixel for each image
 parse_average_pixel()
 
+#parses and export the graphs of the speedup for each image
 parse_running_time()
 
+#parses and export the graphs of the speedup with and without the intervals
 parse_interval()
 
+#parses and export the graphs of the speedup for each big image
 parse_big_input()
